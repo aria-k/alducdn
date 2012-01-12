@@ -4,18 +4,33 @@
     var opts = {
       id: id,
       address: null,
+      locate: true,
       zoom: 8,
       width: $(this).width(),
       height: $(this).height(),
-      lat: -34.397,
-      lng: 150.644,
+      //lat: -34.397,
+      //lng: 150.644,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     return this.each(function() {
       if (options) {
         $.extend(opts, options);
       }
-      $.gMaps.init(this, opts);
+      var map = this;
+      if (window.navigator && options.locate) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          $.gMaps.init(map, $.extend({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude
+          }, options));
+        });
+      }
+      else {
+        $.gMaps.init(this, $.extend({
+          lat: -34.397,
+          lng: 150.644
+        }, options));
+      }
     });
   };
 
