@@ -13,23 +13,21 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     return this.each(function() {
-      if (options) {
-        $.extend(opts, options);
-      }
+      $.extend(opts, options);
       var map = this;
       if (window.navigator && options.locate) {
         navigator.geolocation.getCurrentPosition(function(pos) {
           $.gMaps.init(map, $.extend({
             lat: pos.coords.latitude,
             lng: pos.coords.longitude
-          }, options));
+          }, opts));
         });
       }
       else {
         $.gMaps.init(this, $.extend({
           lat: -34.397,
           lng: 150.644
-        }, options));
+        }, opts));
       }
     });
   };
