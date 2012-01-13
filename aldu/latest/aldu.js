@@ -427,7 +427,7 @@ var Aldu = {
         version : '3',
         load : function(plugin, _options) {
           var options = Aldu.extend({
-            sensor : false
+            sensor : true
           }, _options);
           google.load('maps', plugin.version, {
             'other_params' : 'sensor=' + (options.sensor ? 'true' : 'false'),
@@ -466,7 +466,8 @@ var Aldu = {
         version : '3.0-beta',
         host : 'cdn.aldu.net',
         path : '/jquery.gmap/',
-        js : [ 'jquery.gmap.min.js' ]
+        js : [ 'jquery.gmap.min.js',
+               'jquery.gmap.ext.js' ]
       },
       'jquery.imgload' : {
         depends : [ 'jquery' ],
