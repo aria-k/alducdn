@@ -9,7 +9,7 @@ var Aldu = {
         callback : callback,
         arguments : args ? args : []
       };
-      if (one) {
+      if (one === 1) {
         var _callback = listener.callback;
         listener.callback = function(event) {
           Aldu.Event.off(type, listener.callback, target);
@@ -44,7 +44,6 @@ var Aldu = {
             var args = listeners[i].arguments;
             args.push(event);
             listeners[i].callback.apply(this, args);
-            break;
           }
         }
       }
@@ -462,12 +461,12 @@ var Aldu = {
           })();
         }
       },
-      'jquery.gmaps' : {
+      'jquery.gmap' : {
         depends : [ 'jquery', 'google.maps' ],
-        version : 'latest',
+        version : '3.0-beta',
         host : 'cdn.aldu.net',
-        path : '/jquery.gmaps/',
-        js : [ 'jquery.gmaps.js' ]
+        path : '/jquery.gmap/',
+        js : [ 'jquery.gmap.min.js' ]
       },
       'jquery.imgload' : {
         depends : [ 'jquery' ],
