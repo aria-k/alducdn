@@ -389,6 +389,14 @@ var Aldu = {
           Aldu.CDN._load(plugin, options);
         }
       },
+      'jquery.mobile' : {
+        depends : [ 'jquery' ],
+        version : '1.0',
+        host : 'code.jquery.com',
+        path : '/mobile/',
+        css : [ 'jquery.mobile-1.0.min.css' ],
+        js : [ 'jquery.mobile-1.0.min.js' ]
+      },
       'jquerytools' : {
         depends : [ 'jquery' ],
         version : '1.2.6',
