@@ -294,6 +294,7 @@ var Aldu = {
       for ( var i in plugin.css) {
         plugin.css[i] = plugin.prefix + plugin.css[i];
       }
+      Aldu.chain(Aldu.load, plugin.css);
       if (plugin.depends.length) {
         Aldu.chain(Aldu.CDN.require, plugin.depends, Aldu.chain, [ Aldu.load,
             plugin.js, plugin.load, [ plugin, options ] ]);
@@ -301,7 +302,6 @@ var Aldu = {
       else {
         Aldu.chain(Aldu.load, plugin.js, plugin.load, [ plugin, options ]);
       }
-      Aldu.chain(Aldu.load, plugin.css);
     },
     plugins : {
       'dojo' : {
@@ -396,6 +396,14 @@ var Aldu = {
         path : '/mobile/',
         css : [ 'jquery.mobile-1.0.min.css' ],
         js : [ 'jquery.mobile-1.0.min.js' ]
+      },
+      'jquery.mobile.datebox' : {
+        depends : [ 'jquery.mobile' ],
+        version : [ 'latest' ],
+        host : 'dev.jtsage.com',
+        path : '/cdn/datebox/',
+        css : [ 'jquery.mobile.datebox.min.css' ],
+        js : [ 'jquery.mobile.datebox.min.js' ]
       },
       'jquerytools' : {
         depends : [ 'jquery' ],
