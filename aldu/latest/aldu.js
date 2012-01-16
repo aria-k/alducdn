@@ -37,7 +37,7 @@ var Aldu = {
       Aldu.log('Aldu.Event.trigger: ' + event.type, 4);
       if (this._listeners[event.type] instanceof Array) {
         var listeners = this._listeners[event.type];
-        for ( var i = 0, len = listeners.length; i < len; i++) {
+        for ( var i = 0, len = listeners.length; i < listeners.length; i++) {
           if (listeners[i].target === event.target) {
             var args = listeners[i].arguments;
             args.push(event);
