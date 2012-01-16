@@ -5,14 +5,14 @@ var Aldu = {
     on : function(type, callback, args, target, one) {
       Aldu.log('Aldu.Event.on: ' + type, 4);
       var listener = {
-        target : target,
+        target : target ? target : this,
         callback : callback,
         arguments : args ? args : []
       };
       if (one === 1) {
         var _callback = listener.callback;
         listener.callback = function(event) {
-          Aldu.Event.off(type, listener.callback, target);
+          Aldu.Event.off(type, listener.callback, listener.target);
           return _callback.apply(this, arguments);
         };
       }
@@ -27,11 +27,9 @@ var Aldu = {
     trigger : function(event, target) {
       if (typeof event == "string") {
         event = {
-          type : event
+          type : event,
+          target : target ? target : this
         };
-      }
-      if (!event.target) {
-        event.target = this;
       }
       if (!event.type) {
         throw new Error("Event object missing 'type' property.");
@@ -40,7 +38,7 @@ var Aldu = {
       if (this._listeners[event.type] instanceof Array) {
         var listeners = this._listeners[event.type];
         for ( var i = 0, len = listeners.length; i < len; i++) {
-          if (listeners[i].target === target) {
+          if (listeners[i].target === event.target) {
             var args = listeners[i].arguments;
             args.push(event);
             listeners[i].callback.apply(this, args);
