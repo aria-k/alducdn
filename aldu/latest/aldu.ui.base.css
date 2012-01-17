@@ -77,61 +77,6 @@ div.aldu-helpers-html-form-element {
   vertical-align: text-top;
 }
 
-div.aldu-helpers-html-form-element label {
-  display: block;
-  font-size: 110%;
-  margin-bottom: .2em;
-  margin-left: .1em;
-}
-
-div.aldu-helpers-html-form-required label {
-  font-weight: bold;
-}
-
-div.aldu-helpers-html-form-required label:after {
-  color: #e32;
-  content: '*';
-  display: inline;
-}
-
-div.aldu-helpers-html-form-input {
-  color: #444;
-}
-
-input,
-div.aldu-helpers-html-form-input input,
-div.aldu-helpers-html-form-textarea textarea {
-  clear: both;
-  font-size: 120%;
-  font-family: inherit;
-  padding: 4px; /* 1% */
-  margin: 4px 0px;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-div.aldu-helpers-html-form-textarea textarea {
-  resize: vertical;
-  height: 20em;
-}
-
-div.aldu-helpers-html-form-select select {
-  clear: both;
-  font-size: 120%;
-  vertical-align: baseline;
-  margin-right: .5em;
-}
-
-div.aldu-helpers-html-form-select select[multiple=multiple] {
-  width: 100%;
-}
-
-div.aldu-helpers-html-form-select select option {
-  font-size: 120%;
-  padding: 0 3px;
-}
-
 div.aldu-helpers-html-form-radio,
 div.aldu-helpers-html-form-checkbox {
   display: inline-block;
@@ -169,6 +114,57 @@ div.aldu-helpers-html-form-checkbox label a {
   clear: both;
 }
 
+div.aldu-helpers-html-form-element label {
+  display: block;
+  font-size: 110%;
+  margin-bottom: .2em;
+  margin-left: .1em;
+}
+
+div.aldu-helpers-html-form-required label {
+  font-weight: bold;
+}
+
+div.aldu-helpers-html-form-required label:after {
+  color: #e32;
+  content: '*';
+  display: inline;
+}
+
+input,
+div.aldu-helpers-html-form-input input,
+div.aldu-helpers-html-form-textarea textarea {
+  clear: both;
+  font-size: 120%;
+  font-family: inherit;
+  padding: 4px; /* 1% */
+  margin: 4px 0px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+div.aldu-helpers-html-form-textarea textarea {
+  resize: vertical;
+  height: 20em;
+}
+
+div.aldu-helpers-html-form-select select {
+  clear: both;
+  font-size: 120%;
+  vertical-align: baseline;
+  margin-right: .5em;
+}
+
+div.aldu-helpers-html-form-select select[multiple=multiple] {
+  width: 100%;
+}
+
+div.aldu-helpers-html-form-select select option {
+  font-size: 120%;
+  padding: 0 3px;
+}
+
 div.aldu-helpers-html-form-hidden {
   display: none;
 }
@@ -198,6 +194,34 @@ div.aldu-helpers-html-form-submit input {
 
 div.aldu-helpers-html-form-submit input:hover {
   background: #5BA150;
+}
+
+/* Buttons and button links */
+button,
+input[type=submit],
+.actions ul li a,
+.actions a {
+  font-weight: normal;
+  padding: 4px 8px;
+  background: #dcdcdc;
+  background-image: -webkit-linear-gradient(top, #fefefe, #dcdcdc);
+  background-image: -moz-linear-gradient(top, #fefefe, #dcdcdc);
+  background-image: -ms-linear-gradient(top, #fefefe, #dcdcdc);
+  background-image: -o-linear-gradient(top, #fefefe, #dcdcdc);
+  background-image: linear-gradient(top, #fefefe, #dcdcdc);
+  color: #333;
+  border: 1px solid #bbb;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-shadow: #fff 0px 1px 0px;
+  min-width: 0;
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Form errors */
@@ -366,37 +390,6 @@ table .aldu-core-model-actions {
 
 table .aldu-core-model-actions a {
   display: inline-block;
-}
-
-/* Buttons and button links *
-button,
-input[type=submit],
-.actions ul li a,
-.actions a {
-  font-weight: normal;
-  padding: 4px 8px;
-  background: #dcdcdc;
-  background-image: -webkit-linear-gradient(top, #fefefe, #dcdcdc);
-  background-image: -moz-linear-gradient(top, #fefefe, #dcdcdc);
-  background-image: -ms-linear-gradient(top, #fefefe, #dcdcdc);
-  background-image: -o-linear-gradient(top, #fefefe, #dcdcdc);
-  background-image: linear-gradient(top, #fefefe, #dcdcdc);
-  color: #333;
-  border: 1px solid #bbb;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  text-decoration: none;
-  text-shadow: #fff 0px 1px 0px;
-  min-width: 0;
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px
-    rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px
-    rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px
-    rgba(0, 0, 0, 0.2);
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 /* Shortcut classes */
