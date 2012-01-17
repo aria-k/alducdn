@@ -77,43 +77,6 @@ div.aldu-helpers-html-form-element {
   vertical-align: text-top;
 }
 
-div.aldu-helpers-html-form-radio,
-div.aldu-helpers-html-form-checkbox {
-  display: inline-block;
-}
-
-input[type=radio],
-input[type=checkbox] {
-  vertical-align: middle;
-  clear: left;
-  margin: .1em .25em .25em .25em;
-  width: auto;
-}
-
-div.aldu-helpers-html-form-radio label,
-div.aldu-helpers-html-form-checkbox label {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-div.aldu-helpers-html-form-radio label span,
-div.aldu-helpers-html-form-checkbox label span {
-  vertical-align: middle;
-  clear: both;
-}
-
-div.aldu-helpers-html-form-radio label img,
-div.aldu-helpers-html-form-checkbox label img {
-  vertical-align: middle;
-  display: inline-block;
-}
-
-div.aldu-helpers-html-form-radio label a,
-div.aldu-helpers-html-form-checkbox label a {
-  display: block;
-  clear: both;
-}
-
 div.aldu-helpers-html-form-element label {
   display: block;
   font-size: 110%;
@@ -163,6 +126,46 @@ div.aldu-helpers-html-form-select select[multiple=multiple] {
 div.aldu-helpers-html-form-select select option {
   font-size: 120%;
   padding: 0 3px;
+}
+
+div.aldu-helpers-html-form-radio,
+div.aldu-helpers-html-form-checkbox {
+  display: inline-block;
+}
+
+div.aldu-helpers-html-form-radio,
+div.aldu-helpers-html-form-checkbox,
+input[type=radio],
+input[type=checkbox] {
+  display: inline-block;
+  vertical-align: middle;
+  clear: left;
+  margin: .1em .25em .25em .25em;
+  width: auto;
+}
+
+div.aldu-helpers-html-form-radio label,
+div.aldu-helpers-html-form-checkbox label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+div.aldu-helpers-html-form-radio label span,
+div.aldu-helpers-html-form-checkbox label span {
+  vertical-align: middle;
+  clear: both;
+}
+
+div.aldu-helpers-html-form-radio label img,
+div.aldu-helpers-html-form-checkbox label img {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+div.aldu-helpers-html-form-radio label a,
+div.aldu-helpers-html-form-checkbox label a {
+  display: block;
+  clear: both;
 }
 
 div.aldu-helpers-html-form-hidden {
