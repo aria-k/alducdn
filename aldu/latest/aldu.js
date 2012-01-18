@@ -51,7 +51,8 @@ var Aldu = {
       if (this._listeners[type] instanceof Array) {
         var listeners = this._listeners[type];
         for ( var i = 0, len = listeners.length; i < len; i++) {
-          if (listeners[i].callback === callback && listeners[i].target === target) {
+          if (listeners[i].callback === callback
+              && listeners[i].target === target) {
             listeners.splice(i, 1);
             break;
           }
@@ -85,7 +86,7 @@ var Aldu = {
     if (typeof target !== "object" && typeof target !== "function") {
       target = {};
     }
-    if ( length === i ) {
+    if (length === i) {
       target = this;
       --i;
     }
@@ -190,42 +191,46 @@ var Aldu = {
       link.type = 'text/css';
       link.href = url;
       Aldu.Event.one('load', callback, args, link);
-      if (callback)
+      if (callback) {
         link.onload = link.onreadystatechange = function(_event) {
           var event = Aldu.extend({
             type : 'load',
             target : this
           }, _event);
           if (event.target.readyState) {
-            if (event.target.readyState === 'loaded' || event.target.readyState === 'complete') {
+            if (event.target.readyState === 'loaded'
+                || event.target.readyState === 'complete') {
               Aldu.Event.trigger(event.type, event.target);
             }
             return;
           }
           Aldu.Event.trigger(event.type, event.target);
         };
-
+      }
       document.getElementsByTagName('head')[0].appendChild(link);
     }
     else {
       var script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = url;
+      script.async = true;
       Aldu.Event.one('load', callback, args, script);
-      if (callback)
+      if (callback) {
         script.onload = script.onreadystatechange = function(_event) {
           var event = Aldu.extend({
             type : 'load',
             target : this
           }, _event);
           if (event.target.readyState) {
-            if (event.target.readyState === 'loaded' || event.target.readyState === 'complete') {
+            if (event.target.readyState === 'loaded'
+                || event.target.readyState === 'complete') {
               Aldu.Event.trigger(event.type, event.target);
             }
             return;
           }
           Aldu.Event.trigger(event.type, event.target);
         };
+      }
       document.getElementsByTagName('head')[0].appendChild(script);
     }
   },
@@ -410,6 +415,13 @@ var Aldu = {
         path : '/',
         js : [ 'all/jquery.tools.min.js' ]
       },
+      'aldu.jquery' : {
+        depends : [ 'jquery' ],
+        version : 'latest',
+        host : 'cdn.aldu.net',
+        path : '/aldu/',
+        js : [ 'aldu.jquery.js' ]
+      },
       'aldu.ui' : {
         depends : [ 'jquery' ],
         version : 'latest',
@@ -472,7 +484,41 @@ var Aldu = {
                 + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
+            Aldu.CDN._load(plugin, options);
           })();
+        }
+      },
+      'google.plus' : {
+        host : 'apis.google.com',
+        path : '/js/',
+        js : [ 'plusone.js' ]
+      },
+      'twitter' : {
+        host : 'platform.twitter.com',
+        path : '/',
+        js : [ 'widgets.js' ]
+      },
+      'facebook' : {
+        load : function(plugin, _options) {
+          var options = Aldu.extend({
+            appId : '',
+            channelURL : '//' + location.hostname + '/channel.html',
+            status : true,
+            cookie : true,
+            oauth : true,
+            xfbml : true
+          }, _options);
+          window.fbAsyncInit = function() {
+            FB.init(options);
+            Aldu.CDN._load(plugin, options);
+          };
+          $('<div>').prop('id', 'fb-root').appendTo('body');
+          (function(d){
+            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            d.getElementsByTagName('head')[0].appendChild(js);
+          }(document));
         }
       },
       'jquery.gmap' : {
@@ -480,8 +526,7 @@ var Aldu = {
         version : '3.0-beta',
         host : 'cdn.aldu.net',
         path : '/jquery.gmap/',
-        js : [ 'jquery.gmap.min.js',
-               'jquery.gmap.ext.js' ]
+        js : [ 'jquery.gmap.min.js', 'jquery.gmap.ext.js' ]
       },
       'jquery.imgload' : {
         depends : [ 'jquery' ],
@@ -682,10 +727,10 @@ var Aldu = {
           if (jQuery) {
             jQuery.fn.codemirror = function(_options) {
               var options = Aldu.extend({
-                matchBrackets: true,
-                lineNumbers: true,
-                tabSize: 2,
-                tabMode: 'indent'
+                matchBrackets : true,
+                lineNumbers : true,
+                tabSize : 2,
+                tabMode : 'indent'
               }, _options);
               return this.each(function() {
                 CodeMirror.fromTextArea(this, options);
@@ -705,14 +750,15 @@ var Aldu = {
               js : [],
               css : []
             }, plugin.options.modes[v]);
-            for (var i in mode.js) {
+            for ( var i in mode.js) {
               mode.js[i] = plugin.prefix + mode.js[i];
             }
-            for (var i in mode.css) {
+            for ( var i in mode.css) {
               mode.css[i] = plugin.prefix + mode.css[i];
             }
             if (mode.depends.length) {
-              Aldu.chain(arguments.callee, mode.depends, Aldu.chain, [ Aldu.load, mode.js, callback, args ]);
+              Aldu.chain(arguments.callee, mode.depends, Aldu.chain, [
+                  Aldu.load, mode.js, callback, args ]);
             }
             else {
               Aldu.chain(Aldu.load, mode.js, callback, args);
@@ -720,7 +766,8 @@ var Aldu = {
             Aldu.chain(Aldu.load, mode.css);
           };
           if (options.modes.length) {
-            Aldu.chain(loadMode, options.modes, Aldu.CDN._load, [ plugin, options ]);
+            Aldu.chain(loadMode, options.modes, Aldu.CDN._load, [ plugin,
+                options ]);
           }
           else {
             Aldu.CDN._load(plugin, options);
@@ -745,9 +792,10 @@ var Aldu = {
         },
         load : function(plugin, options) {
           if (jQuery) {
-            Aldu.load(plugin.prefix + plugin.options.adapters['jquery'], function() {
-              Aldu.CDN._load(plugin, options);
-            });
+            Aldu.load(plugin.prefix + plugin.options.adapters['jquery'],
+                function() {
+                  Aldu.CDN._load(plugin, options);
+                });
           }
         }
       }
@@ -757,7 +805,8 @@ var Aldu = {
     Aldu.chain(Aldu.CDN.require, plugins, callback);
   },
   color : function() {
-    var colors = [ 'red', 'orange', 'yellow', 'magenta', 'green', 'blue', 'indigo', 'violet', 'lime', 'cyan' ];
+    var colors = [ 'red', 'orange', 'yellow', 'magenta', 'green', 'blue',
+        'indigo', 'violet', 'lime', 'cyan' ];
     $('div,section,article,nav,aside').each(function(i) {
       $(this).css('border', '1px solid ' + colors[i % 10]);
     });
