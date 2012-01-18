@@ -591,6 +591,14 @@ var Aldu = {
         path : '/jquery.placeholder/',
         js : [ 'jquery.placeholder.min.js' ]
       },
+      'jquery.fancybox' : {
+        depends : [ 'jquery' ],
+        version : '2.0.4',
+        host : 'cdn.aldu.net',
+        path : '/jquery.fancybox/',
+        css : [ 'jquery.fancybox.css' ],
+        js : [ 'jquery.fancybox.js' ]
+      },
       'mediaelement' : {
         version : 'latest',
         host : 'cdn.aldu.net',
