@@ -46,11 +46,9 @@
   };
   $.fn.imgload = function(method, callback) {
     if (methods[method]) {
-      return methods[method].apply(this, Array.prototype.slice.call(arguments,
-          1));
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
     }
-    else if (typeof method === 'object' || typeof method === 'function'
-        || !method) {
+    else if (typeof method === 'object' || typeof method === 'function' || !method) {
       return methods.load.apply(this, arguments);
     }
     else {
