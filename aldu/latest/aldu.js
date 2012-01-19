@@ -490,8 +490,7 @@ var Aldu = {
       },
       'google.plus' : {
         host : 'apis.google.com',
-        path : '/js/',
-        js : [ 'plusone.js' ]
+        js : [ 'js/plusone.js' ]
       },
       'twitter' : {
         host : 'platform.twitter.com',
@@ -568,7 +567,10 @@ var Aldu = {
         version : '',
         host : 'malsup.github.com',
         path : '',
-        js : [ 'jquery.blockUI.js' ]
+        js : [ 'jquery.blockUI.js' ],
+        load : function(plugin, options) {
+          Aldu.extend($.blockUI.defaults, _options);
+        }
       },
       'jquery.corner' : {
         depends : [ 'jquery' ],

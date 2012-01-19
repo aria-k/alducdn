@@ -19,8 +19,8 @@ a:visited {
   text-decoration: none;  
 }
 
-a:active,
-a:hover {
+a:hover,
+a:active {
   cursor: pointer;
   text-decoration: underline;
 }
