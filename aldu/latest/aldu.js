@@ -344,9 +344,9 @@ var Aldu = {
         path : '/ajax/libs/jquery/',
         js : [ 'jquery.min.js' ]
       },
-      'jqueryui' : {
+      'jquery.ui' : {
         depends : [ 'jquery' ],
-        version : '1.8.16',
+        version : '1.8.17',
         host : 'ajax.googleapis.com',
         path : '/ajax/libs/jqueryui/',
         js : [ 'jquery-ui.min.js' ],
@@ -408,7 +408,7 @@ var Aldu = {
         css : [ 'jquery.mobile.datebox.min.css' ],
         js : [ 'jquery.mobile.datebox.min.js' ]
       },
-      'jquerytools' : {
+      'jquery.tools' : {
         depends : [ 'jquery' ],
         version : '1.2.6',
         host : 'cdn.jquerytools.org',
@@ -423,7 +423,7 @@ var Aldu = {
         js : [ 'aldu.jquery.js' ]
       },
       'aldu.ui' : {
-        depends : [ 'jquery' ],
+        depends : [ 'jquery', 'jquery.ui' ],
         version : 'latest',
         host : 'cdn.aldu.net',
         path : '/aldu/',
