@@ -36,8 +36,11 @@ var Aldu = {
       }
       Aldu.log('Aldu.Event.trigger: ' + event.type, 4);
       if (this._listeners[event.type] instanceof Array) {
-        var listeners = this._listeners[event.type];
-        for ( var i = 0, len = listeners.length; i < listeners.length; i++) {
+        var listeners = [];
+        Aldu.each(this._listeners[event.type], function(i, listener) {
+          listeners.push(Aldu.extend({}, listener));
+        });
+        for ( var i = 0, len = listeners.length; i < len; i++) {
           if (listeners[i].target === event.target) {
             var args = listeners[i].arguments;
             args.push(event);
@@ -51,8 +54,7 @@ var Aldu = {
       if (this._listeners[type] instanceof Array) {
         var listeners = this._listeners[type];
         for ( var i = 0, len = listeners.length; i < len; i++) {
-          if (listeners[i].callback === callback
-              && listeners[i].target === target) {
+          if (listeners[i].callback === callback && listeners[i].target === target) {
             listeners.splice(i, 1);
             break;
           }

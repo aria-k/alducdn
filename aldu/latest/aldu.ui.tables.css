@@ -1,1 +1,74 @@
 @CHARSET "UTF-8";
+
+table {
+  border-right: 0;
+  clear: both;
+  color: #333;
+  margin-bottom: 10px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table th {
+  border: 0;
+  border-bottom: 2px solid #555;
+  text-align: left;
+  padding: 4px;
+}
+
+table th a {
+  display: block;
+  padding: 2px 4px;
+  text-decoration: none;
+}
+
+table th a.asc:after {
+  content: ' ⇣';
+}
+
+table th a.desc:after {
+  content: ' ⇡';
+}
+
+table tr td {
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+table td.actions {
+  text-align: center;
+}
+
+table td.actions a {
+  margin: 0px 6px;
+  padding: 2px 5px;
+}
+
+table.aldu-core-view-index td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table .aldu-core-file-thumb {
+  width: 92px;
+}
+
+table .aldu-core-model-actions {
+  width: 120px;
+}
+
+table .aldu-core-model-actions {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table .aldu-core-model-actions a {
+  display: inline-block;
+}
