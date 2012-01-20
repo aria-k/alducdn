@@ -571,7 +571,8 @@ var Aldu = {
         path : '',
         js : [ 'jquery.blockUI.js' ],
         load : function(plugin, options) {
-          Aldu.extend($.blockUI.defaults, _options);
+          Aldu.extend($.blockUI.defaults, options);
+          Aldu.CDN._load(plugin, options);
         }
       },
       'jquery.corner' : {
@@ -602,6 +603,17 @@ var Aldu = {
         path : '/jquery.fancybox/',
         css : [ 'jquery.fancybox.css' ],
         js : [ 'jquery.fancybox.js' ]
+      },
+      'jquery.datatables' : {
+        depends : [ 'jquery' ],
+        host : 'datatables.net',
+        path : '/download/build',
+        js : [ 'jquery.dataTables.nightly.js' ] 
+      },
+      'jquery.jeditable' : {
+        host : 'www.appelsiini.net',
+        path : '/download',
+        js : [ 'jquery.jeditable.mini.js' ]
       },
       'mediaelement' : {
         version : 'latest',
