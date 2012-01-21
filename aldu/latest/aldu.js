@@ -164,6 +164,50 @@ var Aldu = {
     }
     return object;
   },
+  _loaded : false,
+  ready : function(callback) {
+    Aldu.Event.one('ready', callback);
+    if ( Aldu._loaded || document.readyState === "complete" ) {
+      // Handle it asynchronously to allow scripts the opportunity to delay ready
+      return Aldu.Event.trigger('ready');
+    }
+    if ( document.addEventListener ) {
+      DOMContentLoaded = function() {
+        document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+        Aldu.Event.trigger('ready');
+      };
+
+    } else if ( document.attachEvent ) {
+      DOMContentLoaded = function() {
+        // Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
+        if ( document.readyState === "complete" ) {
+          document.detachEvent( "onreadystatechange", DOMContentLoaded );
+          Aldu.Event.trigger('ready');
+        }
+      };
+    }
+    // Mozilla, Opera and webkit nightlies currently support this event
+    if ( document.addEventListener ) {
+      // Use the handy event callback
+      document.addEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+
+      // A fallback to window.onload, that will always work
+      window.addEventListener( "load", function() {
+        Aldu.Event.trigger('ready');
+      }, false );
+
+    // If IE event model is used
+    } else if ( document.attachEvent ) {
+      // ensure firing before onload,
+      // maybe late but safe also for iframes
+      document.attachEvent( "onreadystatechange", DOMContentLoaded );
+
+      // A fallback to window.onload, that will always work
+      window.attachEvent( "onload", function() {
+        Aldu.Event.trigger('ready');
+      } );
+    }
+  },
   isBoolean : function(_var) {
     return typeof _var === 'boolean';
   },
@@ -191,7 +235,6 @@ var Aldu = {
       var link = document.createElement('link');
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = url;
       Aldu.Event.one('load', callback, args, link);
       if (callback) {
         link.onload = link.onreadystatechange = function(_event) {
@@ -209,12 +252,12 @@ var Aldu = {
           Aldu.Event.trigger(event.type, event.target);
         };
       }
+      link.href = url;
       document.getElementsByTagName('head')[0].appendChild(link);
     }
     else {
       var script = document.createElement('script');
       script.type = 'text/javascript';
-      script.src = url;
       script.async = true;
       Aldu.Event.one('load', callback, args, script);
       if (callback) {
@@ -224,8 +267,9 @@ var Aldu = {
             target : this
           }, _event);
           if (event.target.readyState) {
-            if (event.target.readyState === 'loaded'
-                || event.target.readyState === 'complete') {
+            if (event.target.readyState === 'loaded' ||
+                event.target.readyState === 'complete') {
+              event.target.onreadystatechange = null;
               Aldu.Event.trigger(event.type, event.target);
             }
             return;
@@ -233,6 +277,7 @@ var Aldu = {
           Aldu.Event.trigger(event.type, event.target);
         };
       }
+      script.src = url;
       document.getElementsByTagName('head')[0].appendChild(script);
     }
   },
@@ -826,6 +871,11 @@ var Aldu = {
     }
   },
   init : function(plugins, callback) {
+    if (document.addEventListener) {
+      document.addEventListener( "DOMContentLoaded", function() {
+        Aldu._loaded = true;
+      }, false );
+    }
     Aldu.chain(Aldu.CDN.require, plugins, callback);
   },
   color : function() {

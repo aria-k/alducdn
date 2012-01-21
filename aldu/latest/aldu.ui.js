@@ -2,7 +2,7 @@ Aldu.extend({
   UI : {
     Panel : {
       init : function() {
-        $(document).ready(function() {
+        Aldu.ready(function() {
           $('.aldu-helpers-panel').children().each(function(i, panel) {
             var status = $(panel).data('status');
             var height = $(panel).outerHeight(true);
