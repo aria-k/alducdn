@@ -72,7 +72,6 @@ div.aldu-helpers-html-form-required label:after {
   display: inline;
 }
 
-input,
 div.aldu-helpers-html-form-input input,
 div.aldu-helpers-html-form-textarea textarea {
   clear: both;

@@ -166,6 +166,10 @@ a.aldu-core-model-action {
   border-collapse: separate;
 }
 
+.table.inline {
+  display: inline-table;
+}
+
 .row {
   display: table-row;
 }

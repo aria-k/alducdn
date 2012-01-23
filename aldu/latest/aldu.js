@@ -333,11 +333,14 @@ var Aldu = {
         js : [],
         css : [],
         depends : [],
+        preload : null,
         load : Aldu.CDN._load,
         options : {}
       }, Aldu.CDN.plugins[_plugin]);
-      var options = Aldu.extend({}, _options);
-      plugin.prefix = '//' + plugin.host + plugin.path + plugin.version + '/';
+      var options = Aldu.extend({
+        version : plugin.version
+      }, _options);
+      plugin.prefix = '//' + plugin.host + plugin.path + options.version + '/';
       for ( var i in plugin.js) {
         plugin.js[i] = plugin.prefix + plugin.js[i];
       }
@@ -345,6 +348,9 @@ var Aldu = {
         plugin.css[i] = plugin.prefix + plugin.css[i];
       }
       Aldu.chain(Aldu.load, plugin.css);
+      if (plugin.preload) {
+        plugin.preload(plugin, options);
+      }
       if (plugin.depends.length) {
         Aldu.chain(Aldu.CDN.require, plugin.depends, Aldu.chain, [ Aldu.load,
             plugin.js, plugin.load, [ plugin, options ] ]);
@@ -537,7 +543,17 @@ var Aldu = {
       },
       'google.plus' : {
         host : 'apis.google.com',
-        js : [ 'js/plusone.js' ]
+        js : [ 'js/plusone.js' ],
+        options : {
+          parsetage : 'onload'
+        },
+        preload : function(plugin, _options) {
+          var options = Aldu.extend(plugin.options, _options);
+          window.___gcfg = {
+            //lang : 'en-US',
+            parsetags : options.parsetag
+          };
+        }
       },
       'twitter' : {
         host : 'platform.twitter.com',
@@ -808,7 +824,7 @@ var Aldu = {
           }
           var options = Aldu.extend({
             modes : [],
-            theme : null
+            themes : []
           }, _options);
           var loadMode = function(v, callback, args) {
             Aldu.log('Aldu.CDN.plugin.codemirror.load: loading ' + v, 4);
@@ -841,12 +857,12 @@ var Aldu = {
           else {
             Aldu.CDN._load(plugin, options);
           }
-          if (options.theme) {
-            if (typeof plugin.options.themes[options.theme] === 'undefined')
-              return false;
-            var theme = plugin.options.themes[options.theme];
-            Aldu.load(plugin.prefix + theme);
-          }
+          Aldu.each(options.themes, function(i, theme) {
+            if (typeof plugin.options.themes[theme] === 'undefined')
+              return;
+            var path = plugin.options.themes[theme];
+            Aldu.load(plugin.prefix + path);
+          });
         }
       },
       'ckeditor' : {
