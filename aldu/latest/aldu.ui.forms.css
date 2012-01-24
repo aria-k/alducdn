@@ -86,7 +86,7 @@ div.aldu-helpers-html-form-textarea textarea {
 
 div.aldu-helpers-html-form-textarea textarea {
   resize: vertical;
-  height: 20em;
+  height: 10em;
 }
 
 div.aldu-helpers-html-form-select select {
@@ -119,6 +119,11 @@ input[type=checkbox] {
   clear: left;
   margin: .1em .25em .25em .25em;
   width: auto;
+}
+
+div.aldu-helpers-html-form-radio,
+div.aldu-helpers-html-form-checkbox {
+  vertical-align: top;
 }
 
 div.aldu-helpers-html-form-radio label,
@@ -179,6 +184,7 @@ div.aldu-helpers-html-form-submit input:hover {
 /* Buttons and button links */
 button,
 input[type=submit],
+a[role=button],
 .actions ul li a,
 .actions a {
   font-weight: normal;
@@ -205,8 +211,8 @@ input[type=submit],
 }
 
 /* Form errors */
-div.aldu-helpers-html-form-element.error,
-div.aldu-helpers-html-form-element.invalid,
-div.aldu-helpers-html-form-element.missing {
-  
+div.aldu-helpers-html-form-element .error,
+div.aldu-helpers-html-form-element .invalid,
+div.aldu-helpers-html-form-element .missing {
+  background: #FFDACC;
 }
