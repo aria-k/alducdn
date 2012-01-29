@@ -33,7 +33,7 @@ table.aldu-helpers-html-table th a.desc:after {
 table.aldu-helpers-html-table tr td {
   padding: 6px;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
   border-bottom: 1px solid #ddd;
 }
 
@@ -71,4 +71,10 @@ table.aldu-helpers-html-table .aldu-core-model-actions {
 
 table.aldu-helpers-html-table .aldu-core-model-actions a {
   display: inline-block;
+}
+table.aldu-helpers-html-table .aldu-core-view-tags-input {
+  width: 30px;
+}
+table.aldu-helpers-html-table .aldu-core-view-tags-preview {
+  width: 80px;
 }

@@ -517,17 +517,18 @@ var Aldu = {
         }
       },
       'google.analytics' : {
+        options : {
+          account : '',
+          domainName : 'none',
+          allowLinker : true
+        },
         load : function(plugin, _options) {
-          var options = Aldu.extend({
-            account : '',
-            domainName : 'none',
-            allowLinker : true
-          }, _options);
-          var _gaq = [];
-          _gaq.push([ '_setAccount', options.account ]);
-          _gaq.push([ '_setDomainName', options.domainName ]);
-          _gaq.push([ '_setAllowLinker', options.allowLinker ]);
-          _gaq.push([ '_trackPageview' ]);
+          var options = Aldu.extend(plugin.options, _options);
+          window._gaq = [];
+          window._gaq.push([ '_setAccount', options.account ]);
+          window._gaq.push([ '_setDomainName', options.domainName ]);
+          window._gaq.push([ '_setAllowLinker', options.allowLinker ]);
+          window._gaq.push([ '_trackPageview' ]);
           (function() {
             var ga = document.createElement('script');
             ga.type = 'text/javascript';
@@ -561,15 +562,16 @@ var Aldu = {
         js : [ 'widgets.js' ]
       },
       'facebook' : {
+        options : {
+          appId : '',
+          channelURL : '//' + location.hostname + '/channel.html',
+          status : true,
+          cookie : true,
+          oauth : true,
+          xfbml : true
+        },
         load : function(plugin, _options) {
-          var options = Aldu.extend({
-            appId : '',
-            channelURL : '//' + location.hostname + '/channel.html',
-            status : true,
-            cookie : true,
-            oauth : true,
-            xfbml : true
-          }, _options);
+          var options = Aldu.extend(plugin.options, _options);
           window.fbAsyncInit = function() {
             FB.init(options);
             Aldu.CDN._load(plugin, options);
@@ -669,7 +671,7 @@ var Aldu = {
         depends : [ 'jquery' ],
         host : 'datatables.net',
         path : '/download/build',
-        js : [ 'jquery.dataTables.nightly.js' ] 
+        js : [ 'jquery.dataTables.nightly.js' ]
       },
       'jquery.jeditable' : {
         host : 'www.appelsiini.net',
@@ -681,7 +683,7 @@ var Aldu = {
         host : 'cdn.aldu.net',
         path : '/mediaelement/',
         css : [ 'mediaelementplayer.css' ],
-        js : [ 'mediaelement-and-player.min.js' ]
+        js : [ 'mediaelement-and-player.js' ]
       },
       'codemirror' : {
         version : 'latest',

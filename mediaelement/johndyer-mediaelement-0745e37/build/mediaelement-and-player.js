@@ -2237,6 +2237,8 @@ if (typeof jQuery != 'undefined') {
 			
 			
 			} else {
+			  t.width = width;
+			  t.height = height;
 
 				t.container
 					.width(t.width)
