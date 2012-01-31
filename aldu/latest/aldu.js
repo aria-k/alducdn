@@ -671,7 +671,31 @@ var Aldu = {
         depends : [ 'jquery' ],
         host : 'datatables.net',
         path : '/download/build',
-        js : [ 'jquery.dataTables.nightly.js' ]
+        js : [ 'jquery.dataTables.js' ],
+        load : function(plugin, options) {
+          $.fn.dataTableExt.afnSortData['dom-text'] = function(oSettings, iColumn) {
+            var aData = [];
+            $('td:eq(' + iColumn + ') input:text', oSettings.oApi._fnGetTrNodes(oSettings)).each(function() {
+              aData.push(this.value);
+            });
+            return aData;
+          };
+          $.fn.dataTableExt.afnSortData['dom-select'] = function(oSettings, iColumn) {
+            var aData = [];
+            $('td:eq(' + iColumn + ') select', oSettings.oApi._fnGetTrNodes(oSettings)).each(function() {
+              aData.push($(this).val());
+            });
+            return aData;
+          };
+          $.fn.dataTableExt.afnSortData['dom-checkbox'] = function(oSettings, iColumn) {
+            var aData = [];
+            $('td:eq(' + iColumn + ') input', oSettings.oApi._fnGetTrNodes(oSettings)).filter(':radio, :checkbox').each(function() {
+              aData.push(this.checked === true ? "1" : "0");
+            });
+            return aData;
+          };
+          Aldu.CDN._load(plugin, options);
+        }
       },
       'jquery.jeditable' : {
         host : 'www.appelsiini.net',
