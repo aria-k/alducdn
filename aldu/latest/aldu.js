@@ -54,7 +54,8 @@ var Aldu = {
       if (this._listeners[type] instanceof Array) {
         var listeners = this._listeners[type];
         for ( var i = 0, len = listeners.length; i < len; i++) {
-          if (listeners[i].callback === callback && listeners[i].target === target) {
+          if (listeners[i].callback === callback
+              && listeners[i].target === target) {
             listeners.splice(i, 1);
             break;
           }
@@ -167,45 +168,50 @@ var Aldu = {
   _loaded : false,
   ready : function(callback) {
     Aldu.Event.one('ready', callback);
-    if ( Aldu._loaded || document.readyState === "complete" ) {
-      // Handle it asynchronously to allow scripts the opportunity to delay ready
+    if (Aldu._loaded || document.readyState === "complete") {
+      // Handle it asynchronously to allow scripts the opportunity to delay
+      // ready
       return Aldu.Event.trigger('ready');
     }
-    if ( document.addEventListener ) {
+    if (document.addEventListener) {
       DOMContentLoaded = function() {
-        document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+        document.removeEventListener("DOMContentLoaded", DOMContentLoaded,
+            false);
         Aldu.Event.trigger('ready');
       };
 
-    } else if ( document.attachEvent ) {
+    }
+    else if (document.attachEvent) {
       DOMContentLoaded = function() {
-        // Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
-        if ( document.readyState === "complete" ) {
-          document.detachEvent( "onreadystatechange", DOMContentLoaded );
+        // Make sure body exists, at least, in case IE gets a little overzealous
+        // (ticket #5443).
+        if (document.readyState === "complete") {
+          document.detachEvent("onreadystatechange", DOMContentLoaded);
           Aldu.Event.trigger('ready');
         }
       };
     }
     // Mozilla, Opera and webkit nightlies currently support this event
-    if ( document.addEventListener ) {
+    if (document.addEventListener) {
       // Use the handy event callback
-      document.addEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+      document.addEventListener("DOMContentLoaded", DOMContentLoaded, false);
 
       // A fallback to window.onload, that will always work
-      window.addEventListener( "load", function() {
+      window.addEventListener("load", function() {
         Aldu.Event.trigger('ready');
-      }, false );
+      }, false);
 
-    // If IE event model is used
-    } else if ( document.attachEvent ) {
+      // If IE event model is used
+    }
+    else if (document.attachEvent) {
       // ensure firing before onload,
       // maybe late but safe also for iframes
-      document.attachEvent( "onreadystatechange", DOMContentLoaded );
+      document.attachEvent("onreadystatechange", DOMContentLoaded);
 
       // A fallback to window.onload, that will always work
-      window.attachEvent( "onload", function() {
+      window.attachEvent("onload", function() {
         Aldu.Event.trigger('ready');
-      } );
+      });
     }
   },
   isBoolean : function(_var) {
@@ -267,8 +273,8 @@ var Aldu = {
             target : this
           }, _event);
           if (event.target.readyState) {
-            if (event.target.readyState === 'loaded' ||
-                event.target.readyState === 'complete') {
+            if (event.target.readyState === 'loaded'
+                || event.target.readyState === 'complete') {
               event.target.onreadystatechange = null;
               Aldu.Event.trigger(event.type, event.target);
             }
@@ -551,7 +557,7 @@ var Aldu = {
         preload : function(plugin, _options) {
           var options = Aldu.extend(plugin.options, _options);
           window.___gcfg = {
-            //lang : 'en-US',
+            // lang : 'en-US',
             parsetags : options.parsetag
           };
         }
@@ -577,9 +583,14 @@ var Aldu = {
             Aldu.CDN._load(plugin, options);
           };
           $('<div>').prop('id', 'fb-root').appendTo('body');
-          (function(d){
-            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-            js = d.createElement('script'); js.id = id; js.async = true;
+          (function(d) {
+            var js, id = 'facebook-jssdk';
+            if (d.getElementById(id)) {
+              return;
+            }
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
             js.src = "//connect.facebook.net/en_US/all.js";
             d.getElementsByTagName('head')[0].appendChild(js);
           }(document));
@@ -673,23 +684,49 @@ var Aldu = {
         path : '/download/build',
         js : [ 'jquery.dataTables.js' ],
         load : function(plugin, options) {
-          $.fn.dataTableExt.afnSortData['dom-text'] = function(oSettings, iColumn) {
+          $.fn.dataTableExt.oApi.fnGetHiddenNodes = function(oSettings) {
+            /*
+             * Note the use of a DataTables 'private' function thought the
+             * 'oApi' object
+             */
+            var anNodes = this.oApi._fnGetTrNodes(oSettings);
+            var anDisplay = $('tbody tr', oSettings.nTable);
+
+            /* Remove nodes which are being displayed */
+            for ( var i = 0; i < anDisplay.length; i++) {
+              var iIndex = jQuery.inArray(anDisplay[i], anNodes);
+              if (iIndex != -1) {
+                anNodes.splice(iIndex, 1);
+              }
+            }
+
+            /* Fire back the array to the caller */
+            return anNodes;
+          };
+          $.fn.dataTableExt.afnSortData['dom-text'] = function(oSettings,
+              iColumn) {
             var aData = [];
-            $('td:eq(' + iColumn + ') input:text', oSettings.oApi._fnGetTrNodes(oSettings)).each(function() {
+            $('td:eq(' + iColumn + ') input:text',
+                oSettings.oApi._fnGetTrNodes(oSettings)).each(function() {
               aData.push(this.value);
             });
             return aData;
           };
-          $.fn.dataTableExt.afnSortData['dom-select'] = function(oSettings, iColumn) {
+          $.fn.dataTableExt.afnSortData['dom-select'] = function(oSettings,
+              iColumn) {
             var aData = [];
-            $('td:eq(' + iColumn + ') select', oSettings.oApi._fnGetTrNodes(oSettings)).each(function() {
+            $('td:eq(' + iColumn + ') select',
+                oSettings.oApi._fnGetTrNodes(oSettings)).each(function() {
               aData.push($(this).val());
             });
             return aData;
           };
-          $.fn.dataTableExt.afnSortData['dom-checkbox'] = function(oSettings, iColumn) {
+          $.fn.dataTableExt.afnSortData['dom-checkbox'] = function(oSettings,
+              iColumn) {
             var aData = [];
-            $('td:eq(' + iColumn + ') input', oSettings.oApi._fnGetTrNodes(oSettings)).filter(':radio, :checkbox').each(function() {
+            $('td:eq(' + iColumn + ') input',
+                oSettings.oApi._fnGetTrNodes(oSettings)).filter(
+                ':radio, :checkbox').each(function() {
               aData.push(this.checked === true ? "1" : "0");
             });
             return aData;
@@ -902,6 +939,15 @@ var Aldu = {
           }
         },
         load : function(plugin, options) {
+          CKEDITOR.on('instanceReady', function(event) {
+            event.editor.dataProcessor.writer.setRules('p', {
+              indent : false,
+              breakBeforeOpen : true,
+              breakAfterOpen : false,
+              breakBeforeClose : false,
+              breakAfterClose : true
+            });
+          });
           if (jQuery) {
             Aldu.load(plugin.prefix + plugin.options.adapters['jquery'],
                 function() {
@@ -912,11 +958,16 @@ var Aldu = {
       }
     }
   },
+  t : function() {
+    var args = Array.prototype.slice.call(arguments);
+    var text = args.shift();
+    return text;
+  },
   init : function(plugins, callback) {
     if (document.addEventListener) {
-      document.addEventListener( "DOMContentLoaded", function() {
+      document.addEventListener("DOMContentLoaded", function() {
         Aldu._loaded = true;
-      }, false );
+      }, false);
     }
     Aldu.chain(Aldu.CDN.require, plugins, callback);
   },
