@@ -8,6 +8,14 @@ body.toolbar-drawer {
   padding-top: 5.3em;
 }
 
+.clearfix::after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
 /**
  * Aggressive resets so we can achieve a consistent look in hostile CSS
  * environments.

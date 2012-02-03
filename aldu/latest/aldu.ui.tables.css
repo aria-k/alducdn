@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
 
 table.aldu-helpers-html-table {
+  table-layout: fixed;
   border-right: 0;
   clear: both;
   color: #333;

@@ -83,6 +83,10 @@ div.aldu-helpers-html-form-textarea textarea {
   margin: 0px 0px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+div.aldu-helpers-html-form-input input,
+div.aldu-helpers-html-form-textarea textarea {
   width: 100%;
 }
 
