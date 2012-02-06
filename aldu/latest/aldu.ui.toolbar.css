@@ -73,6 +73,11 @@ body.toolbar-drawer {
   float: left;
 }
 
+#toolbar ul li select {
+  font-size: .846em;
+  vertical-align: text-top;
+}
+
 /**
  * Administration menu.
  */

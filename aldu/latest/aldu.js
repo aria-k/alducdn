@@ -739,6 +739,12 @@ var Aldu = {
         path : '/download',
         js : [ 'jquery.jeditable.mini.js' ]
       },
+      'jquery.cookies' : {
+        host : 'cdn.aldu.net',
+        version : '2.2.0',
+        path : '/jquery.cookies/',
+        js : [ 'jquery.cookies.min.js' ]
+      },
       'mediaelement' : {
         version : 'latest',
         host : 'cdn.aldu.net',
