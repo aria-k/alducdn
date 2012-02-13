@@ -596,6 +596,13 @@ var Aldu = {
           }(document));
         }
       },
+      'markerclusterer' : {
+        depends : [ 'google.maps' ],
+        version : '2.0.6',
+        host : 'cdn.aldu.net',
+        path : '/markerclusterer/',
+        js : [ 'markerclusterer.min.js' ]
+      },
       'jquery.gmap' : {
         depends : [ 'jquery', 'google.maps' ],
         version : '3.0-beta',
@@ -744,6 +751,12 @@ var Aldu = {
         version : '2.2.0',
         path : '/jquery.cookies/',
         js : [ 'jquery.cookies.min.js' ]
+      },
+      'jquery.minicolors' : {
+        host : 'cdn.aldu.net',
+        version : 'latest',
+        path : '/jquery.minicolors/',
+        js : [ 'jquery.miniColors.min.js' ]
       },
       'mediaelement' : {
         version : 'latest',
