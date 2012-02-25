@@ -470,9 +470,9 @@ var Aldu = {
       'jquery.tools' : {
         depends : [ 'jquery' ],
         version : '1.2.6',
-        host : 'cdn.jquerytools.org',
-        path : '/',
-        js : [ 'all/jquery.tools.min.js' ]
+        host : 'cdn.aldu.net',
+        path : '/jquery.tools/',
+        js : [ 'jquery.tools.min.js' ]
       },
       'aldu.jquery' : {
         depends : [ 'jquery' ],
