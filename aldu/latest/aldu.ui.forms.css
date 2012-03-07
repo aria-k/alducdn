@@ -47,6 +47,14 @@ fieldset legend > div.aldu-helpers-html-form-element {
   padding: 0px;
 }
 
+fieldset legend::after {
+  content: ' ▾';
+}
+
+fieldset.collapsed legend::after {
+  content: ' ▸';
+}
+
 div.aldu-helpers-html-form-element {
   cursor: default;
   clear: both;
@@ -190,9 +198,9 @@ div.aldu-helpers-html-form-submit input:hover {
 /* Buttons and button links */
 button,
 input[type=submit],
-a[role=button],
 .actions ul li a,
 .actions a {
+  cursor: pointer;
   font-weight: normal;
   padding: 4px 8px;
   background: #dcdcdc;
@@ -214,6 +222,10 @@ a[role=button],
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
   -webkit-user-select: none;
   user-select: none;
+}
+button:disabled {
+  cursor: default;
+  color: graytext;
 }
 
 /* Form errors */

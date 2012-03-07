@@ -79,3 +79,23 @@ table.aldu-helpers-html-table .aldu-core-view-tags-input {
 table.aldu-helpers-html-table .aldu-core-view-tags-preview {
   width: 80px;
 }
+
+/** DataTables **/
+.dataTables_filter,
+.dataTables_info {
+  width: 50%;
+  float: left;
+}
+.dataTables_length {
+  width: 50%;
+  float: right;
+}
+.dataTables_length,
+.dataTables_paginate {
+  text-align: right;
+}
+.paginate_disabled_previous,
+.paginate_disabled_next {
+  cursor: default !important;
+  opacity: .35;
+}

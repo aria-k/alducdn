@@ -624,6 +624,13 @@ var Aldu = {
         path : '/jquery.formutils/',
         js : [ 'jquery.formutils.js' ]
       },
+      'jquery.jloupe' : {
+        depends : [ 'jquery' ],
+        version : '1.3.2',
+        host : 'cdn.aldu.net',
+        path : '/jquery.jloupe/',
+        js : [ 'jquery.jloupe.js' ]
+      },
       'jquery.cycle' : {
         depends : [ 'jquery' ],
         version : '',
@@ -687,10 +694,84 @@ var Aldu = {
       },
       'jquery.datatables' : {
         depends : [ 'jquery' ],
-        host : 'datatables.net',
-        path : '/download/build',
-        js : [ 'jquery.dataTables.js' ],
+        version : '1.9.0',
+        host : 'ajax.aspnetcdn.com',
+        path : '/ajax/jquery.dataTables/',
+        js : [ 'jquery.dataTables.min.js' ],
         load : function(plugin, options) {
+          $.fn.dataTableExt.oApi.fnAddDataAndDisplay = function ( oSettings, aData )
+          {
+              /* Add the data */
+              var iAdded = this.oApi._fnAddData( oSettings, aData );
+              var nAdded = oSettings.aoData[ iAdded ].nTr;
+               
+              /* Need to re-filter and re-sort the table to get positioning correct, not perfect
+               * as this will actually redraw the table on screen, but the update should be so fast (and
+               * possibly not alter what is already on display) that the user will not notice
+               */
+              this.oApi._fnReDraw( oSettings );
+               
+              /* Find it's position in the table */
+              var iPos = -1;
+              for( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+              {
+                  if( oSettings.aoData[ oSettings.aiDisplay[i] ].nTr == nAdded )
+                  {
+                      iPos = i;
+                      break;
+                  }
+              }
+               
+              /* Get starting point, taking account of paging */
+              if( iPos >= 0 )
+              {
+                  oSettings._iDisplayStart = ( Math.floor(i / oSettings._iDisplayLength) ) * oSettings._iDisplayLength;
+                  this.oApi._fnCalculateEnd( oSettings );
+              }
+               
+              this.oApi._fnDraw( oSettings );
+              return {
+                  "nTr": nAdded,
+                  "iPos": iAdded
+              };
+          };
+          $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
+          {
+              var anRows = [];
+              for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+              {
+                  var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
+                  anRows.push( nRow );
+              }
+              return anRows;
+          };
+          $.fn.dataTableExt.oApi.fnAddTr = function(oSettings, nTr, bRedraw) {
+            if (typeof bRedraw == 'undefined') {
+              bRedraw = true;
+            }
+
+            var nTds = nTr.getElementsByTagName('td');
+            if (nTds.length != oSettings.aoColumns.length) {
+              alert('Warning: not adding new TR - columns and TD elements must match');
+              return;
+            }
+
+            var aData = [];
+            for ( var i = 0; i < nTds.length; i++) {
+              aData.push(nTds[i].innerHTML);
+            }
+
+            /* Add the data and then replace DataTable's generated TR with ours */
+            var iIndex = this.oApi._fnAddData(oSettings, aData);
+            nTr._DT_RowIndex = iIndex;
+            oSettings.aoData[iIndex].nTr = nTr;
+
+            oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+
+            if (bRedraw) {
+              this.oApi._fnReDraw(oSettings);
+            }
+          };
           $.fn.dataTableExt.oApi.fnGetHiddenNodes = function(oSettings) {
             /*
              * Note the use of a DataTables 'private' function thought the
@@ -737,6 +818,193 @@ var Aldu = {
               aData.push(this.checked === true ? "1" : "0");
             });
             return aData;
+          };
+          $.fn.dataTableExt.oPagination.links = {
+            fnInit : function(oSettings, nPaging, fnCallbackDraw) {
+              var nFirst = document.createElement('button');
+              var nPrevious = document.createElement('button');
+              var nList = document.createElement('span');
+              var nNext = document.createElement('button');
+              var nLast = document.createElement('button');
+
+              nFirst.innerHTML = oSettings.oLanguage.oPaginate.sFirst;
+              nPrevious.innerHTML = oSettings.oLanguage.oPaginate.sPrevious;
+              nNext.innerHTML = oSettings.oLanguage.oPaginate.sNext;
+              nLast.innerHTML = oSettings.oLanguage.oPaginate.sLast;
+
+              var oClasses = oSettings.oClasses;
+              nFirst.className = oClasses.sPageButton + " "
+                  + oClasses.sPageFirst;
+              nPrevious.className = oClasses.sPageButton + " "
+                  + oClasses.sPagePrevious;
+              nNext.className = oClasses.sPageButton + " " + oClasses.sPageNext;
+              nLast.className = oClasses.sPageButton + " " + oClasses.sPageLast;
+
+              nPaging.appendChild(nFirst);
+              nPaging.appendChild(nPrevious);
+              nPaging.appendChild(nList);
+              nPaging.appendChild(nNext);
+              nPaging.appendChild(nLast);
+
+              $(nFirst).bind('click.DT', function() {
+                if (oSettings.oApi._fnPageChange(oSettings, "first")) {
+                  fnCallbackDraw(oSettings);
+                }
+              });
+
+              $(nPrevious).bind('click.DT', function() {
+                if (oSettings.oApi._fnPageChange(oSettings, "previous")) {
+                  fnCallbackDraw(oSettings);
+                }
+              });
+
+              $(nNext).bind('click.DT', function() {
+                if (oSettings.oApi._fnPageChange(oSettings, "next")) {
+                  fnCallbackDraw(oSettings);
+                }
+              });
+
+              $(nLast).bind('click.DT', function() {
+                if (oSettings.oApi._fnPageChange(oSettings, "last")) {
+                  fnCallbackDraw(oSettings);
+                }
+              });
+
+              /* Take the brutal approach to cancelling text selection */
+              $('a', nPaging).bind('mousedown.DT', function() {
+                return false;
+              }).bind('selectstart.DT', function() {
+                return false;
+              });
+
+              /* ID the first elements only */
+              if (oSettings.sTableId !== ''
+                  && typeof oSettings.aanFeatures.p == "undefined") {
+                nPaging.setAttribute('id', oSettings.sTableId + '_paginate');
+                nFirst.setAttribute('id', oSettings.sTableId + '_first');
+                nPrevious.setAttribute('id', oSettings.sTableId + '_previous');
+                nNext.setAttribute('id', oSettings.sTableId + '_next');
+                nLast.setAttribute('id', oSettings.sTableId + '_last');
+              }
+            },
+
+            fnUpdate : function(oSettings, fnCallbackDraw) {
+              if (!oSettings.aanFeatures.p) {
+                return;
+              }
+
+              var iPageCount = $.fn.dataTableExt.oPagination.iFullNumbersShowPages;
+              var iPageCountHalf = Math.floor(iPageCount / 2);
+              var iPages = Math.ceil((oSettings.fnRecordsDisplay())
+                  / oSettings._iDisplayLength);
+              var iCurrentPage = Math.ceil(oSettings._iDisplayStart
+                  / oSettings._iDisplayLength) + 1;
+              var sList = "";
+              var iStartButton, iEndButton, i, iLen;
+              var oClasses = oSettings.oClasses;
+
+              /* Pages calculation */
+              if (iPages < iPageCount) {
+                iStartButton = 1;
+                iEndButton = iPages;
+              }
+              else {
+                if (iCurrentPage <= iPageCountHalf) {
+                  iStartButton = 1;
+                  iEndButton = iPageCount;
+                }
+                else {
+                  if (iCurrentPage >= (iPages - iPageCountHalf)) {
+                    iStartButton = iPages - iPageCount + 1;
+                    iEndButton = iPages;
+                  }
+                  else {
+                    iStartButton = iCurrentPage - Math.ceil(iPageCount / 2) + 1;
+                    iEndButton = iStartButton + iPageCount - 1;
+                  }
+                }
+              }
+
+              /* Build the dynamic list */
+              for (i = iStartButton; i <= iEndButton; i++) {
+                if (iCurrentPage != i) {
+                  sList += '<button class="' + oClasses.sPageButton + '">' + i
+                      + '</button>';
+                }
+                else {
+                  sList += '<button disabled="disabled" class="'
+                      + oClasses.sPageButtonActive + '">' + i + '</button>';
+                }
+              }
+
+              /* Loop over each instance of the pager */
+              var an = oSettings.aanFeatures.p;
+              var anButtons, anStatic, nPaginateList;
+              var fnClick = function(e) {
+                /*
+                 * Use the information in the element to jump to the required
+                 * page
+                 */
+                var iTarget = (this.innerHTML * 1) - 1;
+                oSettings._iDisplayStart = iTarget * oSettings._iDisplayLength;
+                fnCallbackDraw(oSettings);
+                e.preventDefault();
+              };
+              var fnFalse = function() {
+                return false;
+              };
+
+              for (i = 0, iLen = an.length; i < iLen; i++) {
+                if (an[i].childNodes.length === 0) {
+                  continue;
+                }
+
+                /* Build up the dynamic list forst - html and listeners */
+                var qjPaginateList = $('span:eq(0)', an[i]);
+                qjPaginateList.html(sList);
+                $('button', qjPaginateList).bind('click.DT', fnClick).bind(
+                    'mousedown.DT', fnFalse).bind('selectstart.DT', fnFalse);
+
+                /* Update the 'premanent botton's classes */
+                anButtons = an[i].getElementsByTagName('button');
+                anStatic = [ anButtons[0], anButtons[1],
+                    anButtons[anButtons.length - 2],
+                    anButtons[anButtons.length - 1] ];
+                $(anStatic).removeClass(
+                    oClasses.sPageButton + " " + oClasses.sPageButtonActive
+                        + " " + oClasses.sPageButtonStaticDisabled);
+                if (iCurrentPage == 1) {
+                  anStatic[0].disabled = true;
+                  anStatic[1].disabled = true;
+                  anStatic[0].className += " "
+                      + oClasses.sPageButtonStaticDisabled;
+                  anStatic[1].className += " "
+                      + oClasses.sPageButtonStaticDisabled;
+                }
+                else {
+                  anStatic[0].disabled = false;
+                  anStatic[1].disabled = false;
+                  anStatic[0].className += " " + oClasses.sPageButton;
+                  anStatic[1].className += " " + oClasses.sPageButton;
+                }
+
+                if (iPages === 0 || iCurrentPage == iPages
+                    || oSettings._iDisplayLength == -1) {
+                  anStatic[2].disabled = true;
+                  anStatic[3].disabled = true;
+                  anStatic[2].className += " "
+                      + oClasses.sPageButtonStaticDisabled;
+                  anStatic[3].className += " "
+                      + oClasses.sPageButtonStaticDisabled;
+                }
+                else {
+                  anStatic[2].disabled = false;
+                  anStatic[3].disabled = false;
+                  anStatic[2].className += " " + oClasses.sPageButton;
+                  anStatic[3].className += " " + oClasses.sPageButton;
+                }
+              }
+            }
           };
           Aldu.CDN._load(plugin, options);
         }

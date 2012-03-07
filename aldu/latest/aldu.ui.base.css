@@ -175,16 +175,19 @@ a.aldu-core-model-action {
 }
 
 .cell,
+.columns > .row > .cell,
 .column {
   display: table-cell;
   vertical-align: top;
 }
 
+.columns > .row > .cell,
 .column {
   border-right: 1px solid #1a1a1a;
   padding: 0px 8px;
 }
 
+.columns > .row > .cell:first-child,
 .column:first-child {
   border-left: 1px solid #1a1a1a;
 }
