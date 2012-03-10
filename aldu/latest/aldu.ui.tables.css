@@ -2,82 +2,55 @@
 
 table.aldu-helpers-html-table {
   table-layout: fixed;
-  border-right: 0;
   clear: both;
   color: #333;
+  background-color: #eee;
   margin-bottom: 10px;
+  border 
   width: 100%;
-  table.aldu-helpers-html-table-layout: fixed;
+}
+
+table.aldu-helpers-html-table thead th {
+  border-bottom: 2px solid #555;
+}
+
+table.aldu-helpers-html-table tfoot th {
+  border-top: 2px solid #555;
 }
 
 table.aldu-helpers-html-table th {
-  border: 0;
-  border-bottom: 2px solid #555;
   text-align: left;
+  padding: 8px 4px;
+}
+
+table.aldu-helpers-html-table th.sorting_desc,
+table.aldu-helpers-html-table th.sorting_asc,
+table.aldu-helpers-html-table th.sorting {
+  cursor: pointer;
+}
+
+table.aldu-helpers-html-table th.sorting_asc::after {
+  content: '⇣';
+  float: right;
+}
+
+table.aldu-helpers-html-table th.sorting_desc::after {
+  content: '⇡';
+  float: right;
+}
+
+table.aldu-helpers-html-table td,
+table.aldu-helpers-html-table td > div {
   padding: 4px;
-}
-
-table.aldu-helpers-html-table th a {
-  display: block;
-  padding: 2px 4px;
-  text-decoration: none;
-}
-
-table.aldu-helpers-html-table th a.asc:after {
-  content: ' ⇣';
-}
-
-table.aldu-helpers-html-table th a.desc:after {
-  content: ' ⇡';
-}
-
-table.aldu-helpers-html-table tr td {
-  padding: 6px;
   text-align: left;
   vertical-align: middle;
-  border-bottom: 1px solid #ddd;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 table.aldu-helpers-html-table tr:nth-child(even) {
   background: #f9f9f9;
-}
-
-table.aldu-helpers-html-table td.actions {
-  text-align: center;
-}
-
-table.aldu-helpers-html-table td.actions a {
-  margin: 0px 6px;
-  padding: 2px 5px;
-}
-
-table.aldu-helpers-html-table.aldu-core-view-index td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-table.aldu-helpers-html-table .aldu-core-file-thumb {
-  width: 92px;
-}
-
-table.aldu-helpers-html-table .aldu-core-model-actions {
-  width: 120px;
-}
-
-table.aldu-helpers-html-table .aldu-core-model-actions {
-  text-align: center;
-  vertical-align: middle;
-}
-
-table.aldu-helpers-html-table .aldu-core-model-actions a {
-  display: inline-block;
-}
-table.aldu-helpers-html-table .aldu-core-view-tags-input {
-  width: 30px;
-}
-table.aldu-helpers-html-table .aldu-core-view-tags-preview {
-  width: 80px;
 }
 
 /** DataTables **/

@@ -479,15 +479,15 @@ var Aldu = {
         version : 'latest',
         host : 'cdn.aldu.net',
         path : '/aldu/',
-        js : [ 'aldu.jquery.js' ]
+        js : [ 'aldu.jquery.min.js' ]
       },
       'aldu.ui' : {
         depends : [ 'jquery', 'jquery.ui' ],
         version : 'latest',
         host : 'cdn.aldu.net',
         path : '/aldu/',
-        css : [ 'aldu.ui.css' ],
-        js : [ 'aldu.ui.js' ]
+        css : [ 'aldu.ui.min.css' ],
+        js : [ 'aldu.ui.min.js' ]
       },
       'google' : {
         version : '',
@@ -615,21 +615,21 @@ var Aldu = {
         version : 'latest',
         host : 'cdn.aldu.net',
         path : '/jquery.imgload/',
-        js : [ 'jquery.imgload.js' ]
+        js : [ 'jquery.imgload.min.js' ]
       },
       'jquery.formutils' : {
         depends : [ 'jquery' ],
         version : 'latest',
         host : 'cdn.aldu.net',
         path : '/jquery.formutils/',
-        js : [ 'jquery.formutils.js' ]
+        js : [ 'jquery.formutils.min.js' ]
       },
       'jquery.jloupe' : {
         depends : [ 'jquery' ],
         version : '1.3.2',
         host : 'cdn.aldu.net',
         path : '/jquery.jloupe/',
-        js : [ 'jquery.jloupe.js' ]
+        js : [ 'jquery.jloupe.min.js' ]
       },
       'jquery.cycle' : {
         depends : [ 'jquery' ],
@@ -690,7 +690,7 @@ var Aldu = {
         host : 'cdn.aldu.net',
         path : '/jquery.fancybox/',
         css : [ 'jquery.fancybox.css' ],
-        js : [ 'jquery.fancybox.js' ]
+        js : [ 'jquery.fancybox.pack.js' ]
       },
       'jquery.datatables' : {
         depends : [ 'jquery' ],

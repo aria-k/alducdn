@@ -21,27 +21,28 @@ Aldu.extend({
               });
             }
             $('a.toggle', panel).click(function() {
+              $(this).toggleClass('toggle-active');
+              var shortcuts = $('.toolbar-shortcuts');
+              var status = shortcuts.data('status');
+              var height = $(this).outerHeight(true);
               switch (status) {
               case 'off':
-                $(panel).animate({
-                  top : '+=' + height
-                });
                 $(panel).parent().animate({
                   height : '+=' + height
                 });
+                shortcuts.slideDown();
                 status = 'on';
                 break;
               case 'on':
+              default:
                 $(panel).parent().animate({
                   height : '-=' + height
                 });
-                $(panel).animate({
-                  top : '-=' + height
-                });
+                shortcuts.slideUp();
                 status = 'off';
                 break;
               }
-              $(panel).data('status', status);
+              $(shortcuts).data('status', status);
             });
           });
         });
