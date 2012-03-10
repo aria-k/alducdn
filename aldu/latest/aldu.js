@@ -596,12 +596,19 @@ var Aldu = {
           }(document));
         }
       },
-      'markerclusterer' : {
+      'google.maps.markerclusterer' : {
         depends : [ 'google.maps' ],
         version : '2.0.6',
         host : 'cdn.aldu.net',
-        path : '/markerclusterer/',
+        path : '/google.maps.markerclusterer/',
         js : [ 'markerclusterer.min.js' ]
+      },
+      'google.maps.markerwithlabel' : {
+        depends : [ 'google.maps' ],
+        version : '1.1.5',
+        host : 'cdn.aldu.net',
+        path : '/google.maps.markerwithlabel/',
+        js : [ 'markerwithlabel.min.js' ]
       },
       'jquery.gmap' : {
         depends : [ 'jquery', 'google.maps' ],
