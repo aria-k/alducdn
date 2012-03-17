@@ -19,6 +19,7 @@ Aldu.extend({
               $(panel).parent().animate({
                 'height' : height + "px"
               });
+              $(panel).css('position', 'fixed');
             }
             $('a.toggle', panel).click(function() {
               $(this).toggleClass('toggle-active');

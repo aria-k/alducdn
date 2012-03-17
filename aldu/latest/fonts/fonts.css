@@ -1,36 +1,4 @@
-@font-face {
-  font-family: 'HelveticaNeue-Light';
-  src: url('HelveticaNeue-Light.eot');
-  src: url('HelveticaNeue-Light.woff') format('woff'),
-       url('HelveticaNeue-Light.svg#HelveticaNeue-Light') format('svg');
-}
-@font-face {
-  font-family: 'HelveticaNeue-UltraLight';
-  src: url('HelveticaNeue-UltraLight.eot');
-  src: url('HelveticaNeue-UltraLight.woff') format('woff'),
-       url('HelveticaNeue-UltraLight.svg#HelveticaNeue-UltraLight') format('svg');
-}
-@font-face {
-  font-family: 'Georgia';
-  src: url('Georgia.eot');
-  src: url('Georgia.woff') format('woff'),
-       url('Georgia.svg#Georgia') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Georgia';
-  src: url('GeorgiaBold.eot');
-  src: url('GeorgiaBold.woff') format('woff'),
-       url('GeorgiaBold.svg#GeorgiaBold') format('svg');
-  font-weight: bold;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Georgia';
-  src: url('GeorgiaItalic.eot');
-  src: url('GeorgiaItalic.woff') format('woff'),
-       url('GeorgiaItalic.svg#GeorgiaItalic') format('svg');
-  font-weight: normal;
-  font-style: italic;
-}
+@import url("Georgia/Georgia.css");
+@import url("HelveticaNeue/HelveticaNeue.css");
+@import url("TengwarAnnatar/TengwarAnnatar.css");
+@import url("TengwarAnnatarAlt/TengwarAnnatarAlt.css");

@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+@font-face {
+  font-family: 'TengwarAnnatar';
+  src: url('tngan.eot');
+  src: url('tngan.woff') format('woff'),
+       url('tngan.svg#TengwarAnnatar') format('svg');
+}
+
+@font-face {
+  font-family: 'TengwarAnnatar';
+  font-weight: bold;
+  src: url('tnganb.eot');
+  src: url('tnganb.woff') format('woff'),
+       url('tnganb.svg#TengwarAnnatar-Bold') format('svg');
+}
+
+@font-face {
+  font-family: 'TengwarAnnatar';
+  font-style: italic, oblique;
+  src: url('tngani.eot');
+  src: url('tngani.woff') format('woff'),
+       url('tngani.svg#TengwarAnnatar-Italic') format('svg');
+}
+
+@font-face {
+  font-family: 'TengwarAnnatar';
+  font-weight: bold;
+  font-style: italic, oblique;
+  src: url('tnganbi.eot');
+  src: url('tnganbi.woff') format('woff'),
+       url('tnganbi.svg#TengwarAnnatar-BoldItalic') format('svg');
+}

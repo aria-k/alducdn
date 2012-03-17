@@ -158,6 +158,10 @@ a.aldu-core-model-action {
   border-collapse: collapse;
 }
 
+.columns {
+  width: 100%;
+}
+
 .table.fluid {
   table-layout: auto;
 }
