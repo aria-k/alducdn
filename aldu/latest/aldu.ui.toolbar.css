@@ -20,8 +20,8 @@ body.toolbar-drawer {
  * Aggressive resets so we can achieve a consistent look in hostile CSS
  * environments.
  */
-#toolbar,
-#toolbar * {
+.aldu-ui-toolbar,
+.aldu-ui-toolbar * {
   margin: 0;
   padding: 0;
   border: 0;
@@ -39,11 +39,10 @@ body.toolbar-drawer {
  * We use a keyword for the toolbar font size to make it display consistently
  * across different themes, while still allowing browsers to resize the text.
  */
-#toolbar {
+.aldu-ui-toolbar {
   font: normal small "Lucida Grande", Verdana, sans-serif;
   background: #666;
   color: #ccc;
-  top: 0;
   left: 0;
   right: 0;
   margin: 0 -20px;
@@ -56,23 +55,32 @@ body.toolbar-drawer {
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000, direction='180', strength='10')";
 }
 
-#toolbar div.collapsed {
+.aldu-ui-toolbar.top {
+  top: 0;
+}
+
+.aldu-ui-toolbar.bottom {
+  position: fixed;
+  bottom: 0;
+}
+
+.aldu-ui-toolbar div.collapsed {
   display: none;
   visibility: hidden;
 }
 
-#toolbar a {
+.aldu-ui-toolbar a {
   color: #fff;
   font-size: .846em;
   text-decoration: none;
 }
 
-#toolbar ul li,
-#toolbar ul li a {
+.aldu-ui-toolbar ul li,
+.aldu-ui-toolbar ul li a {
   float: left;
 }
 
-#toolbar ul li select {
+.aldu-ui-toolbar ul li select {
   font-size: .846em;
   vertical-align: text-top;
 }
@@ -80,14 +88,14 @@ body.toolbar-drawer {
 /**
  * Administration menu.
  */
-#toolbar div.toolbar-menu {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu {
   background: #000;
   line-height: 20px;
   padding: 5px 40px 5px 10px;
   position: relative;
 }
 
-#toolbar-home a span {
+.aldu-ui-toolbar-home a span {
   vertical-align: text-bottom;
   width: 11px;
   height: 14px;
@@ -97,15 +105,15 @@ body.toolbar-drawer {
   margin: 3px 0px;
 }
 
-#toolbar-user {
+.aldu-ui-toolbar-user {
   float: right;
 }
 
-#toolbar-menu {
+.aldu-ui-toolbar-shortcuts {
   float: left;
 }
 
-#toolbar div.toolbar-menu a.toggle {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu a.toggle {
   position: absolute;
   right: 10px;
   bottom: 0;
@@ -116,37 +124,41 @@ body.toolbar-drawer {
   width: 25px;
   height: 25px;
 }
-#toolbar div.toolbar-menu a.toggle:focus,
-#toolbar div.toolbar-menu a.toggle:hover {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu a.toggle:focus,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu a.toggle:hover {
 background-position:  -50px -20px;
 }
 
-#toolbar div.toolbar-menu a.toggle-active {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu a.toggle-active {
   background-position:  -25px -20px;
 }
-#toolbar div.toolbar-menu a.toggle-active.toggle:focus,
-#toolbar div.toolbar-menu a.toggle-active.toggle:hover {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu a.toggle-active.toggle:focus,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu a.toggle-active.toggle:hover {
 background-position:  -75px -20px;
 }
 
-#toolbar div.toolbar-menu ul li a {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li > span {
+  margin: 0 5px;
+}
+
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li > a {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
   padding: 0 10px;
 }
 
-#toolbar div.toolbar-menu ul li a:focus,
-#toolbar div.toolbar-menu ul li a:hover,
-#toolbar div.toolbar-menu ul li a:active,
-#toolbar div.toolbar-menu ul li a.active:focus {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li a:focus,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li a:hover,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li a:active,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li a.active:focus {
   background: #444;
 }
 
-#toolbar div.toolbar-menu ul li a.active:hover,
-#toolbar div.toolbar-menu ul li a.active:active,
-#toolbar div.toolbar-menu ul li a.active,
-#toolbar div.toolbar-menu ul li.active-trail a {
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li a.active:hover,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li a.active:active,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li a.active,
+.aldu-ui-toolbar div.aldu-ui-toolbar-menu ul li.active-trail a {
   text-shadow: #333 0 1px 0;
   background: url(aldu.ui.toolbar.png) 0 0 repeat-x;
 }
@@ -154,27 +166,27 @@ background-position:  -75px -20px;
 /**
  * Collapsed drawer of additional toolbar content.
  */
-#toolbar div.toolbar-drawer {
+.aldu-ui-toolbar div.toolbar-drawer {
   position: relative;
   padding: 0 10px;
 }
 
 /** Shortcuts **/
 /* $Id: shortcut.css,v 1.10 2011/01/03 07:04:48 webchick Exp $ */
-div#toolbar a#edit-shortcuts {
+div.aldu-ui-toolbar a.aldu-ui-toolbar-edit-shortcuts {
   float: right;
   padding: 5px 10px 5px 5px;
   line-height: 24px;
   color: #fefefe;
 }
-div#toolbar a#edit-shortcuts:focus,
-div#toolbar a#edit-shortcuts:hover,
-div#toolbar a#edit-shortcuts.active {
+div.aldu-ui-toolbar a.aldu-ui-toolbar-edit-shortcuts:focus,
+div.aldu-ui-toolbar a.aldu-ui-toolbar-edit-shortcuts:hover,
+div.aldu-ui-toolbar a.aldu-ui-toolbar-edit-shortcuts.active {
   color: #fff;
   text-decoration: underline;
 }
 
-div#toolbar div.toolbar-shortcuts ul {
+div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts {
   padding: 5px 0 2px 0;
   height: 28px;
   line-height: 24px;
@@ -182,7 +194,7 @@ div#toolbar div.toolbar-shortcuts ul {
   margin-left:5px;
 }
 
-div#toolbar div.toolbar-shortcuts ul li a {
+div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a {
   padding: 0 5px 0 5px;
   margin-right: 5px;
   -moz-border-radius: 5px;
@@ -190,18 +202,18 @@ div#toolbar div.toolbar-shortcuts ul li a {
   border-radius: 5px;
 }
 
-div#toolbar div.toolbar-shortcuts ul li a:focus,
-div#toolbar div.toolbar-shortcuts ul li a:hover,
-div#toolbar div.toolbar-shortcuts ul li a.active:focus {
+div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a:focus,
+div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a:hover,
+div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a.active:focus {
   background: #555;
 }
 
-div#toolbar div.toolbar-shortcuts ul li a.active:hover,
-div#toolbar div.toolbar-shortcuts ul li a.active {
+div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a.active:hover,
+div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a.active {
   background: #000;
 }
 
-div#toolbar div.toolbar-shortcuts span.icon {
+div.aldu-ui-toolbar div.aldu-ui-toolbar-shortcuts span.icon {
   float: left;
   background: #444;
   width: 30px;

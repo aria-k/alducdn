@@ -123,6 +123,7 @@ div.aldu-helpers-html-form-select select option {
 div.aldu-helpers-html-form-radio,
 div.aldu-helpers-html-form-checkbox {
   display: inline-block;
+  white-space: nowrap;
 }
 
 div.aldu-helpers-html-form-radio,
@@ -161,8 +162,8 @@ div.aldu-helpers-html-form-checkbox label img {
 
 div.aldu-helpers-html-form-radio label a,
 div.aldu-helpers-html-form-checkbox label a {
-  display: block;
-  clear: both;
+  /*display: block;
+  clear: both;*/
 }
 
 div.aldu-helpers-html-form-hidden {

@@ -3,27 +3,26 @@ Aldu.extend({
     Panel : {
       init : function() {
         Aldu.ready(function() {
-          $('.aldu-helpers-panel').children().each(function(i, panel) {
+          $('.aldu-helpers-panel').each(function(i, panel) {
             var status = $(panel).data('status');
             var height = $(panel).outerHeight(true);
+            var parent = $(panel).parent();
             switch (status) {
             case 'off':
-              $(panel).css('top', "-" + height + "px");
-              $(panel).parent().animate({
+              parent.animate({
                 'height' : "0px"
               });
               break;
             case 'on':
             default:
-              $(panel).css('top', "0px");
-              $(panel).parent().animate({
+              parent.animate({
                 'height' : height + "px"
               });
-              $(panel).css('position', 'fixed');
             }
+            $(panel).css('position', 'fixed');
             $('a.toggle', panel).click(function() {
               $(this).toggleClass('toggle-active');
-              var shortcuts = $('.toolbar-shortcuts');
+              var shortcuts = $('.aldu-ui-toolbar-shortcuts');
               var status = shortcuts.data('status');
               var height = $(this).outerHeight(true);
               switch (status) {
