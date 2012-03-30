@@ -6,7 +6,6 @@ table.aldu-helpers-html-table {
   color: #333;
   background-color: #eee;
   margin-bottom: 10px;
-  border 
   width: 100%;
 }
 
@@ -51,6 +50,11 @@ table.aldu-helpers-html-table td > div {
 */
 table.aldu-helpers-html-table tr:nth-child(even) {
   background: #f9f9f9;
+}
+
+table.aldu-core-view-tags colgroup col:first-child,
+table.aldu-core-view-tagged colgroup col:first-child {
+  width: 36px;
 }
 
 /** DataTables **/
