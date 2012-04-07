@@ -1,15 +1,15 @@
 (function($) {
   $.fn.updateOptions = function(options) {
     var settings = {
-      'dataType': 'json',
-      'data': null,
-      'tag': 'option',
-      'key': 'id',
-      'values': ['name'],
-      'delimiter': ', ',
-      'beforeUpdate': null,
-      'afterUpdate': null,
-      'removeFirst': true
+      'dataType' : 'json',
+      'data' : null,
+      'tag' : 'option',
+      'key' : 'id',
+      'values' : ['name'],
+      'delimiter' : ', ',
+      'beforeUpdate' : null,
+      'afterUpdate' : null,
+      'removeFirst' : true
     };
     return this.each(function() {
       if (options) {
@@ -17,10 +17,17 @@
       }
       var target = $(this);
       $.ajax({
-        url: settings.url,
-        data: settings.data,
-        dataType: settings.dataType,
-        success: function(data) {
+        url : settings.url,
+        data : settings.data,
+        dataType : settings.dataType,
+        beforeSend : function(xhr, settings) {
+          var option = $('<option>').prop({
+            selected : true
+          }).text('Loading...');
+          target.prepend(option);
+        },
+        success : function(data) {
+          target.children(':first').remove();
           if (settings.removeFirst) {
             target.children().remove();
           }
@@ -28,7 +35,7 @@
             target.children(":first").siblings().remove();
           }
           $.each(data, function(k, v) {
-            var tag = $("<" + settings.tag + "/>");
+            var tag = $("<" + settings.tag + ">");
             var values = new Array();
             for (var i in settings.values) {
               values.push(v[settings.values[i]]);

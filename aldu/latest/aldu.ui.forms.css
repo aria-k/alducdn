@@ -233,8 +233,46 @@ button:disabled {
 }
 
 /* Form errors */
+
+.validation-bubble {
+  font: message-box;
+  color: black;
+  opacity: 0.95;
+  min-width: 260px;
+  max-width: 320px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  padding: 8px;
+}
+
+.validation-bubble em {
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  width: 16px;
+  height: 16px;
+  border-top: 2px solid #ccc;
+  border-left: 2px solid #ccc;
+  display: block;
+  background: white;
+  transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -mox-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.validation-bubble span {
+  float: left;
+  margin-right: 5px;
+}
+
+.validation-bubble p {
+  margin: 0px;
+}
+
 div.aldu-helpers-html-form-element .error,
 div.aldu-helpers-html-form-element .invalid,
 div.aldu-helpers-html-form-element .missing {
-  background: #FFDACC;
 }

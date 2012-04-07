@@ -469,7 +469,7 @@ var Aldu = {
       },
       'jquery.tools' : {
         depends : [ 'jquery' ],
-        version : '1.2.6',
+        version : '1.2.7',
         host : 'cdn.aldu.net',
         path : '/jquery.tools/',
         js : [ 'jquery.tools.min.js' ]
@@ -1169,18 +1169,40 @@ var Aldu = {
           if (jQuery) {
             jQuery.fn.codemirror = function(_options) {
               var options = Aldu.extend({
-                matchBrackets : true,
+                mode : 'htmlmixed',
                 lineNumbers : true,
-                tabSize : 2,
-                tabMode : 'indent'
+                matchBrackets : true,
+                extraKeys : {
+                  'Tab' : function(cm) {
+                    cm.indentLine(cm.getCursor().line);
+                  },
+                  'Ctrl-S' : function(cm) {
+                    cm.save();
+                    var form = cm.getTextArea().form;
+                    $.ajax({
+                      url : $(form).prop('action'),
+                      type : $(form).prop('method'),
+                      data : new FormData(form),
+                      processData : false,
+                      contentType : false,
+                      success : function(data) {
+                        alert('Success!');
+                      },
+                      error : function() {
+                        alert('Error!');
+                      }
+                    });
+                  }
+                }
               }, _options);
               return this.each(function() {
-                CodeMirror.fromTextArea(this, options);
+                var instance = CodeMirror.fromTextArea(this, options);
+                $(this).data('codemirror', instance);
               });
             };
           }
           var options = Aldu.extend({
-            modes : [],
+            modes : [ 'htmlmixed' ],
             themes : []
           }, _options);
           var loadMode = function(v, callback, args) {
@@ -1227,6 +1249,7 @@ var Aldu = {
         host : 'cdn.aldu.net',
         path : '/ckeditor/',
         js : [ 'ckeditor.js' ],
+        depends : [ 'codemirror' ],
         options : {
           adapters : {
             jquery : [ 'adapters/jquery.js' ]
@@ -1242,11 +1265,55 @@ var Aldu = {
               breakAfterClose : true
             });
           });
+          
+          /**
+           * @fileOverview The "codemirror" plugin. It's indented to enhance the
+           *  "sourcearea" editing mode, which displays the xhtml source code with
+           *  syntax highlight and line numbers.
+           * @see http://marijn.haverbeke.nl/codemirror/ for CodeMirror editor which this
+           *  plugin is using.
+           */
+          CKEDITOR.plugins.add('codemirror', {
+            requires : [ 'sourcearea' ],
+            /**
+             * This's a command-less plugin, auto loaded as soon as switch to 'source' mode  
+             * and 'textarea' plugin is activeated.
+             * @param {Object} editor
+             */
+            init : function(editor) {
+              editor.on('mode', function() {
+                if (editor.mode == 'source') {
+                  var sourceAreaElement = editor.textarea;
+                  var holderElement = sourceAreaElement.getParent();
+                  $(sourceAreaElement.$).codemirror({
+                  });
+                  var codemirror = $(sourceAreaElement.$).data('codemirror');
+                  // Commit source data back into 'source' mode.
+                  editor.on('beforeCommandExec', function(ev) {
+                    // Listen to this event once.
+                    ev.removeListener();
+                    sourceAreaElement.setValue(codemirror.getValue());
+                    editor.fire('dataReady');
+                    //editor._.modes[ editor.mode ].loadData(codemirror.getValue());
+                  });
+                  CKEDITOR.plugins.mirrorSnapshotCmd = {
+                    exec : function(editor) {
+                      if (editor.mode == 'source') {
+                        sourceAreaElement.setValue(codemirror.getValue());
+                        editor.fire('dataReady');
+                      }
+                    }
+                  };
+                  editor.addCommand('mirrorSnapshot', CKEDITOR.plugins.mirrorSnapshotCmd);
+                  //editor.execCommand('mirrorSnapshot');
+                }
+              });
+            }
+          });
           if (jQuery) {
-            Aldu.load(plugin.prefix + plugin.options.adapters['jquery'],
-                function() {
-                  Aldu.CDN._load(plugin, options);
-                });
+            Aldu.load(plugin.prefix + plugin.options.adapters['jquery'], function() {
+              Aldu.CDN._load(plugin, options);
+            });
           }
         }
       }
