@@ -1198,6 +1198,10 @@ var Aldu = {
               return this.each(function() {
                 var instance = CodeMirror.fromTextArea(this, options);
                 $(this).data('codemirror', instance);
+                $(this).on('update.aldu', function() {
+                  var cm = $(this).data('codemirror');
+                  cm.save();
+                });
               });
             };
           }

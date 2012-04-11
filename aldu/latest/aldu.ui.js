@@ -1,5 +1,37 @@
 Aldu.extend({
   UI : {
+    Form : {
+      init : function(context) {
+        $('input:submit', context).on('click', function(event) {
+          if (!event.target.form) {
+            var id = $(event.target).attr('form');
+            $('form#' + id).submit();
+          }
+        });
+        $('form', context).each(function(i, form) {
+          if (!form.elements.length) {
+            var id = form.id;
+            $(form).on('submit', function(event) {
+              event.preventDefault();
+              $(':input[form=' + id + ']', context).each(function(i, input) {
+                $(input).trigger('update.aldu');
+                var ck = $(input).data('ckeditorInstance');
+                if (ck) {
+                  ck.updateElement();
+                }
+                var hidden = $('<input>').attr({
+                  type : 'hidden',
+                  name : $(input).attr('name'),
+                  value : $(input).val()
+                });
+                $(form).append(hidden);
+              });
+              form.submit();
+            });
+          }
+        });
+      }
+    },
     Panel : {
       init : function() {
         Aldu.ready(function() {
