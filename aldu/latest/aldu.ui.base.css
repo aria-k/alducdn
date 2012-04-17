@@ -25,6 +25,14 @@ a:active {
   text-decoration: underline;
 }
 
+dl dt {
+  font-weight: bold;
+}
+
+dl dd {
+  padding-left: 1em;
+}
+
 /* Messages */
 .aldu-helpers-ui-message {
   clear: both;

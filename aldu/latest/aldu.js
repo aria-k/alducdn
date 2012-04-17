@@ -705,6 +705,20 @@ var Aldu = {
         host : 'ajax.aspnetcdn.com',
         path : '/ajax/jquery.dataTables/',
         js : [ 'jquery.dataTables.min.js' ],
+        extras : {
+          tabletools : {
+            host : 'cdn.aldu.net',
+            path : '/jquery.datatables/plugins/tabletools/',
+            version : [ '2.0.3' ],
+            js : [ '/js/TableTools.min.js' ],
+            css : [ '/css/TableTools.css' ],
+            swf : [ '/swf/copy_csv_xls_pdf.swf' ],
+            callback : function(extra, callback, args) {
+              TableTools.DEFAULTS.sSwfPath = '//' + extra.host + extra.path + extra.version + extra.swf[0];
+              callback.apply(extra, args);
+            }
+          }
+        },
         load : function(plugin, options) {
           $.fn.dataTableExt.oApi.fnAddDataAndDisplay = function ( oSettings, aData )
           {
@@ -1056,7 +1070,39 @@ var Aldu = {
              
             return asResultData;
           };
-          Aldu.CDN._load(plugin, options);
+          var options = Aldu.extend({
+            extras : []
+          }, options);
+          var loadExtra = function(v, callback, args) {
+            Aldu.log('Aldu.CDN.plugin.datatables.load: loading ' + v, 4);
+            if (typeof plugin.extras[v] === 'undefined')
+              return false;
+            var extra = $.extend({
+              host : plugin.host,
+              path : plugin.path + 'plugins/' + v + '/',
+              version : 'latest',
+              js : [],
+              css : [],
+              callback : function(extra, callback, args) {
+                callback.apply(extra, args);
+              }
+            }, plugin.extras[v]);
+            for ( var i in extra.js) {
+              extra.js[i] = '//' + extra.host + extra.path + extra.version  + extra.js[i];
+            }
+            for ( var i in extra.css) {
+              extra.css[i] = '//' + extra.host + extra.path + extra.version + extra.css[i];
+            }
+            Aldu.chain(Aldu.load, extra.js, extra.callback, [ extra, callback, args ]);
+            Aldu.chain(Aldu.load, extra.css);
+          };
+          if (options.extras.length) {
+            Aldu.chain(loadExtra, options.extras, Aldu.CDN._load, [ plugin,
+                options ]);
+          }
+          else {
+            Aldu.CDN._load(plugin, options);
+          }
         }
       },
       'jquery.jeditable' : {

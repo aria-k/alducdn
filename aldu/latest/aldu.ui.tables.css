@@ -58,16 +58,12 @@ table.aldu-core-view-tagged colgroup col:first-child {
 }
 
 /** DataTables **/
-.dataTables_filter,
+.dataTables_length,
 .dataTables_info {
-  width: 50%;
+  clear: both;
   float: left;
 }
-.dataTables_length {
-  width: 50%;
-  float: right;
-}
-.dataTables_length,
+
 .dataTables_paginate {
   text-align: right;
 }
