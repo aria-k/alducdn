@@ -25,6 +25,11 @@ a:active {
   text-decoration: underline;
 }
 
+ul, ol {
+  margin: 1em 0px;
+  padding-left: 40px;
+}
+
 dl dt {
   font-weight: bold;
 }
@@ -153,6 +158,10 @@ a.aldu-core-model-action {
 
 .relative {
   position: relative;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .block {

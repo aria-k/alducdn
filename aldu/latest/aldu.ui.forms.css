@@ -70,6 +70,19 @@ div.aldu-helpers-html-form-element label {
   margin-left: .1em;
 }
 
+div.aldu-helpers-html-form-element label span.tooltip {
+  margin: 1em;
+  font-size: 80%;
+}
+
+div.aldu-helpers-html-form-element label span.tooltip::before {
+  content: '(';
+}
+
+div.aldu-helpers-html-form-element label span.tooltip::after {
+  content: ')';
+}
+
 div.aldu-helpers-html-form-required label {
   font-weight: bold;
 }
@@ -181,9 +194,6 @@ div.aldu-helpers-html-form-submit input {
   display: inline;
   font-size: 110%;
   width: auto;
-}
-
-div.aldu-helpers-html-form-submit input {
   background: #62af56;
   background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
   background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
@@ -198,6 +208,7 @@ div.aldu-helpers-html-form-submit input:hover {
 }
 
 /* Buttons and button links */
+button[type=submit],
 input[type=submit],
 .button,
 .paginate_button,
@@ -248,14 +259,13 @@ button:disabled {
 
 .validation-bubble em {
   position: absolute;
-  top: -10px;
-  left: 8px;
+  top: -9px;
+  left: 9px;
   width: 16px;
   height: 16px;
-  border-top: 2px solid #ccc;
-  border-left: 2px solid #ccc;
+  border-bottom: none;
+  border-right: none;
   display: block;
-  background: white;
   transform: rotate(45deg);
   -o-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
