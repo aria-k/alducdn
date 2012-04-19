@@ -482,12 +482,15 @@ var Aldu = {
         js : [ 'aldu.jquery.min.js' ]
       },
       'aldu.ui' : {
-        depends : [ 'jquery', 'jquery.ui' ],
+        depends : [ 'aldu.jquery', 'jquery.ui' ],
         version : 'latest',
         host : 'cdn.aldu.net',
         path : '/aldu/',
         css : [ 'aldu.ui.min.css' ],
-        js : [ 'aldu.ui.min.js' ]
+        js : [ 'aldu.ui.min.js' ],
+        load : function(plugin, options) {
+          Aldu.UI.init();
+        }
       },
       'google' : {
         version : '',

@@ -8,7 +8,20 @@ Aldu.extend({
             $('form#' + id).submit();
           }
         });
-        $('form', context).each(function(i, form) {
+        $('form', context).autoload('jquery.tools', function(i, form) {
+          $.tools.validator.fn('[data-equals]', Aldu.t("Value not equal with the $1 field."), function(input) {
+            var id = input.data('equals');
+            var field = $('#' + id);
+            var name = field.siblings('label').text();
+            var valid = input.val() == field.val();
+            return valid ? true : [name];
+          });
+          $(form).validator({
+            messageClass : 'validation-bubble',
+            position : 'bottom left',
+            offset: [ 12, 0 ],
+            message : '<div class="ui-state-error"><em class="ui-state-error"></em><span class="ui-icon ui-icon-alert"></span></div>'
+          });
           if (!form.elements.length) {
             var id = form.id;
             $(form).on('submit', function(event) {
@@ -33,7 +46,7 @@ Aldu.extend({
       }
     },
     Panel : {
-      init : function() {
+      init : function(context) {
         Aldu.ready(function() {
           $('.aldu-helpers-panel').each(function(i, panel) {
             var status = $(panel).data('status');
@@ -79,6 +92,10 @@ Aldu.extend({
           });
         });
       }
+    },
+    init : function(context) {
+      Aldu.UI.Form.init(context);
+      Aldu.UI.Panel.init(context);
     }
   }
 });

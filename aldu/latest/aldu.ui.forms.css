@@ -249,8 +249,6 @@ button:disabled {
   font: message-box;
   color: black;
   opacity: 0.95;
-  min-width: 260px;
-  max-width: 320px;
   border: 2px solid #ccc;
   border-radius: 8px;
   background: white;
@@ -274,11 +272,13 @@ button:disabled {
 }
 
 .validation-bubble span {
-  float: left;
+  display: inline-block;
+  vertical-align: bottom;
   margin-right: 5px;
 }
 
 .validation-bubble p {
+  display: inline-block;
   margin: 0px;
 }
 
