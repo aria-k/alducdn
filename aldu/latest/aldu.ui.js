@@ -22,6 +22,17 @@ Aldu.extend({
             offset: [ 12, 0 ],
             message : '<div class="ui-state-error"><em class="ui-state-error"></em><span class="ui-icon ui-icon-alert"></span></div>'
           });
+          $('textarea[data-mode]', context).autoload('codemirror', {
+            modes : [ 'php' ],
+            themes : [ 'eclipse', 'night', 'cobalt', 'monokai' ]
+          }, function(i, textarea) {
+            $(textarea).codemirror({
+              mode : $(textarea).data('mode'),
+              lineNumbers : true,
+              readOnly : $(textarea).prop('readonly'),
+              theme : 'monokai'
+            });
+          });
           if (!form.elements.length) {
             var id = form.id;
             $(form).on('submit', function(event) {
