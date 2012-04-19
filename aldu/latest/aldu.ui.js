@@ -2,12 +2,6 @@ Aldu.extend({
   UI : {
     Form : {
       init : function(context) {
-        $('input:submit', context).on('click', function(event) {
-          if (!event.target.form) {
-            var id = $(event.target).attr('form');
-            $('form#' + id).submit();
-          }
-        });
         $('form', context).autoload('jquery.tools', function(i, form) {
           $.tools.validator.fn('[data-equals]', Aldu.t("Value not equal with the $1 field."), function(input) {
             var id = input.data('equals');
@@ -32,6 +26,12 @@ Aldu.extend({
               readOnly : $(textarea).prop('readonly'),
               theme : 'monokai'
             });
+          });
+          $('input:submit', context).on('click', function(event) {
+            if (!event.target.form) {
+              var id = $(event.target).attr('form');
+              $('form#' + id).submit();
+            }
           });
           if (!form.elements.length) {
             var id = form.id;

@@ -490,6 +490,7 @@ var Aldu = {
         js : [ 'aldu.ui.min.js' ],
         load : function(plugin, options) {
           Aldu.UI.init();
+          Aldu.CDN._load(plugin, options);
         }
       },
       'google' : {
