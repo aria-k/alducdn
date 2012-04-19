@@ -1,0 +1,6 @@
+@CHARSET "UTF-8";
+
+img {
+  -pie-png-fix: true;
+  behavior: url("//cdn.aldu.net/aldu/latest/htc/PIE.htc");
+}
