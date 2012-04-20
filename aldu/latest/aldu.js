@@ -710,9 +710,15 @@ var Aldu = {
         path : '/ajax/jquery.dataTables/',
         js : [ 'jquery.dataTables.min.js' ],
         extras : {
+          rowreordering : {
+            host : 'cdn.aldu.net',
+            path : '/jquery.datatables/extras/rowreordering/',
+            version : [ '1.0.0' ],
+            js : [ '/jquery.dataTables.rowReordering.min.js' ]
+          },
           tabletools : {
             host : 'cdn.aldu.net',
-            path : '/jquery.datatables/plugins/tabletools/',
+            path : '/jquery.datatables/extras/tabletools/',
             version : [ '2.0.3' ],
             js : [ '/js/TableTools.min.js' ],
             css : [ '/css/TableTools.css' ],
@@ -1077,13 +1083,14 @@ var Aldu = {
           var options = Aldu.extend({
             extras : []
           }, options);
+          console.debug(options);
           var loadExtra = function(v, callback, args) {
             Aldu.log('Aldu.CDN.plugin.datatables.load: loading ' + v, 4);
             if (typeof plugin.extras[v] === 'undefined')
               return false;
             var extra = $.extend({
               host : plugin.host,
-              path : plugin.path + 'plugins/' + v + '/',
+              path : plugin.path + 'extras/' + v + '/',
               version : 'latest',
               js : [],
               css : [],
