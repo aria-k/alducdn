@@ -26,8 +26,11 @@ a:active {
 }
 
 ul, ol {
-  margin: 1em 0px;
-  padding-left: 40px;
+  padding-left: 1em;
+}
+
+ul.sortable li:hover {
+  cursor: move;
 }
 
 dl dt {

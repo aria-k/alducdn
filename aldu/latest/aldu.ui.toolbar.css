@@ -80,9 +80,11 @@ body.toolbar-drawer {
   float: left;
 }
 
-.aldu-ui-toolbar ul li select {
+.aldu-ui-toolbar .aldu-helpers-html-form-element {
+  display: inline-block;
   font-size: .846em;
-  vertical-align: text-top;
+  padding: 0px;
+  vertical-align: top;
 }
 
 /**
