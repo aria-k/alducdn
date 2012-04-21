@@ -1083,7 +1083,6 @@ var Aldu = {
           var options = Aldu.extend({
             extras : []
           }, options);
-          console.debug(options);
           var loadExtra = function(v, callback, args) {
             Aldu.log('Aldu.CDN.plugin.datatables.load: loading ' + v, 4);
             if (typeof plugin.extras[v] === 'undefined')

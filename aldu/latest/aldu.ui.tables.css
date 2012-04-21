@@ -37,6 +37,7 @@ table.aldu-helpers-html-table th.sorting_desc::after {
   content: '⇡';
   float: right;
 }
+
 /*
 table.aldu-helpers-html-table td,
 table.aldu-helpers-html-table td > div {

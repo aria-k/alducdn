@@ -147,6 +147,7 @@ a.aldu-core-model-action {
   width: 33%;
 }
 
+.hidden,
 .none {
   display: none;
 }
