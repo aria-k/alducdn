@@ -212,9 +212,7 @@ button[type=submit],
 input[type=submit],
 .button,
 .paginate_button,
-.paginate_active,
-.actions ul li a,
-.actions a {
+.paginate_active {
   cursor: pointer;
   font-weight: normal;
   padding: 4px 8px;
