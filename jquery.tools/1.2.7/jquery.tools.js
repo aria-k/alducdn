@@ -2180,6 +2180,9 @@
     })
 })(jQuery);
 (function (c) {
+    function escape(s) {
+      return s.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|\\])/g, '\\$1');
+    }
     function i(b, a, f) {
         var a = c(a).first() || a,
             d = b.offset().top,
@@ -2247,7 +2250,7 @@
                 if (!h) {
                     var d = [];
                     c.each(a, function (a, f) {
-                        var c = b.filter("[name='" + a + "']");
+                        var c = b.filter("[name='" + escape(a) + "']");
                         c.length && (c.trigger("OI", [f]), d.push({
                             input: c,
                             messages: [f]
@@ -2353,8 +2356,8 @@
             var b = c(this);
             (this.checked || b.is("select") && c(this).val()) && l[f.effect][1].call(e, b, a)
         });
-        b.filter(":radio[required]").on("change.V", function (a) {
-            var b = c("[name='" + c(a.srcElement).attr("name") + "']");
+        b.filter(":radio").on("change.V", function (a) {
+            var b = c("[name='" + escape(c(a.srcElement).attr("name")) + "']");
             b != null && b.length != 0 && e.checkValidity(b, a)
         });
         c(window).resize(function () {
@@ -2484,7 +2487,7 @@
     });
     d.fn(":radio", "Please select an option.", function (b) {
         var a = !1;
-        c("[name='" + b.attr("name") + "']").each(function (b, d) {
+        c("[name='" + escape(b.attr("name")) + "']").each(function (b, d) {
             c(d).is(":checked") && (a = !0)
         });
         return a ? !0 : !1

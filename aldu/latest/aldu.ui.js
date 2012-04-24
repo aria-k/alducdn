@@ -223,6 +223,7 @@ Aldu.extend({
     Form : {
       init : function(context) {
         $('form', context).autoload('jquery.tools', function(i, form) {
+          Aldu.log('Aldu.UI.Form.init', 2);
           $.tools.validator.fn('[data-equals]', Aldu.t("Value not equal with the $1 field."), function(input) {
             var id = input.data('equals');
             var field = $('#' + id);

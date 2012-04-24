@@ -179,6 +179,10 @@ div.aldu-helpers-html-form-checkbox label a {
   clear: both;*/
 }
 
+div.aldu-helpers-html-form-element > div.aldu-helpers-html-form-checkbox {
+  display: block;
+}
+
 div.aldu-helpers-html-form-hidden {
   display: none;
 }
