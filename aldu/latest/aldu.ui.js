@@ -226,7 +226,7 @@ Aldu.extend({
           Aldu.log('Aldu.UI.Form.init', 2);
           if (!form.elements.length) {
             var container = $(form).parent();
-            $('aldu-helpers-html-form', container).remove();
+            $('div.aldu-helpers-html-form', container).remove();
             $(form).siblings().appendTo(form);
           }
           $.tools.validator.fn('[data-equals]', Aldu.t("Value not equal with the $1 field."), function(input) {
