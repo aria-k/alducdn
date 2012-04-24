@@ -224,6 +224,11 @@ Aldu.extend({
       init : function(context) {
         $('form', context).autoload('jquery.tools', function(i, form) {
           Aldu.log('Aldu.UI.Form.init', 2);
+          if (!form.elements.length) {
+            var container = $(form).parent();
+            $('aldu-helpers-html-form', container).remove();
+            $(form).siblings().appendTo(form);
+          }
           $.tools.validator.fn('[data-equals]', Aldu.t("Value not equal with the $1 field."), function(input) {
             var id = input.data('equals');
             var field = $('#' + id);
@@ -237,7 +242,62 @@ Aldu.extend({
             offset: [ 12, 0 ],
             message : '<div class="ui-state-error"><em class="ui-state-error"></em><span class="ui-icon ui-icon-alert"></span></div>'
           });
-          $('textarea[data-mode]', context).autoload('codemirror', {
+          $(form.elements).filter('input[name*="Term"]').each(function(i, input) {
+            $(input).on('keydown.ui.aldu', function(event) {
+              if (event.keyCode === $.ui.keyCode.TAB && $(this).data('autocomplete').menu.active ) {
+                event.preventDefault();
+              }
+              if (event.keyCode === $.ui.keyCode.ENTER) {
+                var terms = this.value.split(/,\s*/);
+                var names = $.map(terms, function(title) {
+                  return title.toLowerCase().replace(/\s+/g, '-');
+                });
+              }
+            }).autocomplete({
+              search: function() {
+                var terms = this.value.split(/,\s*/).pop();
+                if (terms.length < 2) return false;
+              },
+              select: function(event, ui) {
+                var terms = this.value.split(/,\s*/);
+                terms.pop();
+                if (ui.item.value === terms[terms.length - 1]) return false;
+                terms.push(ui.item.value);
+                terms.push('');
+                this.value = terms.join(', ');
+                return false;
+              },
+              focus: function(event, ui) {
+                var terms = this.value.split(/,\s*/);
+                terms.pop();
+                terms.push(ui.item.value);
+                terms.push('');
+                this.value = terms.join(', ');
+                return false;
+              },
+              source: function(req, add) {
+                $.ajax({
+                  url: '/aldu/core/terms/ajax',
+                  data: {
+                    search: [
+                      ['title', 'like', '%' + req.term.split(/,\s*/).pop() + '%']
+                    ]
+                  },
+                  success: function (data) {
+                    add($.map(data, function(item) {
+                      return {
+                        id : item.id,
+                        name : item.name,
+                        value : item.title
+                      };
+                    }));
+                  }
+                });
+              },
+              minLength: 2
+            });
+          });
+          $(form.elements).filter('textarea[data-mode]').autoload('codemirror', {
             modes : [ 'php' ],
             themes : [ 'eclipse', 'night', 'cobalt', 'monokai' ]
           }, function(i, textarea) {
@@ -248,32 +308,6 @@ Aldu.extend({
               theme : 'monokai'
             });
           });
-          $('input:submit', context).on('click', function(event) {
-            if (!event.target.form) {
-              var id = $(event.target).attr('form');
-              $('form#' + id).submit();
-            }
-          });
-          if (!form.elements.length) {
-            var id = form.id;
-            $(form).on('submit', function(event) {
-              event.preventDefault();
-              $(':input[form=' + id + ']', context).each(function(i, input) {
-                $(input).trigger('update.aldu');
-                var ck = $(input).data('ckeditorInstance');
-                if (ck) {
-                  ck.updateElement();
-                }
-                var hidden = $('<input>').attr({
-                  type : 'hidden',
-                  name : $(input).attr('name'),
-                  value : $(input).val()
-                });
-                $(form).append(hidden);
-              });
-              form.submit();
-            });
-          }
         });
       }
     },
