@@ -1,5 +1,95 @@
 var Aldu = {
   verbosity : 1,
+  IE : {
+    init : function() {
+      // Production steps of ECMA-262, Edition 5, 15.4.4.19
+      // Reference: http://es5.github.com/#x15.4.4.19
+      if (!Array.prototype.map) {
+        Array.prototype.map = function(callback, thisArg) {
+
+          var T, A, k;
+
+          if (this == null) {
+            throw new TypeError(" this is null or not defined");
+          }
+
+          // 1. Let O be the result of calling ToObject passing the |this| value
+          // as the argument.
+          var O = Object(this);
+
+          // 2. Let lenValue be the result of calling the Get internal method of
+          // O with the argument "length".
+          // 3. Let len be ToUint32(lenValue).
+          var len = O.length >>> 0;
+
+          // 4. If IsCallable(callback) is false, throw a TypeError exception.
+          // See: http://es5.github.com/#x9.11
+          if ({}.toString.call(callback) != "[object Function]") {
+            throw new TypeError(callback + " is not a function");
+          }
+
+          // 5. If thisArg was supplied, let T be thisArg; else let T be
+          // undefined.
+          if (thisArg) {
+            T = thisArg;
+          }
+
+          // 6. Let A be a new array created as if by the expression new
+          // Array(len) where Array is
+          // the standard built-in constructor with that name and len is the
+          // value of len.
+          A = new Array(len);
+
+          // 7. Let k be 0
+          k = 0;
+
+          // 8. Repeat, while k < len
+          while (k < len) {
+
+            var kValue, mappedValue;
+
+            // a. Let Pk be ToString(k).
+            // This is implicit for LHS operands of the in operator
+            // b. Let kPresent be the result of calling the HasProperty internal
+            // method of O with argument Pk.
+            // This step can be combined with c
+            // c. If kPresent is true, then
+            if (k in O) {
+
+              // i. Let kValue be the result of calling the Get internal method
+              // of O with argument Pk.
+              kValue = O[k];
+
+              // ii. Let mappedValue be the result of calling the Call internal
+              // method of callback
+              // with T as the this value and argument list containing kValue,
+              // k, and O.
+              mappedValue = callback.call(T, kValue, k, O);
+
+              // iii. Call the DefineOwnProperty internal method of A with
+              // arguments
+              // Pk, Property Descriptor {Value: mappedValue, Writable: true,
+              // Enumerable: true, Configurable: true},
+              // and false.
+
+              // In browsers that support Object.defineProperty, use the
+              // following:
+              // Object.defineProperty(A, Pk, { value: mappedValue, writable:
+              // true, enumerable: true, configurable: true });
+
+              // For best browser support, use the following:
+              A[k] = mappedValue;
+            }
+            // d. Increase k by 1.
+            k++;
+          }
+
+          // 9. return A
+          return A;
+        };
+      }
+    }
+  },
   Event : {
     _listeners : {},
     on : function(type, callback, args, target, one) {
@@ -724,57 +814,57 @@ var Aldu = {
             css : [ '/css/TableTools.css' ],
             swf : [ '/swf/copy_csv_xls_pdf.swf' ],
             callback : function(extra, callback, args) {
-              TableTools.DEFAULTS.sSwfPath = '//' + extra.host + extra.path + extra.version + extra.swf[0];
+              TableTools.DEFAULTS.sSwfPath = '//' + extra.host + extra.path
+                  + extra.version + extra.swf[0];
               callback.apply(extra, args);
             }
           }
         },
         load : function(plugin, options) {
-          $.fn.dataTableExt.oApi.fnAddDataAndDisplay = function ( oSettings, aData )
-          {
-              /* Add the data */
-              var iAdded = this.oApi._fnAddData( oSettings, aData );
-              var nAdded = oSettings.aoData[ iAdded ].nTr;
-               
-              /* Need to re-filter and re-sort the table to get positioning correct, not perfect
-               * as this will actually redraw the table on screen, but the update should be so fast (and
-               * possibly not alter what is already on display) that the user will not notice
-               */
-              this.oApi._fnReDraw( oSettings );
-               
-              /* Find it's position in the table */
-              var iPos = -1;
-              for( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-              {
-                  if( oSettings.aoData[ oSettings.aiDisplay[i] ].nTr == nAdded )
-                  {
-                      iPos = i;
-                      break;
-                  }
+          $.fn.dataTableExt.oApi.fnAddDataAndDisplay = function(oSettings,
+              aData) {
+            /* Add the data */
+            var iAdded = this.oApi._fnAddData(oSettings, aData);
+            var nAdded = oSettings.aoData[iAdded].nTr;
+
+            /*
+             * Need to re-filter and re-sort the table to get positioning
+             * correct, not perfect as this will actually redraw the table on
+             * screen, but the update should be so fast (and possibly not alter
+             * what is already on display) that the user will not notice
+             */
+            this.oApi._fnReDraw(oSettings);
+
+            /* Find it's position in the table */
+            var iPos = -1;
+            for ( var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
+              if (oSettings.aoData[oSettings.aiDisplay[i]].nTr == nAdded) {
+                iPos = i;
+                break;
               }
-               
-              /* Get starting point, taking account of paging */
-              if( iPos >= 0 )
-              {
-                  oSettings._iDisplayStart = ( Math.floor(i / oSettings._iDisplayLength) ) * oSettings._iDisplayLength;
-                  this.oApi._fnCalculateEnd( oSettings );
-              }
-               
-              this.oApi._fnDraw( oSettings );
-              return {
-                  "nTr": nAdded,
-                  "iPos": iAdded
-              };
+            }
+
+            /* Get starting point, taking account of paging */
+            if (iPos >= 0) {
+              oSettings._iDisplayStart = (Math.floor(i
+                  / oSettings._iDisplayLength))
+                  * oSettings._iDisplayLength;
+              this.oApi._fnCalculateEnd(oSettings);
+            }
+
+            this.oApi._fnDraw(oSettings);
+            return {
+              "nTr" : nAdded,
+              "iPos" : iAdded
+            };
           };
-          $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
-          {
-              var anRows = [];
-              for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-              {
-                  var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
-                  anRows.push( nRow );
-              }
-              return anRows;
+          $.fn.dataTableExt.oApi.fnGetFilteredNodes = function(oSettings) {
+            var anRows = [];
+            for ( var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
+              var nRow = oSettings.aoData[oSettings.aiDisplay[i]].nTr;
+              anRows.push(nRow);
+            }
+            return anRows;
           };
           $.fn.dataTableExt.oApi.fnAddTr = function(oSettings, nTr, bRedraw) {
             if (typeof bRedraw == 'undefined') {
@@ -1037,47 +1127,59 @@ var Aldu = {
               }
             }
           };
-          $.fn.dataTableExt.oApi.fnGetColumnData = function ( oSettings, iColumn, bUnique, bFiltered, bIgnoreEmpty, bRecurse ) {
+          $.fn.dataTableExt.oApi.fnGetColumnData = function(oSettings, iColumn,
+              bUnique, bFiltered, bIgnoreEmpty, bRecurse) {
             // check that we have a column id
-            if ( typeof iColumn == "undefined" ) return new Array();
-             
+            if (typeof iColumn == "undefined")
+              return new Array();
+
             // by default we only wany unique data
-            if ( typeof bUnique == "undefined" ) bUnique = true;
-             
+            if (typeof bUnique == "undefined")
+              bUnique = true;
+
             // by default we do want to only look at filtered data
-            if ( typeof bFiltered == "undefined" ) bFiltered = true;
-             
+            if (typeof bFiltered == "undefined")
+              bFiltered = true;
+
             // by default we do not wany to include empty values
-            if ( typeof bIgnoreEmpty == "undefined" ) bIgnoreEmpty = true;
-            
-            if ( typeof bRecurse == "undefined" ) bRecurse = false;
-             
+            if (typeof bIgnoreEmpty == "undefined")
+              bIgnoreEmpty = true;
+
+            if (typeof bRecurse == "undefined")
+              bRecurse = false;
+
             // list of rows which we're going to loop through
             var aiRows;
 
             // use only filtered rows
-            if (bFiltered == true) aiRows = oSettings.aiDisplay; 
+            if (bFiltered == true)
+              aiRows = oSettings.aiDisplay;
             // use all rows
-            else aiRows = oSettings.aiDisplayMaster; // all row numbers
-         
-            // set up data array    
+            else
+              aiRows = oSettings.aiDisplayMaster; // all row numbers
+
+            // set up data array
             var asResultData = new Array();
-             
-            for (var i=0,c=aiRows.length; i<c; i++) {
-                iRow = aiRows[i];
-                var aData = this.fnGetData(iRow);
-                var sValue = bRecurse ? $(aData[iColumn]).text() : aData[iColumn];
-                 
-                // ignore empty values?
-                if (bIgnoreEmpty == true && sValue.length == 0) continue;
-         
-                // ignore unique values?
-                else if (bUnique == true && jQuery.inArray(sValue, asResultData) > -1) continue;
-                 
-                // else push the value onto the result data array
-                else asResultData.push(sValue);
+
+            for ( var i = 0, c = aiRows.length; i < c; i++) {
+              iRow = aiRows[i];
+              var aData = this.fnGetData(iRow);
+              var sValue = bRecurse ? $(aData[iColumn]).text() : aData[iColumn];
+
+              // ignore empty values?
+              if (bIgnoreEmpty == true && sValue.length == 0)
+                continue;
+
+              // ignore unique values?
+              else if (bUnique == true
+                  && jQuery.inArray(sValue, asResultData) > -1)
+                continue;
+
+              // else push the value onto the result data array
+              else
+                asResultData.push(sValue);
             }
-             
+
             return asResultData;
           };
           var options = Aldu.extend({
@@ -1098,12 +1200,15 @@ var Aldu = {
               }
             }, plugin.extras[v]);
             for ( var i in extra.js) {
-              extra.js[i] = '//' + extra.host + extra.path + extra.version  + extra.js[i];
+              extra.js[i] = '//' + extra.host + extra.path + extra.version
+                  + extra.js[i];
             }
             for ( var i in extra.css) {
-              extra.css[i] = '//' + extra.host + extra.path + extra.version + extra.css[i];
+              extra.css[i] = '//' + extra.host + extra.path + extra.version
+                  + extra.css[i];
             }
-            Aldu.chain(Aldu.load, extra.js, extra.callback, [ extra, callback, args ]);
+            Aldu.chain(Aldu.load, extra.js, extra.callback, [ extra, callback,
+                args ]);
             Aldu.chain(Aldu.load, extra.css);
           };
           if (options.extras.length) {
@@ -1368,28 +1473,29 @@ var Aldu = {
               breakAfterClose : true
             });
           });
-          
+
           /**
            * @fileOverview The "codemirror" plugin. It's indented to enhance the
-           *  "sourcearea" editing mode, which displays the xhtml source code with
-           *  syntax highlight and line numbers.
-           * @see http://marijn.haverbeke.nl/codemirror/ for CodeMirror editor which this
-           *  plugin is using.
+           *               "sourcearea" editing mode, which displays the xhtml
+           *               source code with syntax highlight and line numbers.
+           * @see http://marijn.haverbeke.nl/codemirror/ for CodeMirror editor
+           *      which this plugin is using.
            */
           CKEDITOR.plugins.add('codemirror', {
             requires : [ 'sourcearea' ],
             /**
-             * This's a command-less plugin, auto loaded as soon as switch to 'source' mode  
-             * and 'textarea' plugin is activeated.
-             * @param {Object} editor
+             * This's a command-less plugin, auto loaded as soon as switch to
+             * 'source' mode and 'textarea' plugin is activeated.
+             * 
+             * @param {Object}
+             *          editor
              */
             init : function(editor) {
               editor.on('mode', function() {
                 if (editor.mode == 'source') {
                   var sourceAreaElement = editor.textarea;
                   var holderElement = sourceAreaElement.getParent();
-                  $(sourceAreaElement.$).codemirror({
-                  });
+                  $(sourceAreaElement.$).codemirror({});
                   var codemirror = $(sourceAreaElement.$).data('codemirror');
                   // Commit source data back into 'source' mode.
                   editor.on('beforeCommandExec', function(ev) {
@@ -1397,7 +1503,8 @@ var Aldu = {
                     ev.removeListener();
                     sourceAreaElement.setValue(codemirror.getValue());
                     editor.fire('dataReady');
-                    //editor._.modes[ editor.mode ].loadData(codemirror.getValue());
+                    // editor._.modes[ editor.mode
+                    // ].loadData(codemirror.getValue());
                   });
                   CKEDITOR.plugins.mirrorSnapshotCmd = {
                     exec : function(editor) {
@@ -1407,16 +1514,18 @@ var Aldu = {
                       }
                     }
                   };
-                  editor.addCommand('mirrorSnapshot', CKEDITOR.plugins.mirrorSnapshotCmd);
-                  //editor.execCommand('mirrorSnapshot');
+                  editor.addCommand('mirrorSnapshot',
+                      CKEDITOR.plugins.mirrorSnapshotCmd);
+                  // editor.execCommand('mirrorSnapshot');
                 }
               });
             }
           });
           if (jQuery) {
-            Aldu.load(plugin.prefix + plugin.options.adapters['jquery'], function() {
-              Aldu.CDN._load(plugin, options);
-            });
+            Aldu.load(plugin.prefix + plugin.options.adapters['jquery'],
+                function() {
+                  Aldu.CDN._load(plugin, options);
+                });
           }
         }
       }
@@ -1428,6 +1537,7 @@ var Aldu = {
     return text;
   },
   init : function(plugins, callback) {
+    Aldu.IE.init();
     if (document.addEventListener) {
       document.addEventListener("DOMContentLoaded", function() {
         Aldu._loaded = true;
