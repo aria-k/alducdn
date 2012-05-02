@@ -2498,11 +2498,9 @@
         b = c.extend(!0, {}, d.conf, b);
         if (this.is("form")) return this.each(function () {
             var d = c(this);
-            if (this.elements.length > 1) {
-              var inputs = c(this.elements);
-            }
-            else {
-              var inputs = c(':input', this);
+            var inputs = c(this.elements);
+            if (inputs.length === 1) {
+              inputs = c(':input', this);
             }
             a = new n(inputs, d, b);
             d.data("validator", a)
