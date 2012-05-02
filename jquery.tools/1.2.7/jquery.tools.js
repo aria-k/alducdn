@@ -2493,12 +2493,15 @@
         return a ? !0 : !1
     });
     c.fn.validator = function (b) {
+      console.log('validator');
         var a = this.data("validator");
         a && (a.destroy(), this.removeData("validator"));
         b = c.extend(!0, {}, d.conf, b);
         if (this.is("form")) return this.each(function () {
+          console.log('validator.form');
             var d = c(this);
             var inputs = c(this.elements);
+            console.log(inputs.length);
             a = new n(inputs, d, b);
             d.data("validator", a)
         });
