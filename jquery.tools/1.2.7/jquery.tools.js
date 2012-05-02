@@ -2501,6 +2501,7 @@
             var inputs = c(this.elements);
             if (inputs.length === 1) {
               inputs = c(':input', this);
+              console.log(inputs.length);
             }
             a = new n(inputs, d, b);
             d.data("validator", a)
