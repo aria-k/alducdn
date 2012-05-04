@@ -32,10 +32,10 @@
             target.children().remove();
           }
           else {
-            target.children(":first").siblings().remove();
+            target.children(':first').siblings().remove();
           }
           $.each(data, function(k, v) {
-            var tag = $("<" + settings.tag + ">");
+            var tag = $('<' + settings.tag + '>');
             var values = new Array();
             for (var i in settings.values) {
               values.push(v[settings.values[i]]);
