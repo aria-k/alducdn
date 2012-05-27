@@ -325,6 +325,9 @@ var Aldu = {
     }
     return false;
   },
+  escape : function(s) {
+    return s.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|\\])/g, '\\$1');
+  },
   load : function(url, callback, args) {
     Aldu.log('Aldu.load: ' + url, 4);
     if (url.match(/\.css$/)) {

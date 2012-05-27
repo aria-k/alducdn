@@ -98,7 +98,7 @@ input[type=search],
 div.aldu-helpers-html-form-input input,
 div.aldu-helpers-html-form-textarea textarea {
   clear: both;
-  font-size: 120%;
+  font-size: 100%;
   font-family: inherit;
   padding: 4px; /* 1% */
   margin: 0px 0px;
@@ -249,12 +249,12 @@ button:disabled {
 
 .validation-bubble {
   font: message-box;
-  color: black;
   opacity: 0.95;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  background: white;
   padding: 8px;
+  border-radius: 8px;
+/*border: 2px solid #ccc;
+  color: black;
+  background: white;*/
 }
 
 .validation-bubble em {

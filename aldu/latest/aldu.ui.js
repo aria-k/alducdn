@@ -237,6 +237,9 @@ Aldu.extend({
             return valid ? true : [name];
           });
           $(form).validator({
+            onBeforeFail : function(event, el) {
+              Aldu.debug(el);
+            },
             messageClass : 'validation-bubble',
             position : 'bottom left',
             offset: [ 12, 0 ],
@@ -306,6 +309,38 @@ Aldu.extend({
               lineNumbers : true,
               readOnly : $(textarea).prop('readonly'),
               theme : 'monokai'
+            });
+          });
+          $('fieldset', context).each(function(i, fieldset) {
+            var children = $(fieldset).children();
+            var legend = $('legend', fieldset).first();
+            legend.addClass('pointer');
+            var div = $('<div></div>').append(children).appendTo(fieldset);
+            $(fieldset).prepend(legend);
+            if ($(fieldset).hasClass('collapsed') || $(fieldset).parents('fieldset').length) {
+              $(fieldset).addClass('collapsed');
+              div.hide();
+            }
+            $('.aldu-helpers-html-form-element', legend).click(function(e) {
+              e.stopPropagation();
+            });
+            $(':checkbox, :radio', legend).change(function(e) {
+              if ($(this).is(':not(:checked)')) {
+                $(this).closest('fieldset').find(':checkbox').prop('checked', false);
+              }
+              if ($(this).is(':checked')) {
+                $(fieldset).removeClass('collapsed');
+                div.slideDown();
+              }
+            });
+            $(':checkbox, :radio', fieldset).change(function() {
+              if ($(this).is(':checked')) {
+                $(fieldset).children('legend').find(':checkbox').prop('checked', true);
+              }
+            });
+            legend.click(function(e) {
+              $(fieldset).toggleClass('collapsed');
+              div.slideToggle();
             });
           });
         });
