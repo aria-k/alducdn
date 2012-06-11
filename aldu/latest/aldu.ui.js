@@ -140,7 +140,6 @@ Aldu.extend({
               });
               select.on('change.ui.aldu', function() {
                 if (this.value) {
-                  console.log(this.value);
                   indexTable.fnFilter(this.value, index);
                 }
               });
