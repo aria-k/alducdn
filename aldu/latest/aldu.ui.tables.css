@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 table.aldu-helpers-html-table {
-  table-layout: fixed;
+  table-layout: auto;
   clear: both;
   color: #333;
   background-color: #eee;
@@ -36,6 +36,11 @@ table.aldu-helpers-html-table th.sorting_asc::after {
 table.aldu-helpers-html-table th.sorting_desc::after {
   content: '⇡';
   float: right;
+}
+
+table.aldu-helpers-html-table td.actions {
+  width: 1px;
+  text-align: center;
 }
 
 /*

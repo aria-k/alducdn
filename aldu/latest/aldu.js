@@ -728,6 +728,22 @@ var Aldu = {
         path : '/jquery.formutils/',
         js : [ 'jquery.formutils.min.js' ]
       },
+      'jquery.anytime' : {
+        depends : [ 'jquery.ui' ],
+        version : '4.1112L',
+        host : 'cdn.aldu.net',
+        path : '/jquery.anytime/',
+        js : [ 'anytime.js' ],
+        css : [ 'anytime.css' ]
+      },
+      'jquery.timepicker' : {
+        depends : [ 'jquery' ],
+        version : 'latest',
+        host : 'cdn.aldu.net',
+        path : '/jquery.timepicker/',
+        js : [ 'jquery.timepicker.min.js' ],
+        css : [ 'jquery.timepicker.min.css' ]
+      },
       'jquery.jloupe' : {
         depends : [ 'jquery' ],
         version : '1.3.2',
