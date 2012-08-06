@@ -75,6 +75,10 @@ body.toolbar-drawer {
   text-decoration: none;
 }
 
+.aldu-ui-toolbar a:hover {
+  color: #fff;
+}
+
 .aldu-ui-toolbar ul li,
 .aldu-ui-toolbar ul li a {
   float: left;

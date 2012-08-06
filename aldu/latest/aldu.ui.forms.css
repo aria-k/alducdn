@@ -212,6 +212,7 @@ div.aldu-helpers-html-form-submit input:hover {
 }
 
 /* Buttons and button links */
+button.default,
 button[type=submit],
 input[type=submit],
 .button,

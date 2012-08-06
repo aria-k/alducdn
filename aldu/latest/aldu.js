@@ -352,7 +352,8 @@ var Aldu = {
         };
       }
       link.href = url;
-      document.getElementsByTagName('head')[0].appendChild(link);
+      var head = document.getElementsByTagName('head')[0];
+      head.insertBefore(link, head.firstChild);
     }
     else {
       var script = document.createElement('script');
@@ -491,7 +492,7 @@ var Aldu = {
         js : [ 'scriptaculous.js' ]
       },
       'jquery' : {
-        version : '1.7.1',
+        version : '1.7.2',
         host : 'ajax.googleapis.com',
         path : '/ajax/libs/jquery/',
         js : [ 'jquery.min.js' ]
@@ -735,6 +736,13 @@ var Aldu = {
         path : '/jquery.anytime/',
         js : [ 'anytime.js' ],
         css : [ 'anytime.css' ]
+      },
+      'jquery.autosize' : {
+        depends : [ 'jquery' ],
+        version : '1.10',
+        path : '/jquery.autosize/',
+        host : 'cdn.aldu.net',
+        js : [ 'jquery.autosize.min.js' ]
       },
       'jquery.timepicker' : {
         depends : [ 'jquery' ],

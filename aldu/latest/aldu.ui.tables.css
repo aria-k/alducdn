@@ -1,10 +1,10 @@
 @CHARSET "UTF-8";
 
 table.aldu-helpers-html-table {
-  table-layout: auto;
+  table-layout: fixed;
   clear: both;
   color: #333;
-  background-color: #eee;
+  /*background-color: #eee;*/
   margin-bottom: 10px;
   width: 100%;
 }
@@ -55,7 +55,7 @@ table.aldu-helpers-html-table td > div {
 }
 */
 table.aldu-helpers-html-table tr:nth-child(even) {
-  background: #f9f9f9;
+  /*background: #f9f9f9;*/
 }
 
 table.aldu-core-view-tags colgroup col:first-child,
