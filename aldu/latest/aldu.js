@@ -744,6 +744,14 @@ var Aldu = {
         host : 'cdn.aldu.net',
         js : [ 'jquery.autosize.min.js' ]
       },
+      'jquery.visualize' : {
+        depends : [ 'jquery' ],
+        version : 'latest',
+        path : '/jquery.visualize/',
+        host : 'cdn.aldu.net',
+        css : [ 'jquery.visualize.css' ],
+        js : [ 'jquery.visualize.min.js' ]
+      },
       'jquery.timepicker' : {
         depends : [ 'jquery' ],
         version : 'latest',

@@ -435,18 +435,20 @@ Aldu
         datetime : function(context) {
           $('input[type=date]', context).each(
             function(i, date) {
-              var clone = $(this).clone();
-              clone.attr('id', '_' + clone.attr('id'));
-              clone.removeAttr('name');
-              clone.insertBefore(this);
-              $(this).hide();
-              var options = {
-                altField : this,
-                altFormat : 'yy-mm-dd',
-                changeYear : true
-              };
-              clone.datepicker(options).datepicker('setDate',
+              if (date.type !== 'date') {
+                var clone = $(this).clone();
+                clone.attr('id', '_' + clone.attr('id'));
+                clone.removeAttr('name');
+                clone.insertBefore(this);
+                $(this).hide();
+                var options = {
+                  altField : this,
+                  altFormat : 'yy-mm-dd',
+                  changeYear : true
+                };
+                clone.datepicker(options).datepicker('setDate',
                 new Date(this.value.replace(/ /, 'T')));
+              }
             });
         }
       },
