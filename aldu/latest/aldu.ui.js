@@ -446,8 +446,10 @@ Aldu
                   altFormat : 'yy-mm-dd',
                   changeYear : true
                 };
-                clone.datepicker(options).datepicker('setDate',
-                new Date(this.value.replace(/ /, 'T')));
+                clone.datepicker(options);
+                if (clone.prop('required')) {
+                  clone.datepicker('setDate', new Date(this.value.replace(/ /, 'T')));
+                }
               }
             });
         }
