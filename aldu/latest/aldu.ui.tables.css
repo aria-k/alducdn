@@ -63,6 +63,9 @@ table.aldu-core-view-tagged colgroup col:first-child {
   width: 36px;
 }
 
+table.aldu-helpers-html-table tr td a.aldu-core-view-table-anchor {
+  text-decoration: inherit;
+}
 /** DataTables **/
 .dataTables_length,
 .dataTables_info {

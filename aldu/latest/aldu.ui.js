@@ -99,6 +99,26 @@ Aldu
                       }
                     }
                   });
+                $('thead th.aldu-core-model-actions', table).each(function(i, th) {
+                  var index = $('thead th', table).index(th);
+                  var checkbox = $('<input>').attr({
+                    type : 'checkbox'
+                  }).on('click.ui.aldu', function(event) {
+                    $('tbody tr', table).each(function(i, tr) {
+                      $('td', tr).eq(index).find('input:checkbox').prop('checked', $(event.target).prop('checked'));
+                    });
+                  });
+                  var form = $('<form>').attr({
+                    id : table.id + '-actions',
+                    action : $(table).data('source') + ':pdf',
+                    method : 'get'
+                  });
+                  var submit = $('<input>').attr({
+                    type : 'submit'
+                  });
+                  form.append(submit);
+                  $('tfoot th', table).eq(index).append(checkbox, form);
+                });
                 $('thead th.searchable', table).not('.select').each(
                   function(i, th) {
                     var title = $(th).text();
@@ -106,8 +126,10 @@ Aldu
                     input.attr({
                       type : 'search',
                       results : 5,
-                      placeholder : title
+                      placeholder : title,
+                      name : $(th).data('name')
                     });
+                    input.data('source', $(table).data('source'));
                     var index = $('thead th', table).index(th);
                     input.on('keyup.ui.aldu click.ui.aldu', function() {
                       var input = this;
@@ -283,153 +305,157 @@ Aldu
       },
       Form : {
         validator : function(element) {
-          $(element).autoload('jquery.tools', function(i, element) {
-          $(element).validator(
-            {
-              onBeforeFail : function(event, el) {
-                Aldu.debug(el);
-              },
-              messageClass : 'validation-bubble',
-              position : 'bottom left',
-              offset : [ 12, 0 ],
-              message : '<div class="ui-state-error"><em class="ui-state-error"></em><span class="ui-icon ui-icon-alert"></span></div>'
-            });
-          });
-        },
-        init : function(context) {
-          $('form', context)
+          $(element)
             .autoload(
               'jquery.tools',
-              function(i, form) {
-                Aldu.log('Aldu.UI.Form.init', 2);
-                if (!form.elements.length) {
-                  var container = $(form).parent();
-                  $('div.aldu-helpers-html-form', container).remove();
-                  $(form).siblings().appendTo(form);
-                }
-                $.tools.validator.fn('[data-equals]', Aldu
-                  .t("Value not equal with the $1 field."), function(input) {
-                  var id = input.data('equals');
-                  var field = $('#' + id);
-                  var name = field.siblings('label').text();
-                  var valid = input.val() == field.val();
-                  return valid ? true : [ name ];
-                });
-                Aldu.UI.Form.validator(form);
-                $(form.elements).filter('input[name*="Term"]').each(
-                  function(i, input) {
-                    $(input).on(
-                      'keydown.ui.aldu',
-                      function(event) {
-                        if (event.keyCode === $.ui.keyCode.TAB
-                          && $(this).data('autocomplete').menu.active) {
-                          event.preventDefault();
-                        }
-                        if (event.keyCode === $.ui.keyCode.ENTER) {
-                          var terms = this.value.split(/,\s*/);
-                          var names = $.map(terms, function(title) {
-                            return title.toLowerCase().replace(/\s+/g, '-');
-                          });
-                        }
-                      }).autocomplete(
-                      {
-                        search : function() {
-                          var terms = this.value.split(/,\s*/).pop();
-                          if (terms.length < 2)
-                            return false;
-                        },
-                        select : function(event, ui) {
-                          var terms = this.value.split(/,\s*/);
-                          terms.pop();
-                          if (ui.item.value === terms[terms.length - 1])
-                            return false;
-                          terms.push(ui.item.value);
-                          terms.push('');
-                          this.value = terms.join(', ');
-                          return false;
-                        },
-                        focus : function(event, ui) {
-                          var terms = this.value.split(/,\s*/);
-                          terms.pop();
-                          terms.push(ui.item.value);
-                          terms.push('');
-                          this.value = terms.join(', ');
-                          return false;
-                        },
-                        source : function(req, add) {
-                          $.ajax({
-                            url : '/aldu/core/terms/ajax',
-                            data : {
-                              search : [ [ 'title', 'like',
-                                '%' + req.term.split(/,\s*/).pop() + '%' ] ]
-                            },
-                            success : function(data) {
-                              add($.map(data, function(item) {
-                                return {
-                                  id : item.id,
-                                  name : item.name,
-                                  value : item.title
-                                };
-                              }));
-                            }
-                          });
-                        },
-                        minLength : 2
-                      });
-                  });
-                $(form.elements).filter('textarea[data-mode]').autoload(
-                  'codemirror', {
-                    modes : [ 'php' ],
-                    themes : [ 'eclipse', 'night', 'cobalt', 'monokai' ]
-                  }, function(i, textarea) {
-                    $(textarea).codemirror({
-                      mode : $(textarea).data('mode'),
-                      lineNumbers : true,
-                      readOnly : $(textarea).prop('readonly'),
-                      theme : 'monokai'
+              function(i, element) {
+                $(element)
+                  .validator(
+                    {
+                      onBeforeFail : function(event, el) {
+                        Aldu.debug(el);
+                      },
+                      messageClass : 'validation-bubble',
+                      position : 'bottom left',
+                      offset : [ 12, 0 ],
+                      message : '<div class="ui-state-error"><em class="ui-state-error"></em><span class="ui-icon ui-icon-alert"></span></div>'
                     });
-                  });
-                $('fieldset', context).each(
-                  function(i, fieldset) {
-                    var children = $(fieldset).children();
-                    var legend = $('legend', fieldset).first();
-                    legend.addClass('pointer');
-                    var div = $('<div></div>').append(children).appendTo(
-                      fieldset);
-                    $(fieldset).prepend(legend);
-                    if ($(fieldset).hasClass('collapsed')
-                      || $(fieldset).parents('fieldset').length) {
-                      $(fieldset).addClass('collapsed');
-                      div.hide();
-                    }
-                    $('.aldu-helpers-html-form-element', legend).click(
-                      function(e) {
-                        e.stopPropagation();
-                      });
-                    $(':checkbox, :radio', legend).change(
-                      function(e) {
-                        if ($(this).is(':not(:checked)')) {
-                          $(this).closest('fieldset').find(':checkbox').prop(
-                            'checked', false);
-                        }
-                        if ($(this).is(':checked')) {
-                          $(fieldset).removeClass('collapsed');
-                          div.slideDown();
-                        }
-                      });
-                    $(':checkbox, :radio', fieldset).change(
-                      function() {
-                        if ($(this).is(':checked')) {
-                          $(fieldset).children('legend').find(':checkbox')
-                            .prop('checked', true);
-                        }
-                      });
-                    legend.click(function(e) {
-                      $(fieldset).toggleClass('collapsed');
-                      div.slideToggle();
-                    });
-                  });
               });
+        },
+        init : function(context) {
+          Aldu.UI.Form.combobox();
+          $('form', context).autoload(
+            'jquery.tools',
+            function(i, form) {
+              Aldu.log('Aldu.UI.Form.init', 2);
+              if (!form.elements.length) {
+                var container = $(form).parent();
+                $('div.aldu-helpers-html-form', container).remove();
+                $(form).siblings().appendTo(form);
+              }
+              $.tools.validator.fn('[data-equals]', Aldu
+                .t("Value not equal with the $1 field."), function(input) {
+                var id = input.data('equals');
+                var field = $('#' + id);
+                var name = field.siblings('label').text();
+                var valid = input.val() == field.val();
+                return valid ? true : [ name ];
+              });
+              Aldu.UI.Form.validator(form);
+              $(form.elements).filter('input[name*="Term"]').each(
+                function(i, input) {
+                  $(input).on(
+                    'keydown.ui.aldu',
+                    function(event) {
+                      if (event.keyCode === $.ui.keyCode.TAB
+                        && $(this).data('autocomplete').menu.active) {
+                        event.preventDefault();
+                      }
+                      if (event.keyCode === $.ui.keyCode.ENTER) {
+                        var terms = this.value.split(/,\s*/);
+                        var names = $.map(terms, function(title) {
+                          return title.toLowerCase().replace(/\s+/g, '-');
+                        });
+                      }
+                    }).autocomplete(
+                    {
+                      search : function() {
+                        var terms = this.value.split(/,\s*/).pop();
+                        if (terms.length < 2)
+                          return false;
+                      },
+                      select : function(event, ui) {
+                        var terms = this.value.split(/,\s*/);
+                        terms.pop();
+                        if (ui.item.value === terms[terms.length - 1])
+                          return false;
+                        terms.push(ui.item.value);
+                        terms.push('');
+                        this.value = terms.join(', ');
+                        return false;
+                      },
+                      focus : function(event, ui) {
+                        var terms = this.value.split(/,\s*/);
+                        terms.pop();
+                        terms.push(ui.item.value);
+                        terms.push('');
+                        this.value = terms.join(', ');
+                        return false;
+                      },
+                      source : function(req, add) {
+                        $.ajax({
+                          url : '/aldu/core/terms/ajax',
+                          data : {
+                            search : [ [ 'title', 'like',
+                              '%' + req.term.split(/,\s*/).pop() + '%' ] ]
+                          },
+                          success : function(data) {
+                            add($.map(data, function(item) {
+                              return {
+                                id : item.id,
+                                name : item.name,
+                                value : item.title
+                              };
+                            }));
+                          }
+                        });
+                      },
+                      minLength : 2
+                    });
+                });
+              $(form.elements).filter('textarea[data-mode]').autoload(
+                'codemirror', {
+                  modes : [ 'php' ],
+                  themes : [ 'eclipse', 'night', 'cobalt', 'monokai' ]
+                }, function(i, textarea) {
+                  $(textarea).codemirror({
+                    mode : $(textarea).data('mode'),
+                    lineNumbers : true,
+                    readOnly : $(textarea).prop('readonly'),
+                    theme : 'monokai'
+                  });
+                });
+              $('fieldset', context).each(
+                function(i, fieldset) {
+                  var children = $(fieldset).children();
+                  var legend = $('legend', fieldset).first();
+                  legend.addClass('pointer');
+                  var div = $('<div></div>').append(children)
+                    .appendTo(fieldset);
+                  $(fieldset).prepend(legend);
+                  if ($(fieldset).hasClass('collapsed')
+                    || $(fieldset).parents('fieldset').length) {
+                    $(fieldset).addClass('collapsed');
+                    div.hide();
+                  }
+                  $('.aldu-helpers-html-form-element', legend).click(
+                    function(e) {
+                      e.stopPropagation();
+                    });
+                  $(':checkbox, :radio', legend).change(
+                    function(e) {
+                      if ($(this).is(':not(:checked)')) {
+                        $(this).closest('fieldset').find(':checkbox').prop(
+                          'checked', false);
+                      }
+                      if ($(this).is(':checked')) {
+                        $(fieldset).removeClass('collapsed');
+                        div.slideDown();
+                      }
+                    });
+                  $(':checkbox, :radio', fieldset).change(
+                    function() {
+                      if ($(this).is(':checked')) {
+                        $(fieldset).children('legend').find(':checkbox').prop(
+                          'checked', true);
+                      }
+                    });
+                  legend.click(function(e) {
+                    $(fieldset).toggleClass('collapsed');
+                    div.slideToggle();
+                  });
+                });
+            });
           Aldu.UI.Form.datetime(context);
         },
         datetime : function(context) {
@@ -448,10 +474,147 @@ Aldu
                 };
                 clone.datepicker(options);
                 if (clone.prop('required')) {
-                  clone.datepicker('setDate', new Date(this.value.replace(/ /, 'T')));
+                  clone.datepicker('setDate', new Date(this.value.replace(/ /,
+                    'T')));
                 }
               }
             });
+        },
+        combobox : function() {
+          if (!$.ui.combobox) {
+          $.widget(
+              "ui.combobox",
+              {
+                _create : function() {
+                  var input, self = this, select = this.element.hide(), selected = select
+                    .children(":selected"), value = selected.val() ? selected
+                    .text() : "", wrapper = this.wrapper = $("<span>").addClass(
+                    "ui-combobox").insertAfter(select);
+                  var required = this.element.prop('required');
+                  this.element.prop('required', false);
+                  input = $("<input>").prop('required', required).attr({
+                    form : this.element.attr('form')
+                  });
+                  input.appendTo(wrapper).val(value)
+                    .addClass("ui-combobox-input").autocomplete(
+                      {
+                        delay : 0,
+                        minLength : 0,
+                        source : function(request, response) {
+                          // TODO da rivedere
+                          if (source = select.data('source')) {
+                            $.ajax({
+                              url : source + ':json',
+                              data : {
+                                flat : true,
+                                unique : true,
+                                attributes : [ select.attr('name') ],
+                                search : [
+                                  [ select.attr('name'), 'like', '%' + request.term + '%' ]
+                                ]
+                              },
+                              success : function(data) {
+                                response(data);
+                              }
+                            });
+                          }
+                          else {
+                          var matcher = new RegExp($.ui.autocomplete
+                            .escapeRegex(request.term), "i");
+                          response(select.children("option").map(
+                            function() {
+                              var text = $(this).text();
+                              if (this.value
+                                && (!request.term || matcher.test(text)))
+                                return {
+                                  label : text.replace(new RegExp(
+                                    "(?![^&;]+;)(?!<[^<>]*)("
+                                      + $.ui.autocomplete
+                                        .escapeRegex(request.term)
+                                      + ")(?![^<>]*>)(?![^&;]+;)", "gi"),
+                                    "<strong>$1</strong>"),
+                                  value : text,
+                                  option : this
+                                };
+                            }));
+                          }
+                        },
+                        select : function(event, ui) {
+                          ui.item.option.selected = true;
+                          self._trigger("selected", event, {
+                            item : ui.item.option
+                          });
+                          select.trigger('change');
+                        },
+                        change : function(event, ui) {
+                          if (!ui.item) {
+                            var matcher = new RegExp("^"
+                              + $.ui.autocomplete.escapeRegex($(this).val())
+                              + "$", "i"), valid = false;
+                            select.children("option").each(function() {
+                              if ($(this).text().match(matcher)) {
+                                this.selected = valid = true;
+                                return false;
+                              }
+                            });
+                            if (!valid) {
+                              // TODO if invalid, add to the database or
+                              if (url = select.data('add')) {
+                                $.ajax({
+                                  url : url,
+                                  method : 'post',
+                                  data : {
+                                    value : $(this).val()
+                                  },
+                                  success : function(data) {
+                                    ;
+                                  }
+                                });
+                              }
+                              // remove invalid value, as it didn't match anything
+                              else {
+                                $(this).val("");
+                                select.val("");
+                                input.data("autocomplete").term = "";
+                              }
+                              return false;
+                            }
+                          }
+                        }
+                      }).addClass("ui-widget ui-widget-content ui-corner-left");
+                  Aldu.UI.Form.validator(input);
+                  input.data("autocomplete")._renderItem = function(ul, item) {
+                    return $("<li></li>").data("item.autocomplete", item).append(
+                      "<a>" + item.label + "</a>").appendTo(ul);
+                  };
+                  $("<a>").attr("tabIndex", -1).attr("title", "Show All Items")
+                    .appendTo(wrapper).button({
+                      icons : {
+                        primary : "ui-icon-triangle-1-s"
+                      },
+                      text : false
+                    }).removeClass("ui-corner-all").addClass(
+                      "ui-corner-right ui-combobox-toggle").click(function() {
+                      // close if already visible
+                      if (input.autocomplete("widget").is(":visible")) {
+                        input.autocomplete("close");
+                        return;
+                      }
+                      // work around a bug (likely same cause as #5265)
+                      $(this).blur();
+                      // pass empty string as value to search for, displaying all
+                      // results
+                      input.autocomplete("search", "");
+                      input.focus();
+                    });
+                },
+                destroy : function() {
+                  this.wrapper.remove();
+                  this.element.show();
+                  $.Widget.prototype.destroy.call(this);
+                }
+              });
+          }
         }
       },
       Panel : {

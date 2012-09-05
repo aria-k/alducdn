@@ -499,7 +499,7 @@ var Aldu = {
       },
       'jquery.ui' : {
         depends : [ 'jquery' ],
-        version : '1.8.17',
+        version : '1.8.21',
         host : 'ajax.googleapis.com',
         path : '/ajax/libs/jqueryui/',
         js : [ 'jquery-ui.min.js' ],
@@ -547,19 +547,11 @@ var Aldu = {
       },
       'jquery.mobile' : {
         depends : [ 'jquery' ],
-        version : '1.0',
+        version : '1.2.0-alpha.1',
         host : 'code.jquery.com',
         path : '/mobile/',
-        css : [ 'jquery.mobile-1.0.min.css' ],
-        js : [ 'jquery.mobile-1.0.min.js' ]
-      },
-      'jquery.mobile.datebox' : {
-        depends : [ 'jquery.mobile' ],
-        version : [ 'latest' ],
-        host : 'dev.jtsage.com',
-        path : '/cdn/datebox/',
-        css : [ 'jquery.mobile.datebox.min.css' ],
-        js : [ 'jquery.mobile.datebox.min.js' ]
+        css : [ 'jquery.mobile-1.2.0-alpha.1.min.css' ],
+        js : [ 'jquery.mobile-1.2.0-alpha.1.min.js' ]
       },
       'jquery.tools' : {
         depends : [ 'jquery' ],
@@ -830,7 +822,7 @@ var Aldu = {
       },
       'jquery.datatables' : {
         depends : [ 'jquery' ],
-        version : '1.9.0',
+        version : '1.9.3',
         host : 'ajax.aspnetcdn.com',
         path : '/ajax/jquery.dataTables/',
         js : [ 'jquery.dataTables.min.js' ],
