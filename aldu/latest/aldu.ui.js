@@ -54,6 +54,9 @@ Aldu
                     aLengthMenu : [ [ 5, 10, 25, 50, -1 ],
                       [ 5, 10, 25, 50, Aldu.t('All') ] ],
                     fnDrawCallback : function(oSettings) {
+                      $('tbody tr', this).each(function(i, tr) {
+                        Aldu.UI.processHtml(tr);
+                      });
                       $('tbody tr td div[data-url].editable', this).autoload(
                         'jquery.jeditable',
                         function(i, td) {
@@ -112,10 +115,10 @@ Aldu
                     id : table.id + '-actions',
                     action : $(table).data('source') + ':pdf',
                     method : 'get'
-                  });
+                  }).addClass('aldu-core-model-actions');
                   var submit = $('<input>').attr({
                     type : 'submit'
-                  });
+                  }).addClass('aldu-core-model-action aldu-core-model-action-view');
                   form.append(submit);
                   $('tfoot th', table).eq(index).append(checkbox, form);
                 });
@@ -669,6 +672,13 @@ Aldu
         Aldu.UI.Form.init(context);
         Aldu.UI.Table.init(context);
         Aldu.UI.Panel.init(context);
+        Aldu.each(Aldu.UI._processCallbacks, function(i, callback) {
+          callback.call();
+        });
+      },
+      _processCallbacks : [],
+      addProcessCallback : function(callback) {
+        Aldu.UI._processCallbacks.push(callback);
       },
       init : function(context) {
         Aldu.UI.processHtml(context);
