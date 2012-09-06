@@ -54,9 +54,8 @@ Aldu
                     aLengthMenu : [ [ 5, 10, 25, 50, -1 ],
                       [ 5, 10, 25, 50, Aldu.t('All') ] ],
                     fnDrawCallback : function(oSettings) {
-                      $('tbody tr', this).each(function(i, tr) {
-                        Aldu.UI.processHtml(tr);
-                      });
+                      var tbody = $('tbody', this);
+                      Aldu.UI.processHtml(tbody);
                       $('tbody tr td div[data-url].editable', this).autoload(
                         'jquery.jeditable',
                         function(i, td) {
@@ -673,7 +672,7 @@ Aldu
         Aldu.UI.Table.init(context);
         Aldu.UI.Panel.init(context);
         Aldu.each(Aldu.UI._processCallbacks, function(i, callback) {
-          callback.call();
+          callback.call(this, context);
         });
       },
       _processCallbacks : [],
