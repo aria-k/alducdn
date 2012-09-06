@@ -440,7 +440,7 @@ var Aldu = {
       var options = Aldu.extend({
         version : plugin.version
       }, _options);
-      plugin.prefix = '//' + plugin.host + plugin.path + options.version + '/';
+      plugin.prefix = 'http://' + plugin.host + plugin.path + options.version + '/';
       for ( var i in plugin.js) {
         plugin.js[i] = plugin.prefix + plugin.js[i];
       }
@@ -841,7 +841,7 @@ var Aldu = {
             css : [ '/css/TableTools.css' ],
             swf : [ '/swf/copy_csv_xls_pdf.swf' ],
             callback : function(extra, callback, args) {
-              TableTools.DEFAULTS.sSwfPath = '//' + extra.host + extra.path
+              TableTools.DEFAULTS.sSwfPath = 'http://' + extra.host + extra.path
                   + extra.version + extra.swf[0];
               callback.apply(extra, args);
             }
@@ -1227,11 +1227,11 @@ var Aldu = {
               }
             }, plugin.extras[v]);
             for ( var i in extra.js) {
-              extra.js[i] = '//' + extra.host + extra.path + extra.version
+              extra.js[i] = 'http://' + extra.host + extra.path + extra.version
                   + extra.js[i];
             }
             for ( var i in extra.css) {
-              extra.css[i] = '//' + extra.host + extra.path + extra.version
+              extra.css[i] = 'http://' + extra.host + extra.path + extra.version
                   + extra.css[i];
             }
             Aldu.chain(Aldu.load, extra.js, extra.callback, [ extra, callback,
