@@ -459,6 +459,12 @@ var Aldu = {
         Aldu.chain(Aldu.load, plugin.js, plugin.load, [ plugin, options ]);
       }
     },
+    isLoaded : function(plugin) {
+      if (typeof Aldu.CDN.plugins[plugin] !== 'undefined') {
+        return Aldu.CDN.plugins[plugin].status === 'loaded';
+      }
+      return false;
+    },
     plugins : {
       'dojo' : {
         version : '1.6.1',
@@ -1571,12 +1577,5 @@ var Aldu = {
       }, false);
     }
     Aldu.chain(Aldu.CDN.require, plugins, callback);
-  },
-  color : function() {
-    var colors = [ 'red', 'orange', 'yellow', 'magenta', 'green', 'blue',
-        'indigo', 'violet', 'lime', 'cyan' ];
-    $('div,section,article,nav,aside').each(function(i) {
-      $(this).css('border', '1px solid ' + colors[i % 10]);
-    });
   }
 };
