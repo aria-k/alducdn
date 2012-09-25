@@ -692,6 +692,13 @@ var Aldu = {
           }(document));
         }
       },
+      'google.maps.infobox' : {
+        depends : [ 'google.maps' ],
+        version : 'trunk',
+        host : 'google-maps-utility-library-v3.googlecode.com',
+        path : '/svn/',
+        js : [ 'infobox/src/infobox.js' ]
+      },
       'google.maps.markerclusterer' : {
         depends : [ 'google.maps' ],
         version : '2.0.6',
