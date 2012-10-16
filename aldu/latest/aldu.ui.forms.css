@@ -187,34 +187,11 @@ div.aldu-helpers-html-form-hidden {
   display: none;
 }
 
-div.aldu-helpers-html-form-submit {
-  border: 0;
-  clear: both;
-  margin-top: 10px;
-}
-
-div.aldu-helpers-html-form-submit button,
-div.aldu-helpers-html-form-submit input {
-  display: inline;
-  font-size: 110%;
-  width: auto;
-  background: #62af56;
-  background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
-  background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
-  border-color: #2d6324;
-  color: #fff;
-  text-shadow: rgba(0, 0, 0, 0.5) 0px -1px 0px;
-  padding: 8px 10px;
-}
-
-div.aldu-helpers-html-form-submit input:hover {
-  background: #5BA150;
-}
-
 /* Buttons and button links */
-button.default,
-button[type=submit],
-input[type=submit],
+
+div.aldu-helpers-html-form-button button,
+div.aldu-helpers-html-form-submit button,
+div.aldu-helpers-html-form-submit input,
 .button,
 .paginate_button,
 .paginate_active {
@@ -241,6 +218,31 @@ input[type=submit],
   -webkit-user-select: none;
   user-select: none;
 }
+
+div.aldu-helpers-html-form-submit {
+  border: 0;
+  clear: both;
+  margin-top: 10px;
+}
+
+div.aldu-helpers-html-form-submit button,
+div.aldu-helpers-html-form-submit input {
+  display: inline;
+  font-size: 110%;
+  width: auto;
+  background: #62af56;
+  background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
+  background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
+  border-color: #2d6324;
+  color: #fff;
+  text-shadow: rgba(0, 0, 0, 0.5) 0px -1px 0px;
+  padding: 8px 10px;
+}
+
+div.aldu-helpers-html-form-submit input:hover {
+  background: #5BA150;
+}
+
 button:disabled {
   cursor: default;
   color: graytext;

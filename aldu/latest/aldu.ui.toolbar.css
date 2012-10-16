@@ -111,11 +111,11 @@ body.toolbar-drawer {
   margin: 3px 0px;
 }
 
-.aldu-ui-toolbar-user {
+.aldu-ui-toolbar .aldu-auth-user-panel {
   float: right;
 }
 
-.aldu-ui-toolbar-shortcuts {
+.aldu-ui-toolbar .aldu-core-view-shortcuts {
   float: left;
 }
 

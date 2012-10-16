@@ -418,6 +418,7 @@ Aldu.extend({
                 $(textarea).codemirror({
                   mode : $(textarea).data('mode'),
                   lineNumbers : true,
+                  lineWrapping : true,
                   readOnly : $(textarea).prop('readonly'),
                   theme : 'monokai'
                 });
