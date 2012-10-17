@@ -192,7 +192,7 @@ div.aldu-ui-toolbar a.aldu-ui-toolbar-edit-shortcuts.active {
   text-decoration: underline;
 }
 
-div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts {
+div.aldu-ui-toolbar ul.aldu-core-view-shortcuts {
   padding: 5px 0 2px 0;
   height: 28px;
   line-height: 24px;
@@ -200,7 +200,7 @@ div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts {
   margin-left:5px;
 }
 
-div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a {
+div.aldu-ui-toolbar ul.aldu-core-view-shortcuts li a {
   padding: 0 5px 0 5px;
   margin-right: 5px;
   -moz-border-radius: 5px;
@@ -208,18 +208,18 @@ div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a {
   border-radius: 5px;
 }
 
-div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a:focus,
-div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a:hover,
-div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a.active:focus {
+div.aldu-ui-toolbar ul.aldu-core-view-shortcuts li a:focus,
+div.aldu-ui-toolbar ul.aldu-core-view-shortcuts li a:hover,
+div.aldu-ui-toolbar ul.aldu-core-view-shortcuts li a.active:focus {
   background: #555;
 }
 
-div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a.active:hover,
-div.aldu-ui-toolbar ul.aldu-ui-toolbar-shortcuts li a.active {
+div.aldu-ui-toolbar ul.aldu-core-view-shortcuts li a.active:hover,
+div.aldu-ui-toolbar ul.aldu-core-view-shortcuts li a.active {
   background: #000;
 }
 
-div.aldu-ui-toolbar div.aldu-ui-toolbar-shortcuts span.icon {
+div.aldu-ui-toolbar div.aldu-core-view-shortcuts span.icon {
   float: left;
   background: #444;
   width: 30px;

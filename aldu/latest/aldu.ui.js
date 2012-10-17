@@ -645,7 +645,7 @@ Aldu.extend({
             $(panel).css('position', 'fixed');
             $('a.toggle', panel).click(function() {
               $(this).toggleClass('toggle-active');
-              var shortcuts = $('.aldu-ui-toolbar-shortcuts');
+              var shortcuts = $('.aldu-core-view-shortcuts');
               var status = shortcuts.data('status');
               var height = $(this).outerHeight(true);
               switch (status) {

@@ -734,14 +734,6 @@ var Aldu = {
         path : '/jquery.formutils/',
         js : [ 'jquery.formutils.min.js' ]
       },
-      'jquery.anytime' : {
-        depends : [ 'jquery.ui' ],
-        version : '4.1112L',
-        host : 'cdn.aldu.net',
-        path : '/jquery.anytime/',
-        js : [ 'anytime.js' ],
-        css : [ 'anytime.css' ]
-      },
       'jquery.autosize' : {
         depends : [ 'jquery' ],
         version : '1.10',
@@ -756,6 +748,14 @@ var Aldu = {
         host : 'cdn.aldu.net',
         css : [ 'jquery.visualize.css' ],
         js : [ 'jquery.visualize.min.js' ]
+      },
+      'jquery.mobiscroll' : {
+        depends : [ 'jquery.ui' ],
+        version : 'latest',
+        host : 'cdn.aldu.net',
+        path : '/jquery.mobiscroll/',
+        js : [ 'jquery.mobiscroll.min.js' ],
+        css : [ 'jquery.mobiscroll.min.css' ]
       },
       'jquery.timepicker' : {
         depends : [ 'jquery' ],
