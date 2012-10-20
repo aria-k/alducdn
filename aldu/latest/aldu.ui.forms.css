@@ -42,7 +42,7 @@ fieldset fieldset {
   background: none repeat scroll 0 0 #E8E8E8;
 }
 
-fieldset legend > div.aldu-helpers-html-form-element {
+fieldset legend > div.aldu-core-view-helper-html-form-element {
   margin: 0px;
   padding: 0px;
 }
@@ -55,7 +55,7 @@ fieldset.collapsed legend::after {
   content: ' ▸';
 }
 
-div.aldu-helpers-html-form-element {
+div.aldu-core-view-helper-html-form-element {
   cursor: default;
   clear: both;
   /*margin-bottom: .5em;*/
@@ -63,84 +63,111 @@ div.aldu-helpers-html-form-element {
   vertical-align: text-top;
 }
 
-div.aldu-helpers-html-form-element label {
+div.aldu-core-view-helper-html-form-element label {
   display: block;
   font-size: 110%;
   margin-bottom: .2em;
   margin-left: .1em;
 }
 
-div.aldu-helpers-html-form-element label span.tooltip {
+div.aldu-core-view-helper-html-form-element label span.tooltip {
   margin: 1em;
   font-size: 80%;
 }
 
-div.aldu-helpers-html-form-element label span.tooltip::before {
+div.aldu-core-view-helper-html-form-element label span.tooltip::before {
   content: '(';
 }
 
-div.aldu-helpers-html-form-element label span.tooltip::after {
+div.aldu-core-view-helper-html-form-element label span.tooltip::after {
   content: ')';
 }
 
-div.aldu-helpers-html-form-required label {
+div.aldu-core-view-helper-html-form-required label {
   font-weight: bold;
 }
 
-div.aldu-helpers-html-form-required label:after {
+div.aldu-core-view-helper-html-form-required label:after {
   color: #e32;
   content: '*';
   display: inline;
 }
 
+.ui-combobox {
+  position: relative;
+  display: inline-block;
+  margin-right: 2em;
+}
+
+.ui-combobox-toggle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-left: -1px;
+  padding: 0;
+}
+
+.ui-combobox-input ~ input {
+  border-left: 0px;
+}
+.ui-combobox-input ~ input,
+.ui-combobox-input {
+  margin: 0;
+  padding: 0.3em;
+}
+
+div.aldu-core-view-helper-html-form-datalist {
+	display: none;
+}
+
+input
 input[type=text],
 input[type=search],
-div.aldu-helpers-html-form-input input,
-div.aldu-helpers-html-form-textarea textarea {
+div.aldu-core-view-helper-html-form-input input,
+div.aldu-core-view-helper-html-form-textarea textarea {
   clear: both;
-  font-size: 100%;
   font-family: inherit;
-  padding: 4px; /* 1% */
+  padding: 0.3em;
   margin: 0px 0px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
 }
 
-div.aldu-helpers-html-form-input input,
-div.aldu-helpers-html-form-textarea textarea {
+div.aldu-core-view-helper-html-form-input input,
+div.aldu-core-view-helper-html-form-textarea textarea {
   width: 100%;
 }
 
-div.aldu-helpers-html-form-textarea textarea {
+div.aldu-core-view-helper-html-form-textarea textarea {
   resize: vertical;
   height: 10em;
 }
 
-div.aldu-helpers-html-form-select select {
+div.aldu-core-view-helper-html-form-select select {
   clear: both;
   font-size: 120%;
   vertical-align: baseline;
   margin-right: .5em;
 }
 
-div.aldu-helpers-html-form-select select[multiple=multiple] {
+div.aldu-core-view-helper-html-form-select select[multiple=multiple] {
   width: 100%;
 }
 
-div.aldu-helpers-html-form-select select option {
+div.aldu-core-view-helper-html-form-select select option {
   font-size: 120%;
   padding: 0 3px;
 }
 
-div.aldu-helpers-html-form-radio,
-div.aldu-helpers-html-form-checkbox {
+div.aldu-core-view-helper-html-form-radio,
+div.aldu-core-view-helper-html-form-checkbox {
   display: inline-block;
   white-space: nowrap;
 }
 
-div.aldu-helpers-html-form-radio,
-div.aldu-helpers-html-form-checkbox,
+div.aldu-core-view-helper-html-form-radio,
+div.aldu-core-view-helper-html-form-checkbox,
 input[type=radio],
 input[type=checkbox] {
   display: inline-block;
@@ -150,48 +177,48 @@ input[type=checkbox] {
   width: auto;
 }
 
-div.aldu-helpers-html-form-radio,
-div.aldu-helpers-html-form-checkbox {
+div.aldu-core-view-helper-html-form-radio,
+div.aldu-core-view-helper-html-form-checkbox {
   vertical-align: top;
 }
 
-div.aldu-helpers-html-form-radio label,
-div.aldu-helpers-html-form-checkbox label {
+div.aldu-core-view-helper-html-form-radio label,
+div.aldu-core-view-helper-html-form-checkbox label {
   display: inline-block;
   vertical-align: middle;
 }
 
-div.aldu-helpers-html-form-radio label span,
-div.aldu-helpers-html-form-checkbox label span {
+div.aldu-core-view-helper-html-form-radio label span,
+div.aldu-core-view-helper-html-form-checkbox label span {
   vertical-align: middle;
   clear: both;
 }
 
-div.aldu-helpers-html-form-radio label img,
-div.aldu-helpers-html-form-checkbox label img {
+div.aldu-core-view-helper-html-form-radio label img,
+div.aldu-core-view-helper-html-form-checkbox label img {
   vertical-align: middle;
   display: inline-block;
 }
 
-div.aldu-helpers-html-form-radio label a,
-div.aldu-helpers-html-form-checkbox label a {
+div.aldu-core-view-helper-html-form-radio label a,
+div.aldu-core-view-helper-html-form-checkbox label a {
   /*display: block;
   clear: both;*/
 }
 
-div.aldu-helpers-html-form-element > div.aldu-helpers-html-form-checkbox {
+div.aldu-core-view-helper-html-form-element > div.aldu-core-view-helper-html-form-checkbox {
   display: block;
 }
 
-div.aldu-helpers-html-form-hidden {
+div.aldu-core-view-helper-html-form-hidden {
   display: none;
 }
 
 /* Buttons and button links */
 
-div.aldu-helpers-html-form-button button,
-div.aldu-helpers-html-form-submit button,
-div.aldu-helpers-html-form-submit input,
+div.aldu-core-view-helper-html-form-button button,
+div.aldu-core-view-helper-html-form-submit button,
+div.aldu-core-view-helper-html-form-submit input,
 .button,
 .paginate_button,
 .paginate_active {
@@ -219,14 +246,14 @@ div.aldu-helpers-html-form-submit input,
   user-select: none;
 }
 
-div.aldu-helpers-html-form-submit {
+div.aldu-core-view-helper-html-form-submit {
   border: 0;
   clear: both;
   margin-top: 10px;
 }
 
-div.aldu-helpers-html-form-submit button,
-div.aldu-helpers-html-form-submit input {
+div.aldu-core-view-helper-html-form-submit button,
+div.aldu-core-view-helper-html-form-submit input {
   display: inline;
   font-size: 110%;
   width: auto;
@@ -239,7 +266,7 @@ div.aldu-helpers-html-form-submit input {
   padding: 8px 10px;
 }
 
-div.aldu-helpers-html-form-submit input:hover {
+div.aldu-core-view-helper-html-form-submit input:hover {
   background: #5BA150;
 }
 
@@ -287,7 +314,7 @@ button:disabled {
   margin: 0px;
 }
 
-div.aldu-helpers-html-form-element .error,
-div.aldu-helpers-html-form-element .invalid,
-div.aldu-helpers-html-form-element .missing {
+div.aldu-core-view-helper-html-form-element .error,
+div.aldu-core-view-helper-html-form-element .invalid,
+div.aldu-core-view-helper-html-form-element .missing {
 }
