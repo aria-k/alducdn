@@ -360,7 +360,7 @@ Aldu.extend({
                     }
                     if (event.keyCode === $.ui.keyCode.ENTER) {
                       var terms = this.value.split(/,\s*/);
-                      var names = $.map(terms, function(title) {
+                      $.map(terms, function(title) {
                         return title.toLowerCase().replace(/\s+/g, '-');
                       });
                     }
@@ -410,6 +410,26 @@ Aldu.extend({
                     minLength : 2
                   });
               });
+            $(form.elements).filter('textarea[data-editor]').autoload('ckeditor', function(i, textarea) {
+              $(textarea).ckeditor({
+                toolbar : 'Aldu',
+                toolbar_Aldu : [ { name: 'basicstyles', items : [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+                                     { name: 'paragraph', items : [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent' , '-', 'Blockquote', 'CreateDiv', '-',
+                                                                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl' ] },
+                                     { name: 'links', items : [ 'Link', 'Unlink', 'Anchor' ] },
+                                     { name: 'insert', items : [ 'Image', 'Table', '-', 'Source' ] } ],
+                removePlugins : 'resize',
+                extraPlugins : 'autogrow,codemirror',
+                autoGrow_onStartup : true,
+                forcePasteAsPlainText : true,
+                basicEntities: false,
+                entities : false,
+                contentsCss : [ 'aldu.ui.base.css' ],
+                ignoreEmptyParagraph: true,
+                autoParagraph: true,
+                filebrowserBrowseUrl : '/aldu/media/files',
+              });
+            });
             $(form.elements).filter('textarea[data-mode]').autoload(
               'codemirror', {
                 modes : [ 'php' ],
