@@ -55,6 +55,13 @@ fieldset.collapsed legend::after {
   content: ' ▸';
 }
 
+fieldset.aldu-core-view-helper-html-form-fieldset > div {
+  -webkit-column-count: 6;
+}
+fieldset.aldu-core-view-helper-html-form-fieldset > div > div {
+  width: 95%
+}
+
 div.aldu-core-view-helper-html-form-element {
   cursor: default;
   clear: both;

@@ -349,67 +349,50 @@ Aldu.extend({
               return valid ? true : [ name ];
             });
             Aldu.UI.Form.validator(form);
-            $(form.elements).filter('input[name*="Term"]').each(
-              function(i, input) {
-                $(input).on(
-                  'keydown.ui.aldu',
-                  function(event) {
-                    if (event.keyCode === $.ui.keyCode.TAB
-                      && $(this).data('autocomplete').menu.active) {
-                      event.preventDefault();
-                    }
-                    if (event.keyCode === $.ui.keyCode.ENTER) {
-                      var terms = this.value.split(/,\s*/);
-                      $.map(terms, function(title) {
-                        return title.toLowerCase().replace(/\s+/g, '-');
-                      });
-                    }
-                  }).autocomplete(
-                  {
-                    search : function() {
-                      var terms = this.value.split(/,\s*/).pop();
-                      if (terms.length < 2)
-                        return false;
-                    },
-                    select : function(event, ui) {
-                      var terms = this.value.split(/,\s*/);
-                      terms.pop();
-                      if (ui.item.value === terms[terms.length - 1])
-                        return false;
-                      terms.push(ui.item.value);
-                      terms.push('');
-                      this.value = terms.join(', ');
-                      return false;
-                    },
-                    focus : function(event, ui) {
-                      var terms = this.value.split(/,\s*/);
-                      terms.pop();
-                      terms.push(ui.item.value);
-                      terms.push('');
-                      this.value = terms.join(', ');
-                      return false;
-                    },
-                    source : function(req, add) {
-                      $.ajax({
-                        url : '/aldu/core/terms/ajax',
-                        data : {
-                          search : [ [ 'title', 'like',
-                            '%' + req.term.split(/,\s*/).pop() + '%' ] ]
-                        },
-                        success : function(data) {
-                          add($.map(data, function(item) {
-                            return {
-                              id : item.id,
-                              name : item.name,
-                              value : item.title
-                            };
-                          }));
-                        }
-                      });
-                    },
-                    minLength : 2
-                  });
+            $(form.elements).filter('select').autoload('jquery.chosen', function(i, select) {
+              $(select).chosen({
+                'allow_single_deselect' : true
               });
+            });
+            $(form.elements).filter('input[data-fields]').autoload('jquery.tagit',
+              function(i, input) {
+                var fields = $(input).data('fields').split(',');
+                var labelField = $(input).data('label');
+                var valueField = $(input).data('value');
+                $(input).tagit({
+                  tagSource : function(request, response) {
+                    var $or = [];
+                    var $and = [];
+                    $.each(fields, function(i, field) {
+                      var or = {};
+                      var nin = {};
+                      or[field] = '/^' + request.term + '/';
+                      nin[field] = {'$nin' : input.value.split(',')};
+                      $or.push(or);
+                      $and.push(nin);
+                    });
+                    var search = {
+                      '$or' : $or,
+                      '$and' : $and
+                    };
+                    $.ajax({
+                      'url' : $(input).data('source'),
+                      'data' : {
+                        'render' : 'json',
+                        'search' : search
+                      },
+                      'success' : function(data) {
+                        response($.map(data, function(model) {
+                          return {
+                            'value' : model[valueField]
+                          };
+                        }));
+                      }
+                    });
+                  }
+                });
+              }
+            );
             $(form.elements).filter('textarea[data-editor]').autoload('ckeditor', function(i, textarea) {
               $(textarea).ckeditor({
                 toolbar : 'Aldu',
@@ -736,21 +719,6 @@ Aldu.extend({
                 var li = $("<li></li>").data("item.autocomplete", item).append(anchor).appendTo(ul);
                 return li;
               };
-              if (select.data('search')) {
-                $("<a>").attr({
-                  tabIndex : -1,
-                  title : Aldu.t("Search")
-                })
-                .appendTo(wrapper).button({
-                  icons : {
-                    primary : "ui-icon-search"
-                  },
-                  text : false
-                }).removeClass("ui-corner-all").addClass(
-                  "ui-corner-right ui-combobox-toggle").click(function() {
-                });
-              }
-              else {
               $("<a>").attr("tabIndex", -1).attr("title", "Show All Items")
                 .appendTo(wrapper).button({
                   icons : {
@@ -774,7 +742,6 @@ Aldu.extend({
                   input.autocomplete("search", "");
                   input.focus();
                 });
-              }
             },
             destroy : function() {
               this.wrapper.remove();

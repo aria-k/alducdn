@@ -1,22 +1,26 @@
 @CHARSET "UTF-8";
-
+article.aldu-blog-views-article table,
 table.aldu-helpers-html-table {
   table-layout: fixed;
+  border-collapse: collapse;
   clear: both;
   color: #333;
-  /*background-color: #eee;*/
   margin-bottom: 10px;
   width: 100%;
 }
 
+article.aldu-blog-views-article table thead th,
 table.aldu-helpers-html-table thead th {
-  border-bottom: 2px solid #555;
+  border-top: 2px solid #555;
+  border-bottom: 1px solid #555;
 }
 
+article.aldu-blog-views-article table tfoot th,
 table.aldu-helpers-html-table tfoot th {
   border-top: 2px solid #555;
 }
 
+article.aldu-blog-views-article table th,
 table.aldu-helpers-html-table th {
   text-align: left;
   padding: 8px 4px;
@@ -43,19 +47,24 @@ table.aldu-helpers-html-table td.actions {
   text-align: center;
 }
 
+
 /*
 table.aldu-helpers-html-table td,
-table.aldu-helpers-html-table td > div {
+table.aldu-helpers-html-table td > div,*/
+article.aldu-blog-views-article table td {
   padding: 4px;
+  /*
   text-align: left;
   vertical-align: middle;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  */
 }
-*/
+
+article.aldu-blog-views-article table tr:nth-child(even),
 table.aldu-helpers-html-table tr:nth-child(even) {
-  /*background: #f9f9f9;*/
+  background: #f9f9f9;
 }
 
 table.aldu-core-view-tags colgroup col:first-child,

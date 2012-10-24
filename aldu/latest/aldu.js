@@ -734,6 +734,22 @@ var Aldu = {
         path : '/jquery.formutils/',
         js : [ 'jquery.formutils.min.js' ]
       },
+      'jquery.chosen' : {
+        depends : [ 'jquery' ],
+        version : 'latest',
+        host : 'cdn.aldu.net',
+        path : '/jquery.chosen/',
+        js : [ 'jquery.chosen.min.js' ],
+        css : [ 'jquery.chosen.min.css' ]
+      },
+      'jquery.tagit' : {
+        depends : [ 'jquery.ui' ],
+        version : 'latest',
+        host : 'cdn.aldu.net',
+        path : '/jquery.tagit/',
+        js : [ 'jquery.tagit.js' ],
+        css : [ 'jquery.tagit.css' ]
+      },
       'jquery.autosize' : {
         depends : [ 'jquery' ],
         version : '1.10',
@@ -835,7 +851,7 @@ var Aldu = {
       },
       'jquery.datatables' : {
         depends : [ 'jquery' ],
-        version : '1.9.3',
+        version : '1.9.4',
         host : 'ajax.aspnetcdn.com',
         path : '/ajax/jquery.dataTables/',
         js : [ 'jquery.dataTables.min.js' ],
