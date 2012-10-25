@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 article.aldu-blog-views-article table,
-table.aldu-helpers-html-table {
+table.aldu-core-view-helper-html-table {
   table-layout: fixed;
   border-collapse: collapse;
   clear: both;
@@ -10,47 +10,47 @@ table.aldu-helpers-html-table {
 }
 
 article.aldu-blog-views-article table thead th,
-table.aldu-helpers-html-table thead th {
+table.aldu-core-view-helper-html-table thead th {
   border-top: 2px solid #555;
   border-bottom: 1px solid #555;
 }
 
 article.aldu-blog-views-article table tfoot th,
-table.aldu-helpers-html-table tfoot th {
+table.aldu-core-view-helper-html-table tfoot th {
   border-top: 2px solid #555;
 }
 
 article.aldu-blog-views-article table th,
-table.aldu-helpers-html-table th {
+table.aldu-core-view-helper-html-table th {
   text-align: left;
   padding: 8px 4px;
 }
 
-table.aldu-helpers-html-table th.sorting_desc,
-table.aldu-helpers-html-table th.sorting_asc,
-table.aldu-helpers-html-table th.sorting {
+table.aldu-core-view-helper-html-table th.sorting_desc,
+table.aldu-core-view-helper-html-table th.sorting_asc,
+table.aldu-core-view-helper-html-table th.sorting {
   cursor: pointer;
 }
 
-table.aldu-helpers-html-table th.sorting_asc::after {
+table.aldu-core-view-helper-html-table th.sorting_asc::after {
   content: '⇣';
   float: right;
 }
 
-table.aldu-helpers-html-table th.sorting_desc::after {
+table.aldu-core-view-helper-html-table th.sorting_desc::after {
   content: '⇡';
   float: right;
 }
 
-table.aldu-helpers-html-table td.actions {
+table.aldu-core-view-helper-html-table td.actions {
   width: 1px;
   text-align: center;
 }
 
 
 /*
-table.aldu-helpers-html-table td,
-table.aldu-helpers-html-table td > div,*/
+table.aldu-core-view-helper-html-table td,
+table.aldu-core-view-helper-html-table td > div,*/
 article.aldu-blog-views-article table td {
   padding: 4px;
   /*
@@ -63,7 +63,7 @@ article.aldu-blog-views-article table td {
 }
 
 article.aldu-blog-views-article table tr:nth-child(even),
-table.aldu-helpers-html-table tr:nth-child(even) {
+table.aldu-core-view-helper-html-table tr:nth-child(even) {
   background: #f9f9f9;
 }
 
@@ -72,7 +72,7 @@ table.aldu-core-view-tagged colgroup col:first-child {
   width: 36px;
 }
 
-table.aldu-helpers-html-table tr td a.aldu-core-view-table-anchor {
+table.aldu-core-view-helper-html-table tr td a.aldu-core-view-table-anchor {
   text-decoration: inherit;
 }
 /** DataTables **/

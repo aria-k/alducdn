@@ -325,3 +325,7 @@ div.aldu-core-view-helper-html-form-element .error,
 div.aldu-core-view-helper-html-form-element .invalid,
 div.aldu-core-view-helper-html-form-element .missing {
 }
+
+.ui-autocomplete-loading {
+  background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
