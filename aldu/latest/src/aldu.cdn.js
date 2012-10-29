@@ -45,13 +45,11 @@ Aldu.CDN = {
       load : Aldu.CDN._load,
       options : {}
     }, Aldu.CDN.plugins[_plugin]);
-    var options = Aldu.extend({
-      version : plugin.version
-    }, _options);
+    var options = Aldu.extend(plugin.options, _options);
     if (Aldu.CDN.defaults.force.host) {
       plugin.host = Aldu.CDN.defaults.host;
     }
-    plugin.prefix = 'http://' + plugin.host + plugin.path + options.version + '/';
+    plugin.prefix = 'http://' + plugin.host + plugin.path + plugin.version + '/';
     for ( var i in plugin.js) {
       plugin.js[i] = plugin.prefix + plugin.js[i];
     }

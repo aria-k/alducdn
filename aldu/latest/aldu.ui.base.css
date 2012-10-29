@@ -210,6 +210,9 @@ a.aldu-core-model-action {
   display: block;
 }
 
+/* Table-like behaviour */
+.aldu-ui-grid,
+.aldu-ui-columns,
 .table,
 .columns {
   display: table;
@@ -217,26 +220,33 @@ a.aldu-core-model-action {
   border-collapse: collapse;
 }
 
+.aldu-ui-columns,
 .columns {
   width: 100%;
 }
 
+.aldu-ui-grid.fluid,
 .table.fluid {
   table-layout: auto;
 }
 
+.aldu-ui-grid.separate,
 .table.separate {
   border-collapse: separate;
 }
 
+.aldu-ui-grid.inline,
 .table.inline {
   display: inline-table;
 }
 
+.aldu-ui-row,
 .row {
   display: table-row;
 }
 
+.aldu-ui-cell,
+.aldu-ui-columns > .aldu-ui-row > .aldu-ui-cell,
 .cell,
 .columns > .row > .cell,
 .column {
@@ -244,12 +254,16 @@ a.aldu-core-model-action {
   vertical-align: top;
 }
 
+.aldu-ui-columns > .aldu-ui-row > .aldu-ui-cell,
+.aldu-ui-column,
 .columns > .row > .cell,
 .column {
   border-right: 1px solid #1a1a1a;
   padding: 0px 8px;
 }
 
+.aldu-ui-columns > .aldu-ui-row > .aldu-ui-cell:first-child,
+.aldu-ui-column:first-child,
 .columns > .row > .cell:first-child,
 .column:first-child {
   border-left: 1px solid #1a1a1a;

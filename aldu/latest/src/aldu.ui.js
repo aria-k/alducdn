@@ -1,5 +1,6 @@
 Aldu.extend({
   UI : {
+    engine : null,
     processHtml : function(context) {
       Aldu.UI.Form.init(context);
       Aldu.UI.Table.init(context);
@@ -13,7 +14,7 @@ Aldu.extend({
       Aldu.UI._processCallbacks.push(callback);
     },
     init : function(context) {
-      Aldu.UI.processHtml(context);
+      return Aldu.UI.processHtml(context);
     }
   }
 });

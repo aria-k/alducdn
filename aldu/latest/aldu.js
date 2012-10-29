@@ -474,13 +474,11 @@ Aldu.CDN = {
       load : Aldu.CDN._load,
       options : {}
     }, Aldu.CDN.plugins[_plugin]);
-    var options = Aldu.extend({
-      version : plugin.version
-    }, _options);
+    var options = Aldu.extend(plugin.options, _options);
     if (Aldu.CDN.defaults.force.host) {
       plugin.host = Aldu.CDN.defaults.host;
     }
-    plugin.prefix = 'http://' + plugin.host + plugin.path + options.version + '/';
+    plugin.prefix = 'http://' + plugin.host + plugin.path + plugin.version + '/';
     for ( var i in plugin.js) {
       plugin.js[i] = plugin.prefix + plugin.js[i];
     }
@@ -546,9 +544,10 @@ Aldu.CDN.plugins = {
     path : '/ajax/libs/scriptaculous/',
     js : [ 'scriptaculous.js' ]
   },
-  'twitter-bootstrap' : {
+  'bootstrap' : {
     version : '2.1.1',
     host : 'netdna.bootstrapcdn.com',
+    path : '/twitter-bootstrap/',
     js : [ 'js/bootstrap.min.js' ],
     css : [ 'css/bootstrap-combined.min.css' ]
   },
@@ -638,7 +637,7 @@ Aldu.CDN.plugins = {
     },
     addins : {
       'bootstrap' : {
-        depends : [ 'twitter-bootstrap' ],
+        depends : [ 'bootstrap' ],
         css : [ 'css/jquery.fileupload-ui.css' ],
         js : [ 'js/jquery.fileupload-ui.js' ]
       },
@@ -684,11 +683,20 @@ Aldu.CDN.plugins = {
     js : [ 'aldu.jquery.min.js' ]
   },
   'aldu.ui' : {
-    depends : [ 'aldu.jquery', 'jquery.ui' ],
+    depends : [ 'aldu.jquery' ],
     path : '/aldu/',
     css : [ 'aldu.ui.min.css' ],
     js : [ 'aldu.ui.min.js' ],
+    options : {
+      engine : 'jquery.ui',
+    },
+    preload : function(plugin, options) {
+      plugin.depends.push(options.engine);
+      console.log('preload depends ' + options.engine);
+    },
     load : function(plugin, options) {
+      Aldu.UI.engine = options.engine;
+      console.log('load set Aldu.UI.engine = ' + options.engine);
       Aldu.UI.init();
       Aldu.CDN._load(plugin, options);
     }
@@ -758,8 +766,7 @@ Aldu.CDN.plugins = {
     options : {
       parsetage : 'onload'
     },
-    preload : function(plugin, _options) {
-      var options = Aldu.extend(plugin.options, _options);
+    preload : function(plugin, options) {
       window.___gcfg = {
         // lang : 'en-US',
         parsetags : options.parsetag
@@ -780,8 +787,7 @@ Aldu.CDN.plugins = {
       oauth : true,
       xfbml : true
     },
-    load : function(plugin, _options) {
-      var options = Aldu.extend(plugin.options, _options);
+    load : function(plugin, options) {
       window.fbAsyncInit = function() {
         FB.init(options);
         Aldu.CDN._load(plugin, options);
@@ -1385,124 +1391,123 @@ Aldu.CDN.plugins = {
     path : '/codemirror/',
     css : [ 'lib/codemirror.css' ],
     js : [ 'lib/codemirror.js' ],
-    options : {
-      modes : {
-        'clike' : {
-          js : [ 'mode/clike/clike.js' ]
-        },
-        'clojure' : {
-          js : [ 'mode/clojure/clojure.js' ]
-        },
-        'coffeescript' : {
-          js : [ 'mode/coffeescript/coffescript.js' ]
-        },
-        'css' : {
-          js : [ 'mode/css/css.js' ]
-        },
-        'diff' : {
-          css : [ 'mode/diff/diff.css' ],
-          js : [ 'mode/diff/diff.js' ]
-        },
-        'gfm' : {
-          js : [ 'mode/gfm/gfm.js' ]
-        },
-        'groovy' : {
-          js : [ 'mode/groovy/groovy.js' ]
-        },
-        'haskell' : {
-          js : [ 'mode/haskell/haskell.js' ]
-        },
-        'htmlembedded' : {
-          js : [ 'mode/htmlembedded/htmlembedded.js' ]
-        },
-        'htmlmixed' : {
-          depends : [ 'xml', 'javascript', 'css' ],
-          js : [ 'mode/htmlmixed/htmlmixed.js' ]
-        },
-        'javascript' : {
-          js : [ 'mode/javascript/javascript.js' ]
-        },
-        'jinja2' : {
-          js : [ 'mode/jinja2/jinja2.js' ]
-        },
-        'lua' : {
-          js : [ 'mode/lua/lua.js' ]
-        },
-        'markdown' : {
-          js : [ 'mode/markdown/markdown.js' ]
-        },
-        'ntriples' : {
-          js : [ 'mode/ntriples/ntriples.js' ]
-        },
-        'pascal' : {
-          js : [ 'mode/pascal/pascal.js' ]
-        },
-        'perl' : {
-          js : [ 'mode/perl/perl.js' ]
-        },
-        'php' : {
-          depends : [ 'htmlmixed', 'clike' ],
-          js : [ 'mode/php/php.js' ]
-        },
-        'plsql' : {
-          js : [ 'mode/plsql/plsql.js' ]
-        },
-        'python' : {
-          js : [ 'mode/python/python.js' ]
-        },
-        'r' : {
-          js : [ 'mode/r/r.js' ]
-        },
-        'rpm' : {
-          js : [ 'mode/rpm/rpm.js' ]
-        },
-        'rst' : {
-          js : [ 'mode/rst/rst.js' ]
-        },
-        'ruby' : {
-          js : [ 'mode/ruby/ruby.js' ]
-        },
-        'rust' : {
-          js : [ 'mode/rust/rust.js' ]
-        },
-        'scheme' : {
-          js : [ 'mode/scheme/scheme.js' ]
-        },
-        'smalltalk' : {
-          js : [ 'mode/smalltalk/smalltalk.js' ]
-        },
-        'sparql' : {
-          js : [ 'mode/sparql/sparql.js' ]
-        },
-        'stex' : {
-          js : [ 'mode/stex/stex.js' ]
-        },
-        'tiddlywiki' : {
-          css : [ 'mode/tiddlywiki/tiddlywiki.css' ],
-          js : [ 'mode/tiddlywiki/tiddlywiki.js' ]
-        },
-        'velocity' : {
-          js : [ 'mode/velocity/velocity.js' ]
-        },
-        'xml' : {
-          js : [ 'mode/xml/xml.js' ]
-        },
-        'xmlpure' : {
-          js : [ 'mode/xmlpure/xmlpure.js' ]
-        },
-        'yaml' : {
-          js : [ 'mode/yaml/yaml.js' ]
-        }
+    options : {},
+    modes : {
+      'clike' : {
+        js : [ 'mode/clike/clike.js' ]
       },
-      themes : {
-        'cobalt' : 'theme/cobalt.css',
-        'eclipse' : 'theme/eclipse.css',
-        'elegant' : 'theme/elegant.css',
-        'monokai' : 'theme/monokai.css',
-        'neat' : 'theme/neat.css',
-        'night' : 'theme/night.css',
-        'rubyblue' : 'theme/rubyblue.css'
+      'clojure' : {
+        js : [ 'mode/clojure/clojure.js' ]
+      },
+      'coffeescript' : {
+        js : [ 'mode/coffeescript/coffescript.js' ]
+      },
+      'css' : {
+        js : [ 'mode/css/css.js' ]
+      },
+      'diff' : {
+        css : [ 'mode/diff/diff.css' ],
+        js : [ 'mode/diff/diff.js' ]
+      },
+      'gfm' : {
+        js : [ 'mode/gfm/gfm.js' ]
+      },
+      'groovy' : {
+        js : [ 'mode/groovy/groovy.js' ]
+      },
+      'haskell' : {
+        js : [ 'mode/haskell/haskell.js' ]
+      },
+      'htmlembedded' : {
+        js : [ 'mode/htmlembedded/htmlembedded.js' ]
+      },
+      'htmlmixed' : {
+        depends : [ 'xml', 'javascript', 'css' ],
+        js : [ 'mode/htmlmixed/htmlmixed.js' ]
+      },
+      'javascript' : {
+        js : [ 'mode/javascript/javascript.js' ]
+      },
+      'jinja2' : {
+        js : [ 'mode/jinja2/jinja2.js' ]
+      },
+      'lua' : {
+        js : [ 'mode/lua/lua.js' ]
+      },
+      'markdown' : {
+        js : [ 'mode/markdown/markdown.js' ]
+      },
+      'ntriples' : {
+        js : [ 'mode/ntriples/ntriples.js' ]
+      },
+      'pascal' : {
+        js : [ 'mode/pascal/pascal.js' ]
+      },
+      'perl' : {
+        js : [ 'mode/perl/perl.js' ]
+      },
+      'php' : {
+        depends : [ 'htmlmixed', 'clike' ],
+        js : [ 'mode/php/php.js' ]
+      },
+      'plsql' : {
+        js : [ 'mode/plsql/plsql.js' ]
+      },
+      'python' : {
+        js : [ 'mode/python/python.js' ]
+      },
+      'r' : {
+        js : [ 'mode/r/r.js' ]
+      },
+      'rpm' : {
+        js : [ 'mode/rpm/rpm.js' ]
+      },
+      'rst' : {
+        js : [ 'mode/rst/rst.js' ]
+      },
+      'ruby' : {
+        js : [ 'mode/ruby/ruby.js' ]
+      },
+      'rust' : {
+        js : [ 'mode/rust/rust.js' ]
+      },
+      'scheme' : {
+        js : [ 'mode/scheme/scheme.js' ]
+      },
+      'smalltalk' : {
+        js : [ 'mode/smalltalk/smalltalk.js' ]
+      },
+      'sparql' : {
+        js : [ 'mode/sparql/sparql.js' ]
+      },
+      'stex' : {
+        js : [ 'mode/stex/stex.js' ]
+      },
+      'tiddlywiki' : {
+        css : [ 'mode/tiddlywiki/tiddlywiki.css' ],
+        js : [ 'mode/tiddlywiki/tiddlywiki.js' ]
+      },
+      'velocity' : {
+        js : [ 'mode/velocity/velocity.js' ]
+      },
+      'xml' : {
+        js : [ 'mode/xml/xml.js' ]
+      },
+      'xmlpure' : {
+        js : [ 'mode/xmlpure/xmlpure.js' ]
+      },
+      'yaml' : {
+        js : [ 'mode/yaml/yaml.js' ]
       }
+    },
+    themes : {
+      'cobalt' : 'theme/cobalt.css',
+      'eclipse' : 'theme/eclipse.css',
+      'elegant' : 'theme/elegant.css',
+      'monokai' : 'theme/monokai.css',
+      'neat' : 'theme/neat.css',
+      'night' : 'theme/night.css',
+      'rubyblue' : 'theme/rubyblue.css'
     },
     load : function(plugin, _options) {
       if (jQuery) {
@@ -1550,13 +1555,13 @@ Aldu.CDN.plugins = {
       }, _options);
       var loadMode = function(v, callback, args) {
         Aldu.log('Aldu.CDN.plugin.codemirror.load: loading ' + v, 4);
-        if (typeof plugin.options.modes[v] === 'undefined')
+        if (typeof plugin.modes[v] === 'undefined')
           return false;
         var mode = $.extend({
           depends : [],
           js : [],
           css : []
-        }, plugin.options.modes[v]);
+        }, plugin.modes[v]);
         for ( var i in mode.js) {
           mode.js[i] = plugin.prefix + mode.js[i];
         }
@@ -1580,9 +1585,9 @@ Aldu.CDN.plugins = {
         Aldu.CDN._load(plugin, options);
       }
       Aldu.each(options.themes, function(i, theme) {
-        if (typeof plugin.options.themes[theme] === 'undefined')
+        if (typeof plugin.themes[theme] === 'undefined')
           return;
-        var path = plugin.options.themes[theme];
+        var path = plugin.themes[theme];
         Aldu.load(plugin.prefix + path);
       });
     }
@@ -1591,10 +1596,9 @@ Aldu.CDN.plugins = {
     path : '/ckeditor/',
     js : [ 'ckeditor.js' ],
     depends : [ 'codemirror' ],
-    options : {
-      adapters : {
-        jquery : [ 'adapters/jquery.js' ]
-      }
+    options : {},
+    adapters : {
+      jquery : [ 'adapters/jquery.js' ]
     },
     load : function(plugin, options) {
       CKEDITOR.on('instanceReady', function(event) {
@@ -1655,7 +1659,7 @@ Aldu.CDN.plugins = {
         }
       });
       if (jQuery) {
-        Aldu.load(plugin.prefix + plugin.options.adapters['jquery'],
+        Aldu.load(plugin.prefix + plugin.adapters['jquery'],
             function() {
               Aldu.CDN._load(plugin, options);
             });
