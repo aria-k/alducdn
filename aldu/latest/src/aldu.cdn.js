@@ -2,9 +2,7 @@ Aldu.CDN = {
   defaults : {
     host : 'cdn.aldu.net',
     version : 'latest',
-    force : {
-      host : false
-    }
+    force : false
   },
   _load : function(plugin, options) {
     Aldu.log('Aldu.CDN.require: ' + plugin.name + ' loaded', 2);
@@ -48,7 +46,7 @@ Aldu.CDN = {
     var options = Aldu.extend({
       version : plugin.version
     }, _options);
-    if (Aldu.CDN.defaults.force.host) {
+    if (Aldu.CDN.defaults.force) {
       plugin.host = Aldu.CDN.defaults.host;
     }
     plugin.prefix = 'http://' + plugin.host + plugin.path + options.version + '/';

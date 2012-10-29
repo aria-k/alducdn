@@ -409,14 +409,14 @@ var Aldu = {
     var text = args.shift();
     return text;
   },
-  init : function(plugins, callback) {
+  init : function(plugins, callback, args) {
     Aldu.IE.init();
     if (document.addEventListener) {
       document.addEventListener("DOMContentLoaded", function() {
         Aldu._loaded = true;
       }, false);
     }
-    Aldu.chain(Aldu.CDN.require, plugins, callback);
+    Aldu.chain(Aldu.CDN.require, plugins, callback, args);
   }
 };
 
@@ -431,9 +431,7 @@ Aldu.CDN = {
   defaults : {
     host : 'cdn.aldu.net',
     version : 'latest',
-    force : {
-      host : false
-    }
+    force : false
   },
   _load : function(plugin, options) {
     Aldu.log('Aldu.CDN.require: ' + plugin.name + ' loaded', 2);
@@ -477,7 +475,7 @@ Aldu.CDN = {
     var options = Aldu.extend({
       version : plugin.version
     }, _options);
-    if (Aldu.CDN.defaults.force.host) {
+    if (Aldu.CDN.defaults.force) {
       plugin.host = Aldu.CDN.defaults.host;
     }
     plugin.prefix = 'http://' + plugin.host + plugin.path + options.version + '/';
@@ -1666,18 +1664,6 @@ Aldu.CDN.plugins = {
 
 /*
  * END OF FILE - /alducdn/aldu/latest/src/aldu.cdn.plugins.js
- */
-
-/*
- * START OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
- */
-Aldu.extend(Aldu.CDN.plugins, {
-  'jquery.combobox' : {
-    depends : [ 'jquery.ui' ]
-  }
-});
-/*
- * END OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
  */
 
 /*

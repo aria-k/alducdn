@@ -286,10 +286,12 @@ a.aldu-core-model-action {
   font-size: .25em;
 }
 
+.aldu-ui-float-left,
 .float-left {
   float: left;
 }
 
+.aldu-ui-float-rigth,
 .float-right {
   float: right;
 }
