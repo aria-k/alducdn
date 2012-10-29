@@ -466,8 +466,8 @@ Aldu.CDN = {
       name : _plugin,
       version : Aldu.CDN.defaults.version,
       host : Aldu.CDN.defaults.host,
-      path : '',
-      js : [],
+      path : '/' + _plugin + '/',
+      js : [ _plugin + '.min.js' ],
       css : [],
       depends : [],
       preload : null,
@@ -546,6 +546,17 @@ Aldu.CDN.plugins = {
     path : '/ajax/libs/scriptaculous/',
     js : [ 'scriptaculous.js' ]
   },
+  'twitter-bootstrap' : {
+    version : '2.1.1',
+    host : 'netdna.bootstrapcdn.com',
+    js : [ 'js/bootstrap.min.js' ],
+    css : [ 'css/bootstrap-combined.min.css' ]
+  },
+  'font-awesome' : {
+    version : '2.0',
+    host : 'netdns.bootstrapcdn.com',
+    css : [ 'css/font-awsome.css' ]
+  },
   'jquery' : {
     version : '1.8.2',
     host : 'ajax.googleapis.com',
@@ -619,6 +630,53 @@ Aldu.CDN.plugins = {
     version : '1.2.7',
     path : '/jquery.tools/',
     js : [ 'jquery.tools.min.js' ]
+  },
+  'jquery.fileupload' : {
+    depends : [ 'jquery.ui' ],
+    options : {
+      addins : [ 'iframe' ]
+    },
+    addins : {
+      'bootstrap' : {
+        depends : [ 'twitter-bootstrap' ],
+        css : [ 'css/jquery.fileupload-ui.css' ],
+        js : [ 'js/jquery.fileupload-ui.js' ]
+      },
+      'iframe' : {
+        js : [ 'js/jquery.iframe-transport.js' ]
+      },
+      'processing' : {
+        js : [ 'js/jquery.fileupload-fp.js' ]
+      }
+    },
+    js : [ 'js/vendor/jquery.ui.widget.js', 'js/jquery.fileupload.js' ],
+    load : function(plugin, _options) {
+      var options = Aldu.extend(plugin.options, _options);
+      var depends = [];
+      var assets = [];
+      for (var o in options.addins) {
+        if (typeof plugin.addins[options.addins[o]] === 'undefined') {
+          Aldu.log('Unknow ' + plugin.name + ' addin `' + options.addins[o] + '`', 2);
+        }
+        else {
+          var addin = Aldu.extend({
+            depends : [],
+            js : [],
+            css : []
+          }, plugin.addins[options.addins[o]]);
+          depends = depends.concat(addin.depends); 
+          for ( var i in addin.js ) {
+            addin.js[i] = plugin.prefix + addin.js[i];
+          }
+          for ( var i in addin.css ) {
+            addin.css[i] = plugin.prefix + addin.css[i];
+          }
+          assets = assets.concat(addin.js, addin.css);
+        }
+      }
+      Aldu.chain(Aldu.CDN.require, depends, Aldu.chain, [Aldu.load, assets]);
+      Aldu.CDN._load(plugin, options);
+    }
   },
   'aldu.jquery' : {
     depends : [ 'jquery' ],
@@ -1608,6 +1666,18 @@ Aldu.CDN.plugins = {
 
 /*
  * END OF FILE - /alducdn/aldu/latest/src/aldu.cdn.plugins.js
+ */
+
+/*
+ * START OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
+ */
+Aldu.extend(Aldu.CDN.plugins, {
+  'jquery.combobox' : {
+    depends : [ 'jquery.ui' ]
+  }
+});
+/*
+ * END OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
  */
 
 /*

@@ -41,21 +41,68 @@ dl dd {
   padding-left: 1em;
 }
 
-/* Messages */
-.aldu-helpers-ui-message {
-  clear: both;
-  color: #fff;
-  font-size: 140%;
-  font-weight: bold;
-  margin: 0 0 1em 0;
-  padding: 5px;
+/* Page */
+#aldu-core-view-helper-html-page-content img,
+#aldu-core-view-helper-html-page-content video {
+  max-width: 100%;
 }
 
-.aldu-helpers-ui-message,
-.aldu-helpers-ui-success,
-.aldu-helpers-ui-notice,
-.aldu-helpers-ui-error,
-.aldu-helpers-ui-debug {
+ul.aldu-core-view-listview li {
+  display: block;
+  position: relative;
+  min-height: 60px;
+}
+
+ul.aldu-media-views-image-listview li {
+  display: block;
+  position: relative;
+  padding-left: 100px;
+  padding-right: 40px;
+  min-height: 60px;
+}
+
+ul.aldu-core-view-listview img:first-child {
+  float: left;
+  position: absolute;
+  left: 1px;
+  top: 0;
+  max-height: 80px;
+}
+
+/* Messages */
+.aldu-core-view-helper-html-ui-message {
+  clear: both;
+  color: #fff;
+  font-size: 100%;
+  margin: 1em 0;
+  padding: 0.8em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.aldu-core-view-helper-html-ui-message strong {
+  padding: 0.4em;
+}
+
+.aldu-core-view-helper-html-ui-message.info {
+  background: #0088cc;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #0088cc, #000088);
+  background-image: -ms-linear-gradient(top, #0088cc, #000088);
+  background-image: -webkit-linear-gradient(top, #0088cc, #000088);
+  background-image: -o-linear-gradient(top, #0088cc, #000088);
+  background-image: linear-gradient(top, #0088cc, #000088);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  margin-bottom: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.aldu-core-view-helper-html-ui-message.notice {
   background: #ffcc00;
   background-repeat: repeat-x;
   background-image: -moz-linear-gradient(top, #ffcc00, #E6B800);
@@ -63,41 +110,29 @@ dl dd {
   background-image: -webkit-linear-gradient(top, #ffcc00, #E6B800);
   background-image: -o-linear-gradient(top, #ffcc00, #E6B800);
   background-image: linear-gradient(top, #ffcc00, #E6B800);
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 18px;
-  padding: 7px 14px;
   color: #404040;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
   -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.aldu-helpers-ui-message,
-.aldu-helpers-ui-success,
-.aldu-helpers-ui-error,
-.aldu-helpers-ui-debug {
-  clear: both;
-  color: #fff;
+.aldu-core-view-helper-html-ui-message.error {
   background: #c43c35;
-  border: 1px solid rgba(0, 0, 0, 0.5);
   background-repeat: repeat-x;
   background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
   background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
   background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
   background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
   background-image: linear-gradient(top, #ee5f5b, #c43c35);
+  color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-.aldu-helpers-ui-success {
-  clear: both;
-  color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+.aldu-core-view-helper-html-ui-message.success {
   background: #3B8230;
   background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
@@ -105,19 +140,12 @@ dl dd {
   background-image: -ms-linear-gradient(top, #76BF6B, #3B8230);
   background-image: -o-linear-gradient(top, #76BF6B, #3B8230);
   background-image: linear-gradient(top, #76BF6B, #3B8230);
+  color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-.aldu-helpers-ui-success,
-.aldu-helpers-ui-notice,
-.aldu-helpers-ui-error,
-.aldu-helpers-ui-debug {
-  font-size: 100%;
-  padding: 0.8em;
-  margin: 1em 0;
-}
-
-.aldu-helpers-ui-debug {
+.aldu-core-view-helper-html-ui-message.debug {
   font-family: Monaco, Consolas, Courier, monospace;
   white-space: pre-wrap;
   color: #000;
