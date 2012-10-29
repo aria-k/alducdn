@@ -1,7 +1,7 @@
 Aldu.UI.Panel = {
   init : function(context) {
     Aldu.ready(function() {
-      $('.aldu-helpers-panel').each(function(i, panel) {
+      $('.aldu-ui-panel').each(function(i, panel) {
         var status = $(panel).data('status');
         var height = $(panel).outerHeight(true);
         var parent = $(panel).parent();

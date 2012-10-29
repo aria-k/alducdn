@@ -402,13 +402,13 @@ var Aldu = {
     var text = args.shift();
     return text;
   },
-  init : function(plugins, callback) {
+  init : function(plugins, callback, args) {
     Aldu.IE.init();
     if (document.addEventListener) {
       document.addEventListener("DOMContentLoaded", function() {
         Aldu._loaded = true;
       }, false);
     }
-    Aldu.chain(Aldu.CDN.require, plugins, callback);
+    Aldu.chain(Aldu.CDN.require, plugins, callback, args);
   }
 };

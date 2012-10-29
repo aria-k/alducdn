@@ -16,5 +16,6 @@
         }, [ this, each ]);
       }
     }
+    return this;
   };
 })( jQuery );
