@@ -629,7 +629,7 @@ Aldu.CDN.plugins = {
     js : [ 'jquery.tools.min.js' ]
   },
   'jquery.fileupload' : {
-    depends : [ 'jquery.ui' ],
+    depends : [ 'jquery' ],
     options : {
       addins : [ 'iframe' ]
     },
@@ -686,15 +686,15 @@ Aldu.CDN.plugins = {
     css : [ 'aldu.ui.min.css' ],
     js : [ 'aldu.ui.min.js' ],
     options : {
-      engine : 'jquery.ui',
+      engine : null,
     },
     preload : function(plugin, options) {
-      plugin.depends.push(options.engine);
-      console.log('preload depends ' + options.engine);
+      if (options.engine) {
+        plugin.depends.push(options.engine);
+      }
     },
     load : function(plugin, options) {
       Aldu.UI.engine = options.engine;
-      console.log('load set Aldu.UI.engine = ' + options.engine);
       Aldu.UI.init();
       Aldu.CDN._load(plugin, options);
     }
@@ -1656,11 +1656,13 @@ Aldu.CDN.plugins = {
           });
         }
       });
-      if (jQuery) {
-        Aldu.load(plugin.prefix + plugin.adapters['jquery'],
-            function() {
-              Aldu.CDN._load(plugin, options);
-            });
+      if (0&&jQuery) {
+        Aldu.load(plugin.prefix + plugin.adapters['jquery'], function() {
+          Aldu.CDN._load(plugin, options);
+        });
+      }
+      else {
+        Aldu.CDN._load(plugin, options);
       }
     }
   }

@@ -191,6 +191,7 @@ div.aldu-core-view-helper-html-form-checkbox {
 
 div.aldu-core-view-helper-html-form-radio label,
 div.aldu-core-view-helper-html-form-checkbox label {
+  font-size: 100%;
   display: inline-block;
   vertical-align: middle;
 }
