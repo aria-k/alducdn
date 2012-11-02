@@ -31,7 +31,7 @@ Aldu.CDN.plugins = {
     js : [ 'scriptaculous.js' ]
   },
   'bootstrap' : {
-    version : '2.1.1',
+    version : '2.2.1',
     host : 'netdna.bootstrapcdn.com',
     path : '/twitter-bootstrap/',
     js : [ 'js/bootstrap.min.js' ],
@@ -109,6 +109,9 @@ Aldu.CDN.plugins = {
     path : '/jquery.mobile/',
     version : 'autocomplete',
     js : [ 'jquery.mobile.autocomplete.js' ]
+  },
+  'jquery.bootstrap.validation' : {
+    depends : [ 'jquery' ]
   },
   'jquery.tools' : {
     depends : [ 'jquery' ],
@@ -195,6 +198,7 @@ Aldu.CDN.plugins = {
   },
   'google.chrome-frame' : {
     depends : [ 'google' ],
+    js : [],
     version : '1.0.2',
     load : function(plugin, _options) {
       var options = Aldu.extend({}, _options);
@@ -207,6 +211,7 @@ Aldu.CDN.plugins = {
   },
   'google.maps' : {
     depends : [ 'google' ],
+    js : [],
     version : '3',
     load : function(plugin, _options) {
       var options = Aldu.extend({
@@ -226,6 +231,7 @@ Aldu.CDN.plugins = {
       domainName : 'none',
       allowLinker : true
     },
+    js : [],
     load : function(plugin, _options) {
       var options = Aldu.extend(plugin.options, _options);
       window._gaq = [];
@@ -352,7 +358,7 @@ Aldu.CDN.plugins = {
     js : [ 'jquery.visualize.min.js' ]
   },
   'jquery.mobiscroll' : {
-    depends : [ 'jquery.ui' ],
+    depends : [ 'jquery' ],
     path : '/jquery.mobiscroll/',
     js : [ 'jquery.mobiscroll.min.js' ],
     css : [ 'jquery.mobiscroll.min.css' ]
@@ -362,6 +368,11 @@ Aldu.CDN.plugins = {
     path : '/jquery.timepicker/',
     js : [ 'jquery.timepicker.min.js' ],
     css : [ 'jquery.timepicker.min.css' ]
+  },
+  'jquery.simplecolorpicker' : {
+    depends : [ 'jquery' ],
+    js : [ 'jquery.simplecolorpicker.js' ],
+    css : [ 'jquery.simplecolorpicker.css' ]
   },
   'jquery.jloupe' : {
     depends : [ 'jquery' ],
