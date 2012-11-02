@@ -50,7 +50,7 @@ Aldu.CDN.plugins = {
   },
   'jquery.ui' : {
     depends : [ 'jquery' ],
-    version : '1.8.21',
+    version : '1.9.0',
     host : 'ajax.googleapis.com',
     path : '/ajax/libs/jqueryui/',
     js : [ 'jquery-ui.min.js' ],

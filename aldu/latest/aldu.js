@@ -474,7 +474,7 @@ Aldu.CDN = {
     }, Aldu.CDN.plugins[_plugin]);
     var options = Aldu.extend(plugin.options, _options);
     if (Aldu.CDN.defaults.force) {
-      plugin.host = Aldu.CDN.defaults.host;
+      plugin = Aldu.extend(plugin, Aldu.CDN.defaults, {path : '/' + _plugin + '/'});
     }
     plugin.prefix = 'http://' + plugin.host + plugin.path + plugin.version + '/';
     for ( var i in plugin.js) {
@@ -562,7 +562,7 @@ Aldu.CDN.plugins = {
   },
   'jquery.ui' : {
     depends : [ 'jquery' ],
-    version : '1.8.21',
+    version : '1.9.0',
     host : 'ajax.googleapis.com',
     path : '/ajax/libs/jqueryui/',
     js : [ 'jquery-ui.min.js' ],
@@ -1681,18 +1681,6 @@ Aldu.CDN.plugins = {
 
 /*
  * END OF FILE - /alducdn/aldu/latest/src/aldu.cdn.plugins.js
- */
-
-/*
- * START OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
- */
-Aldu.extend(Aldu.CDN.plugins, {
-  'jquery.combobox' : {
-    depends : [ 'jquery.ui' ]
-  }
-});
-/*
- * END OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
  */
 
 /*
