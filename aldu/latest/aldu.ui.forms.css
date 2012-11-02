@@ -67,7 +67,7 @@ div.aldu-core-view-helper-html-form-element {
   clear: both;
   /*margin-bottom: .5em;*/
   padding: .5em;
-  vertical-align: text-top;
+  /*vertical-align: text-top;*/
 }
 
 div.aldu-core-view-helper-html-form-element label {

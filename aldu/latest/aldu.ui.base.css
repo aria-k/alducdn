@@ -210,6 +210,27 @@ a.aldu-core-model-action {
   display: block;
 }
 
+/* Scaffolding */
+
+.aldu-ui-cell-1 {
+  width: 50px;
+}
+.aldu-ui-cell-2 {
+	width: 150px;
+}
+.aldu-ui-cell-3 {
+  width: 250px;
+}
+.aldu-ui-cell-4 {
+  width: 500px;
+}
+.aldu-ui-cell-5 {
+  width: 750px;
+}
+.aldu-ui-cell-6 {
+  width: 1000px;
+}
+
 /* Table-like behaviour */
 .aldu-ui-grid,
 .aldu-ui-columns,

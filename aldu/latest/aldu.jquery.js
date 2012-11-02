@@ -28,11 +28,11 @@
     case 'form':
       switch (keys.shift()) {
       case 'element':
-        var model = this.data('model');
-        var index = this.data('index');
-        var name = this.data('name');
-        var rel = shift.call(arguments);
-        var target = model + '[' + index + '][' + rel + ']';
+        var options = shift.call(arguments);
+        var model = options.model || this.data('model');
+        var index = options.index || this.data('index');
+        var name = options.name;
+        var target = model + '[' + index + '][' + name + ']';
         return $('[name="' + $.escape(target) + '"]');
       }
     }

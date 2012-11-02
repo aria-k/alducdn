@@ -554,6 +554,10 @@ Aldu.CDN.plugins = {
     host : 'netdns.bootstrapcdn.com',
     css : [ 'css/font-awsome.css' ]
   },
+  'underscore' : {},
+  'backbone' : {
+    depends : ['underscore']
+  },
   'jquery' : {
     version : '1.8.2',
     host : 'ajax.googleapis.com',
@@ -627,9 +631,7 @@ Aldu.CDN.plugins = {
   },
   'jquery.tools' : {
     depends : [ 'jquery' ],
-    version : '1.2.7',
-    path : '/jquery.tools/',
-    js : [ 'jquery.tools.min.js' ]
+    version : '1.2.8',
   },
   'jquery.fileupload' : {
     depends : [ 'jquery' ],
@@ -836,49 +838,53 @@ Aldu.CDN.plugins = {
     js : [ 'jquery.gmap.min.js', 'jquery.gmap.ext.js' ]
   },
   'jquery.imgload' : {
-    depends : [ 'jquery' ],
-    path : '/jquery.imgload/',
-    js : [ 'jquery.imgload.min.js' ]
+    depends : [ 'jquery' ]
   },
   'jquery.formutils' : {
-    depends : [ 'jquery' ],
-    path : '/jquery.formutils/',
-    js : [ 'jquery.formutils.min.js' ]
+    depends : [ 'jquery' ]
   },
   'jquery.chosen' : {
     depends : [ 'jquery' ],
-    path : '/jquery.chosen/',
-    js : [ 'jquery.chosen.min.js' ],
-    css : [ 'jquery.chosen.min.css' ]
+    ui : {
+      'chosen' : {
+        css : 'jquery.chosen.min.css'
+      },
+      'bootstrap' : {
+        css : 'jquery.chosen.bootstrap.css'
+      }
+    },
+    load : function(plugin, options) {
+      if (Aldu.CDN.plugins.bootstrap.status === 'loaded') {
+        Aldu.load(plugin.prefix + plugin.ui.bootstrap.css);
+      }
+      else {
+        Aldu.load(plugin.prefix + plugin.ui.chosen.css);
+      }
+      Aldu.CDN._load(plugin, options);
+    }
   },
   'jquery.tagit' : {
     depends : [ 'jquery.ui' ],
-    path : '/jquery.tagit/',
-    js : [ 'jquery.tagit.js' ],
     css : [ 'jquery.tagit.css' ]
   },
   'jquery.autosize' : {
     depends : [ 'jquery' ],
-    version : '1.10',
-    path : '/jquery.autosize/',
-    js : [ 'jquery.autosize.min.js' ]
+    version : '1.10'
   },
   'jquery.visualize' : {
     depends : [ 'jquery' ],
-    path : '/jquery.visualize/',
-    css : [ 'jquery.visualize.css' ],
-    js : [ 'jquery.visualize.min.js' ]
+    css : [ 'jquery.visualize.css' ]
+  },
+  'jquery.visualsearch' : {
+    depends : [ 'jquery.ui', 'backbone' ],
+    css : [ 'jquery.visualsearch.css', 'jquery.visualsearch-datauri.css' ]
   },
   'jquery.mobiscroll' : {
     depends : [ 'jquery' ],
-    path : '/jquery.mobiscroll/',
-    js : [ 'jquery.mobiscroll.min.js' ],
     css : [ 'jquery.mobiscroll.min.css' ]
   },
   'jquery.timepicker' : {
     depends : [ 'jquery' ],
-    path : '/jquery.timepicker/',
-    js : [ 'jquery.timepicker.min.js' ],
     css : [ 'jquery.timepicker.min.css' ]
   },
   'jquery.simplecolorpicker' : {
@@ -888,9 +894,7 @@ Aldu.CDN.plugins = {
   },
   'jquery.jloupe' : {
     depends : [ 'jquery' ],
-    version : '1.3.2',
-    path : '/jquery.jloupe/',
-    js : [ 'jquery.jloupe.min.js' ]
+    version : '1.3.2'
   },
   'jquery.cycle' : {
     depends : [ 'jquery' ],
@@ -899,54 +903,12 @@ Aldu.CDN.plugins = {
     path : '',
     js : [ 'jquery.cycle.all.js' ]
   },
-  'jquery.cyclelite' : {
-    depends : [ 'jquery' ],
-    version : '',
-    host : 'malsup.github.com',
-    path : '',
-    js : [ 'jquery.cycle.lite.js' ]
-  },
-  'jquery.form' : {
-    depends : [ 'jquery' ],
-    version : '',
-    host : 'malsup.github.com',
-    path : '',
-    js : [ 'jquery.form.js' ]
-  },
-  'jquery.blockUI' : {
-    depends : [ 'jquery' ],
-    version : '',
-    host : 'malsup.github.com',
-    path : '',
-    js : [ 'jquery.blockUI.js' ],
-    load : function(plugin, options) {
-      Aldu.extend($.blockUI.defaults, options);
-      Aldu.CDN._load(plugin, options);
-    }
-  },
-  'jquery.corner' : {
-    depends : [ 'jquery' ],
-    version : '',
-    host : 'malsup.github.com',
-    path : '',
-    js : [ 'jquery.corner.js' ]
-  },
-  'jquery.taconite' : {
-    depends : [ 'jquery' ],
-    version : '',
-    host : 'malsup.github.com',
-    path : '',
-    js : [ 'jquery.taconite.js' ]
-  },
   'jquery.placeholder' : {
-    depends : [ 'jquery' ],
-    path : '/jquery.placeholder/',
-    js : [ 'jquery.placeholder.min.js' ]
+    depends : [ 'jquery' ]
   },
   'jquery.fancybox' : {
     depends : [ 'jquery' ],
     version : '2.0.4',
-    path : '/jquery.fancybox/',
     css : [ 'jquery.fancybox.css' ],
     js : [ 'jquery.fancybox.pack.js' ]
   },
@@ -1383,21 +1345,14 @@ Aldu.CDN.plugins = {
     js : [ 'jquery.jeditable.mini.js' ]
   },
   'jquery.cookies' : {
-    version : '2.2.0',
-    path : '/jquery.cookies/',
-    js : [ 'jquery.cookies.min.js' ]
+    version : '2.2.0'
   },
-  'jquery.minicolors' : {
-    path : '/jquery.minicolors/',
-    js : [ 'jquery.miniColors.min.js' ]
-  },
+  'jquery.minicolors' : {},
   'mediaelement' : {
-    path : '/mediaelement/',
     css : [ 'mediaelementplayer.css' ],
     js : [ 'mediaelement-and-player.js' ]
   },
   'codemirror' : {
-    path : '/codemirror/',
     css : [ 'lib/codemirror.css' ],
     js : [ 'lib/codemirror.js' ],
     options : {},
