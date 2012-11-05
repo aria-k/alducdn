@@ -1639,5 +1639,17 @@ Aldu.CDN.plugins = {
  */
 
 /*
+ * START OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
+ */
+Aldu.extend(Aldu.CDN.plugins, {
+  'jquery.combobox' : {
+    depends : [ 'jquery.ui' ]
+  }
+});
+/*
+ * END OF FILE - /alducdn/aldu/latest/src/plugins/jquery.combobox.js
+ */
+
+/*
  * JavaScript file created by Rockstarapps Concatenation
 */

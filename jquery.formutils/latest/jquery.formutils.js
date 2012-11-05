@@ -22,12 +22,12 @@
         dataType : settings.dataType,
         beforeSend : function(xhr, settings) {
           var option = $('<option>').prop({
+            value : '',
             selected : true
           }).text('Loading...');
-          target.prepend(option);
+          //target.prepend(option);
         },
         success : function(data) {
-          target.children(':first').remove();
           if (settings.removeFirst) {
             target.children().remove();
           }
@@ -42,10 +42,10 @@
             }
             var value = values.join(settings.delimiter);
             tag.attr('value', v[settings.key]).html(value).appendTo(target);
-            if (settings.afterUpdate) {
-              settings.afterUpdate(tag, value);
-            }
           });
+          if (settings.afterUpdate) {
+            settings.afterUpdate.call(target);
+          }
         }
       });
     });

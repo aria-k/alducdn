@@ -84,7 +84,6 @@
             $helpBlock = $controlGroup.find(".help-block").first(),
             $form = $this.parents("form").first(),
             validatorNames = [];
-console.debug(this);
           // create message container if not exists
           if (!$helpBlock.length && settings.options.autoAdd && settings.options.autoAdd.helpBlocks) {
               $helpBlock = $('<div class="help-block" />');
@@ -620,7 +619,6 @@ console.debug(this);
           };
         },
         validate: function ($this, value, validator) {
-          console.log($this);
           if (validator.lastValue == value && validator.lastFinished == true) {
             return validator.lastValid == false;
           }
